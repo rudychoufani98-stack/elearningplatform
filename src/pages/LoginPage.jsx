@@ -22,8 +22,16 @@ export default function LoginPage() {
     setNotice(null);
     if (mode === "signup" && fullName.trim().length < 2)
       return setError("Please enter your full name.");
-    if (password.length < 8)
-      return setError("Password must be at least 8 characters.");
+    if (mode === "signup") {
+      if (password.length < 10)
+        return setError("Password must be at least 10 characters.");
+      if (!/[a-zA-Z]/.test(password) || !/[0-9]/.test(password))
+        return setError("Password must contain both letters and numbers.");
+      if (/^(password|azerty|qwerty|12345|admin)/i.test(password))
+        return setError("That password is too common — pick something unique.");
+      if (email && password.toLowerCase().includes(email.split("@")[0].toLowerCase()))
+        return setError("Password must not contain your email name.");
+    }
     if (mode === "signup" && password !== confirm)
       return setError("Passwords do not match.");
     setBusy(true);
@@ -133,7 +141,7 @@ export default function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 autoComplete={mode === "signin" ? "current-password" : "new-password"}
                 className="w-full rounded-lg border border-outline-variant bg-white px-4 py-3 text-body-md focus:border-secondary focus:outline-none focus:ring-2 focus:ring-secondary/20"
-                placeholder="At least 8 characters"
+                placeholder={mode === "signin" ? "Your password" : "10+ characters, letters and numbers"}
               />
             </label>
             {mode === "signup" && (
