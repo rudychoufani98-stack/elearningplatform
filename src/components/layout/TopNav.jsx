@@ -4,6 +4,7 @@ import MaterialIcon from "../MaterialIcon.jsx";
 import Logo from "../Logo.jsx";
 import { platform, documents, libraryByModule } from "../../data.js";
 import { useCourse } from "../../CourseContext.jsx";
+import { useAuth } from "../../AuthContext.jsx";
 
 // Live search across modules, library documents and glossary terms.
 function useSearchIndex() {
@@ -47,6 +48,9 @@ function useSearchIndex() {
 
 export default function TopNav() {
   const navigate = useNavigate();
+  const { enabled, profile, user, signOut } = useAuth();
+  const displayName = profile?.full_name || user?.email || "Learner";
+  const initial = (displayName[0] || "A").toUpperCase();
   const index = useSearchIndex();
   const [q, setQ] = useState("");
   const [focused, setFocused] = useState(false);
@@ -143,9 +147,23 @@ export default function TopNav() {
         <button className="rounded-full p-2 text-on-surface-variant transition-colors hover:bg-surface-container-high hover:text-primary">
           <MaterialIcon name="help" />
         </button>
-        <div className="ml-stack-sm flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-secondary to-[#9a7a00] text-label-md font-bold text-white shadow-sm ring-2 ring-white">
-          A
+        <div
+          className="ml-stack-sm flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-secondary to-[#9a7a00] text-label-md font-bold text-white shadow-sm ring-2 ring-white"
+          title={displayName}
+        >
+          {initial}
         </div>
+        {enabled && (
+          <button
+            onClick={() => {
+              if (window.confirm("Sign out of Skykapital Academy?")) signOut();
+            }}
+            title="Sign out"
+            className="rounded-full p-2 text-on-surface-variant transition-colors hover:bg-surface-container-high hover:text-error"
+          >
+            <MaterialIcon name="logout" />
+          </button>
+        )}
       </div>
     </header>
   );
