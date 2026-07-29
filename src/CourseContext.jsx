@@ -58,19 +58,26 @@ export function CourseProvider({ children }) {
     initial.acknowledgements
   );
 
-  // Switch data when a different account signs in (or out).
+  // Switch data when a different account signs in (or out). `loadedKey`
+  // guards the persist effect below: never write state that belongs to the
+  // PREVIOUS key into the new one (that would copy demo/test progress into a
+  // fresh account).
+  const loadedKey = useRef(storageKey);
   useEffect(() => {
     const d = loadInitial(storageKey);
     setModules(d.modules);
     setAcknowledgements(d.acknowledgements);
+    loadedKey.current = storageKey;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [storageKey]);
   const [toast, setToast] = useState(null);
   const toastTimer = useRef();
   const toastId = useRef(0);
 
-  // Persist whenever progress or acknowledgements change.
+  // Persist whenever progress or acknowledgements change — but only once the
+  // state in memory actually belongs to this key (see loadedKey above).
   useEffect(() => {
+    if (loadedKey.current !== storageKey) return;
     try {
       const progress = {};
       modules.forEach((m) => {
