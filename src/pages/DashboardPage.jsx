@@ -86,8 +86,9 @@ export default function DashboardPage() {
       {/* Welcome */}
       <section className="mb-stack-lg animate-fade-up">
         <h1 className="mb-2 text-headline-lg text-primary md:text-headline-xl">
-          Welcome back, {firstName}.
+          Welcome back, {firstName} 👋
         </h1>
+        <span className="mb-3 mt-1 block h-1 w-24 rounded-full bg-gradient-to-r from-secondary to-transparent" />
         <p className="text-body-lg text-on-surface-variant">
           You have completed{" "}
           <AnimatedNumber
@@ -101,7 +102,7 @@ export default function DashboardPage() {
 
       {/* First-time guidance */}
       {progress.completed === 0 && (
-        <section className="animate-fade-up mb-stack-lg rounded-xl border border-outline-variant bg-surface-container-lowest p-stack-lg">
+        <section className="animate-fade-up mb-stack-lg rounded-xl border border-outline-variant bg-gradient-to-br from-surface-container-lowest via-surface-container-lowest to-[#fcf6e8] p-stack-lg">
           <p className="mb-stack-md text-caption font-bold uppercase tracking-widest text-secondary">
             New here? How it works
           </p>
@@ -144,6 +145,17 @@ export default function DashboardPage() {
             </span>
           </div>
           <div className="relative h-64 border-b border-l border-outline-variant chart-grid">
+            {!scored.some((m) => (m.score?.earned ?? 0) > 0) && (
+              <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 bg-surface-container-lowest/95 text-center">
+                <span className="flex h-14 w-14 items-center justify-center rounded-full bg-surface-container-low">
+                  <MaterialIcon name="insights" className="text-3xl text-secondary" />
+                </span>
+                <p className="text-label-md font-bold text-primary">Your scores will appear here</p>
+                <p className="max-w-xs text-caption text-on-surface-variant">
+                  Pass your first quiz and watch the bars grow — one per module.
+                </p>
+              </div>
+            )}
             <div className="absolute inset-0 flex items-end justify-around gap-3 px-4 pb-px">
               {scored.map((m, i) => {
                 const pct = Math.round((m.score.earned / m.score.total) * 100);
