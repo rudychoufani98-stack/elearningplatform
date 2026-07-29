@@ -109,6 +109,14 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Every clickable control shows the hand cursor — buttons don't by default. */
+button:not(:disabled),
+select,
+[role="button"],
+label[for] {
+  cursor: pointer;
+}
+
 body {
   font-family: var(--font-sans);
   color: var(--color-on-surface);
