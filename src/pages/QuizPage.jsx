@@ -224,6 +224,7 @@ export default function QuizPage() {
   const [revealed, setRevealed] = useState(false);
   const [phase, setPhase] = useState("quiz"); // "quiz" | "results"
   const [timeLeft, setTimeLeft] = useState(15 * 60);
+  const [confirmExit, setConfirmExit] = useState(null); // route to leave to, or null
 
   useEffect(() => {
     if (timeLeft <= 0 || phase !== "quiz") return;
@@ -401,15 +402,9 @@ export default function QuizPage() {
       <nav className="fixed left-0 right-0 top-0 z-50 flex h-20 items-center justify-between border-b border-outline-variant bg-surface-container-lowest px-margin-mobile shadow-sm md:px-margin-desktop">
         <div className="flex items-center gap-stack-md">
           <button
-            onClick={() => {
-              if (
-                phase === "results" ||
-                window.confirm(
-                  "Are you sure you want to leave the quiz? Your progress in this attempt will not be saved."
-                )
-              )
-                navigate("/");
-            }}
+            onClick={() =>
+              phase === "results" ? navigate("/") : setConfirmExit("/")
+            }
             title="Back to the dashboard"
             className="flex items-center gap-2.5 transition-opacity hover:opacity-80"
           >
@@ -437,15 +432,9 @@ export default function QuizPage() {
             </div>
           )}
           <button
-            onClick={() => {
-              if (
-                phase === "results" ||
-                window.confirm(
-                  "Are you sure you want to leave the quiz? Your progress in this attempt will not be saved."
-                )
-              )
-                navigate("/course");
-            }}
+            onClick={() =>
+              phase === "results" ? navigate("/course") : setConfirmExit("/course")
+            }
             className="rounded-full p-2 text-on-surface-variant transition-colors hover:bg-surface-container-low"
             title="Exit assessment"
           >
@@ -453,6 +442,41 @@ export default function QuizPage() {
           </button>
         </div>
       </nav>
+
+      {confirmExit && (
+        <div
+          className="fixed inset-0 z-[90] flex items-center justify-center bg-[#0d1c32]/60 px-6 backdrop-blur-sm"
+          onClick={() => setConfirmExit(null)}
+        >
+          <div
+            className="animate-pop w-full max-w-sm rounded-2xl bg-white p-stack-lg text-center shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-amber-50">
+              <MaterialIcon name="logout" className="text-3xl text-amber-500" />
+            </div>
+            <h2 className="text-headline-md text-primary">Leave the quiz?</h2>
+            <p className="mx-auto mt-1 max-w-xs text-body-md text-on-surface-variant">
+              Your answers in this attempt will not be saved — you can retake
+              the quiz anytime.
+            </p>
+            <div className="mt-stack-md flex gap-2">
+              <button
+                onClick={() => setConfirmExit(null)}
+                className="flex-1 rounded-lg bg-primary py-3 text-label-md font-bold text-on-primary transition-opacity hover:opacity-90"
+              >
+                Keep going
+              </button>
+              <button
+                onClick={() => navigate(confirmExit)}
+                className="flex-1 rounded-lg border border-outline-variant py-3 text-label-md text-on-surface-variant transition-colors hover:border-rose-300 hover:text-rose-600"
+              >
+                Leave
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <main className="flex min-h-screen flex-col items-center px-margin-mobile pb-margin-desktop pt-32 md:px-margin-desktop">
         {phase === "results" ? (
