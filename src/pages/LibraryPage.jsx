@@ -24,8 +24,7 @@ export default function LibraryPage() {
         The Library
       </h1>
       <p className="mb-stack-lg max-w-2xl text-body-lg text-on-surface-variant">
-        Modules teach, the library proves. Each module's documents unlock once
-        you complete the module before it.
+        All the reference documents and templates, organised by module. Each module's documents unlock when you reach it in the pathway.
       </p>
 
       <div className="overflow-hidden rounded-xl border border-outline-variant bg-surface-container-lowest">

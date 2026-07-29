@@ -415,7 +415,7 @@ export default function QuizPage() {
           </button>
           <div className="mx-unit hidden h-6 w-px bg-outline-variant md:block" />
           <span className="hidden text-label-md uppercase tracking-wider text-on-surface-variant md:block">
-            Final Assessment
+            {target ? `${target.code} · Module quiz` : "Quiz"}
           </span>
         </div>
         <div className="flex items-center gap-stack-md">

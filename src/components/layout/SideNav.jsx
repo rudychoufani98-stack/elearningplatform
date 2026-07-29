@@ -29,7 +29,7 @@ export default function SideNav() {
     <aside className="fixed bottom-0 left-0 top-20 z-40 hidden w-64 flex-col border-r border-outline-variant/70 bg-surface-container-lowest/80 py-stack-lg backdrop-blur-sm md:flex">
       <div className="mb-stack-lg px-6">
         <h2 className="text-headline-md font-bold text-primary">
-          {course.title.split(" ").slice(0, 2).join(" ")}
+          Sustainability Pathway
         </h2>
         <p className="text-caption text-on-surface-variant">{platform.series}</p>
       </div>

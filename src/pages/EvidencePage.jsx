@@ -30,9 +30,7 @@ export default function EvidencePage() {
             Training Evidence
           </h1>
           <p className="max-w-2xl text-body-lg text-on-surface-variant">
-            Every completed module and signed declaration is logged here — name,
-            score and date — as a record for the project's training-evidence
-            register. Your progress is saved on this device.
+            Your personal record: every module you complete and every document you sign is logged here with your name, score and date — ready for the project's training-evidence register.
           </p>
         </div>
         <button
