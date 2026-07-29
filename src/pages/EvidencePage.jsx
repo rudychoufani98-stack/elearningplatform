@@ -2,10 +2,14 @@ import { Link } from "react-router-dom";
 import MaterialIcon from "../components/MaterialIcon.jsx";
 import { useCourse } from "../CourseContext.jsx";
 import { course } from "../data.js";
+import { useAuth } from "../AuthContext.jsx";
 
 // Training-evidence register — completed modules logged as project record.
 export default function EvidencePage() {
   const { modules, progress, acknowledgements, resetProgress } = useCourse();
+  const { profile, user } = useAuth();
+  const learnerName =
+    profile?.full_name || user?.user_metadata?.full_name || user?.email?.split("@")[0] || course.learner;
   const completed = modules.filter((m) => m.status === "completed");
 
   return (
@@ -84,7 +88,7 @@ export default function EvidencePage() {
           <p className="text-caption font-bold uppercase tracking-widest text-secondary-fixed">
             Certificate of completion
           </p>
-          <h2 className="mt-1 text-headline-lg">{course.learner}</h2>
+          <h2 className="mt-1 text-headline-lg">{learnerName}</h2>
           <p className="mt-1 max-w-xl text-body-md text-white/80">
             has completed all {progress.total} modules of “{course.title}” —
             passing every assessment and the capstone simulation.
@@ -214,7 +218,7 @@ export default function EvidencePage() {
                   className="border-b border-surface-container last:border-0"
                 >
                   <td className="px-stack-md py-stack-md text-body-md text-primary">
-                    {course.learner}
+                    {learnerName}
                   </td>
                   <td className="px-stack-md py-stack-md text-body-md text-on-surface-variant">
                     {m.code} · {m.title}

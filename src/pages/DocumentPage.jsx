@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useParams, Link, useLocation } from "react-router-dom";
 import MaterialIcon from "../components/MaterialIcon.jsx";
+import { useAuth } from "../AuthContext.jsx";
 import { useCourse, isUnlocked } from "../CourseContext.jsx";
 import { documents, course, libraryByModule } from "../data.js";
 import RegFrameworkChart from "../components/charts/RegFrameworkChart.jsx";
@@ -25,7 +26,10 @@ export default function DocumentPage() {
     ? { label: "Resources", to: "/resources" }
     : { label: "The Library", to: "/library" };
   const { modules, acknowledgements, acknowledge } = useCourse();
-  const [name, setName] = useState(course.learner);
+  const { profile, user } = useAuth();
+  const [name, setName] = useState(
+    profile?.full_name || user?.user_metadata?.full_name || user?.email?.split("@")[0] || course.learner
+  );
   const [checked, setChecked] = useState(false);
   const doc = documents[docId];
   const signed = acknowledgements.find((a) => a.id === docId);

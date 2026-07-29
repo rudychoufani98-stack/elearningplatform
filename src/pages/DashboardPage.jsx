@@ -4,10 +4,15 @@ import MaterialIcon from "../components/MaterialIcon.jsx";
 import { useCourse, statusMeta } from "../CourseContext.jsx";
 import { AnimatedNumber } from "../useCountUp.jsx";
 import { course } from "../data.js";
+import { useAuth } from "../AuthContext.jsx";
 
 export default function DashboardPage() {
   const navigate = useNavigate();
   const { modules, progress } = useCourse();
+  const { profile, user } = useAuth();
+  const learnerName =
+    profile?.full_name || user?.user_metadata?.full_name || user?.email?.split("@")[0] || course.learner;
+  const firstName = learnerName.split(" ")[0];
 
   // Drives mount animations (bars grow, ring fills).
   const [mounted, setMounted] = useState(false);
@@ -34,7 +39,7 @@ export default function DashboardPage() {
       {/* Welcome */}
       <section className="mb-stack-lg animate-fade-up">
         <h1 className="mb-2 text-headline-lg text-primary md:text-headline-xl">
-          Welcome back, {course.learner}.
+          Welcome back, {firstName}.
         </h1>
         <p className="text-body-lg text-on-surface-variant">
           You have completed{" "}
