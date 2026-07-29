@@ -147,24 +147,131 @@ export default function TopNav() {
         <button className="rounded-full p-2 text-on-surface-variant transition-colors hover:bg-surface-container-high hover:text-primary">
           <MaterialIcon name="help" />
         </button>
-        <div
-          className="ml-stack-sm flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-secondary to-[#9a7a00] text-label-md font-bold text-white shadow-sm ring-2 ring-white"
-          title={displayName}
-        >
-          {initial}
-        </div>
-        {enabled && (
-          <button
-            onClick={() => {
-              if (window.confirm("Sign out of Skykapital Academy?")) signOut();
-            }}
-            title="Sign out"
-            className="rounded-full p-2 text-on-surface-variant transition-colors hover:bg-surface-container-high hover:text-error"
-          >
-            <MaterialIcon name="logout" />
-          </button>
-        )}
+        <AccountMenu
+          enabled={enabled}
+          displayName={displayName}
+          initial={initial}
+          email={user?.email}
+          role={profile?.role}
+          onSignOut={signOut}
+          onGoEvidence={() => navigate("/evidence")}
+        />
       </div>
     </header>
+  );
+}
+
+// Avatar with a dropdown: account details, quick links, and a styled
+// sign-out confirmation — everything hangs under the initial.
+function AccountMenu({ enabled, displayName, initial, email, role, onSignOut, onGoEvidence }) {
+  const [open, setOpen] = useState(false);
+  const [confirming, setConfirming] = useState(false);
+
+  function close() {
+    setOpen(false);
+    setConfirming(false);
+  }
+
+  return (
+    <div
+      className="relative ml-stack-sm"
+      onBlur={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget)) close();
+      }}
+    >
+      <button
+        onClick={() => (open ? close() : setOpen(true))}
+        title={displayName}
+        className={`flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-secondary to-[#9a7a00] text-label-md font-bold text-white shadow-sm ring-2 transition-all hover:brightness-110 active:scale-95 ${
+          open ? "ring-secondary" : "ring-white"
+        }`}
+      >
+        {initial}
+      </button>
+
+      {open && (
+        <div className="animate-fade-up absolute right-0 top-full z-50 mt-2 w-72 overflow-hidden rounded-xl border border-outline-variant bg-white shadow-xl">
+          {confirming ? (
+            <div className="p-stack-md text-center">
+              <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-rose-50">
+                <MaterialIcon name="logout" className="text-2xl text-rose-500" />
+              </div>
+              <p className="text-label-md font-bold text-primary">Sign out?</p>
+              <p className="mt-1 text-caption text-on-surface-variant">
+                Your progress is saved to your account — you can pick up right
+                where you left off.
+              </p>
+              <div className="mt-stack-md flex gap-2">
+                <button
+                  onMouseDown={(e) => {
+                    e.preventDefault();
+                    close();
+                  }}
+                  className="flex-1 rounded-lg border border-outline-variant py-2.5 text-label-md text-on-surface transition-colors hover:bg-surface-container-low"
+                >
+                  Cancel
+                </button>
+                <button
+                  onMouseDown={(e) => {
+                    e.preventDefault();
+                    close();
+                    onSignOut();
+                  }}
+                  className="flex-1 rounded-lg bg-rose-500 py-2.5 text-label-md font-bold text-white transition-colors hover:bg-rose-600"
+                >
+                  Sign out
+                </button>
+              </div>
+            </div>
+          ) : (
+            <>
+              <div className="flex items-center gap-3 border-b border-outline-variant bg-surface-container-low px-stack-md py-3">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-secondary to-[#9a7a00] text-label-md font-bold text-white">
+                  {initial}
+                </span>
+                <span className="min-w-0">
+                  <span className="block truncate text-label-md font-bold text-primary">
+                    {displayName}
+                  </span>
+                  {email && (
+                    <span className="block truncate text-caption text-on-surface-variant">
+                      {email}
+                    </span>
+                  )}
+                  {role && (
+                    <span className="mt-0.5 inline-block rounded-full bg-primary-container px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white">
+                      {role}
+                    </span>
+                  )}
+                </span>
+              </div>
+              <button
+                onMouseDown={(e) => {
+                  e.preventDefault();
+                  close();
+                  onGoEvidence();
+                }}
+                className="flex w-full items-center gap-3 px-stack-md py-3 text-left text-body-md text-on-surface transition-colors hover:bg-surface-container-low"
+              >
+                <MaterialIcon name="verified" className="text-secondary" />
+                My progress & evidence
+              </button>
+              {enabled && (
+                <button
+                  onMouseDown={(e) => {
+                    e.preventDefault();
+                    setConfirming(true);
+                  }}
+                  className="flex w-full items-center gap-3 border-t border-outline-variant px-stack-md py-3 text-left text-body-md text-rose-600 transition-colors hover:bg-rose-50"
+                >
+                  <MaterialIcon name="logout" />
+                  Sign out
+                </button>
+              )}
+            </>
+          )}
+        </div>
+      )}
+    </div>
   );
 }

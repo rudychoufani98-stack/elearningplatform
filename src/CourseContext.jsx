@@ -7,6 +7,7 @@ import {
   useState,
 } from "react";
 import { modules as seedModules, moduleAccents, moduleImages } from "./data.js";
+import { useAuth } from "./AuthContext.jsx";
 
 const CourseContext = createContext(null);
 const STORAGE_KEY = "skykapital-progress-v1";
@@ -21,9 +22,9 @@ const seeded = seedModules.map((m) => ({
 // Load saved progress and overlay it onto the current seed. We persist only
 // the *progress* (status/score/progress), never content — so code edits to
 // lessons/quizzes still take effect while a learner's progress survives.
-function loadInitial() {
+function loadInitial(storageKey) {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = localStorage.getItem(storageKey);
     if (!raw) return { modules: seeded, acknowledgements: [] };
     const saved = JSON.parse(raw);
     const byId = saved.progress || {};
@@ -45,11 +46,25 @@ function loadInitial() {
 }
 
 export function CourseProvider({ children }) {
-  const initial = loadInitial();
+  // Progress is stored PER ACCOUNT when signed in (fresh accounts start at
+  // zero); the shared key is only used in local demo mode without auth.
+  const { enabled: authEnabled, user } = useAuth();
+  const storageKey =
+    authEnabled && user ? `skykapital-progress-${user.id}` : STORAGE_KEY;
+
+  const initial = loadInitial(storageKey);
   const [modules, setModules] = useState(initial.modules);
   const [acknowledgements, setAcknowledgements] = useState(
     initial.acknowledgements
   );
+
+  // Switch data when a different account signs in (or out).
+  useEffect(() => {
+    const d = loadInitial(storageKey);
+    setModules(d.modules);
+    setAcknowledgements(d.acknowledgements);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [storageKey]);
   const [toast, setToast] = useState(null);
   const toastTimer = useRef();
   const toastId = useRef(0);
@@ -62,13 +77,13 @@ export function CourseProvider({ children }) {
         progress[m.id] = { status: m.status, score: m.score, progress: m.progress, completedOn: m.completedOn };
       });
       localStorage.setItem(
-        STORAGE_KEY,
+        storageKey,
         JSON.stringify({ v: 1, progress, acknowledgements })
       );
     } catch {
       /* storage unavailable — ignore */
     }
-  }, [modules, acknowledgements]);
+  }, [modules, acknowledgements, storageKey]);
 
   function showToast(message, tone = "success") {
     toastId.current += 1;
@@ -133,7 +148,7 @@ export function CourseProvider({ children }) {
   // Clears all progress back to the seed (handy for demos).
   function resetProgress() {
     try {
-      localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(storageKey);
     } catch {
       /* ignore */
     }
