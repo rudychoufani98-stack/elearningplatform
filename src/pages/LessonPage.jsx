@@ -167,6 +167,29 @@ export default function LessonPage() {
         </div>
       </div>
 
+      {/* The 3-step path — tells a new user exactly what to do */}
+      <div className="mb-stack-lg flex flex-col gap-2 rounded-xl border border-outline-variant bg-surface-container-lowest p-stack-md sm:flex-row sm:items-center">
+        <a href="#lesson-notes" className="flex flex-1 items-center gap-2 rounded-lg px-3 py-2 transition-colors hover:bg-surface-container-low">
+          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary-container text-caption font-bold text-white">1</span>
+          <span className="text-label-md font-semibold text-primary">Read the lesson</span>
+        </a>
+        <MaterialIcon name="chevron_right" className="hidden text-outline sm:block" />
+        <a href="#practice" className="flex flex-1 items-center gap-2 rounded-lg px-3 py-2 transition-colors hover:bg-surface-container-low">
+          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary-container text-caption font-bold text-white">2</span>
+          <span className="text-label-md font-semibold text-primary">Practice with the games</span>
+        </a>
+        <MaterialIcon name="chevron_right" className="hidden text-outline sm:block" />
+        <button
+          onClick={() => navigate(module.type === "capstone" ? "/capstone" : `/quiz/${module.id}`)}
+          className="flex flex-1 items-center gap-2 rounded-lg px-3 py-2 text-left transition-colors hover:bg-surface-container-low"
+        >
+          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-secondary text-caption font-bold text-white">3</span>
+          <span className="text-label-md font-semibold text-primary">
+            {module.type === "capstone" ? "Run the simulation" : "Pass the quiz (80%)"}
+          </span>
+        </button>
+      </div>
+
       {/* Content grid */}
       <div className="grid grid-cols-12 gap-gutter">
         {/* Media + meta */}
@@ -279,7 +302,7 @@ export default function LessonPage() {
 
           {/* Practice & apply — interactive exercises */}
           {module.activities?.length > 0 && (
-            <div className="mt-stack-lg rounded-xl border border-outline-variant bg-surface-container-lowest p-stack-lg">
+            <div id="practice" className="mt-stack-lg scroll-mt-24 rounded-xl border border-outline-variant bg-surface-container-lowest p-stack-lg">
               <h2 className="mb-stack-md text-headline-md text-primary">
                 Practice &amp; apply
               </h2>
@@ -302,7 +325,7 @@ export default function LessonPage() {
 
         {/* Sidebar: notes / transcript + progress */}
         <div className="col-span-12 space-y-gutter lg:col-span-4">
-          <div className="overflow-hidden rounded-xl border border-outline-variant bg-surface-container-lowest">
+          <div id="lesson-notes" className="scroll-mt-24 overflow-hidden rounded-xl border border-outline-variant bg-surface-container-lowest">
             <div className="flex border-b border-outline-variant">
               <button
                 onClick={() => setTab("notes")}
@@ -312,7 +335,7 @@ export default function LessonPage() {
                     : "text-on-surface-variant hover:bg-surface-container-low"
                 }`}
               >
-                Lesson Notes
+                📖 The Lesson
               </button>
               <button
                 onClick={() => setTab("objectives")}

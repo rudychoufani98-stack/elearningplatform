@@ -52,6 +52,40 @@ export default function DashboardPage() {
         </p>
       </section>
 
+      {/* First-time guidance */}
+      {progress.completed === 0 && (
+        <section className="animate-fade-up mb-stack-lg rounded-xl border border-outline-variant bg-surface-container-lowest p-stack-lg">
+          <p className="mb-stack-md text-caption font-bold uppercase tracking-widest text-secondary">
+            New here? How it works
+          </p>
+          <div className="grid grid-cols-1 gap-stack-md sm:grid-cols-3">
+            {[
+              { n: "1", icon: "menu_book", t: "Read the lesson", d: "Each module starts with a short, illustrated lesson." },
+              { n: "2", icon: "extension", t: "Play the practice games", d: "Puzzles and games to make it stick — no grades here." },
+              { n: "3", icon: "quiz", t: "Pass the quiz", d: "Score 80% to complete the module and unlock the next." },
+            ].map((s) => (
+              <div key={s.n} className="flex items-start gap-3 rounded-lg bg-surface-container-low p-stack-md">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary-container text-label-md font-bold text-white">
+                  {s.n}
+                </span>
+                <span>
+                  <span className="flex items-center gap-1 text-label-md font-bold text-primary">
+                    <MaterialIcon name={s.icon} className="text-[18px] text-secondary" /> {s.t}
+                  </span>
+                  <span className="mt-0.5 block text-caption text-on-surface-variant">{s.d}</span>
+                </span>
+              </div>
+            ))}
+          </div>
+          <button
+            onClick={() => navigate("/module/m1")}
+            className="mt-stack-md flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-primary-container to-[#1c3a63] py-3.5 text-label-md font-bold text-white transition-all hover:brightness-110 active:scale-[0.99] sm:w-auto sm:px-10"
+          >
+            Start Module 1 <MaterialIcon name="arrow_forward" />
+          </button>
+        </section>
+      )}
+
       {/* Bento grid */}
       <div className="grid grid-cols-1 gap-gutter lg:grid-cols-12">
         {/* Performance chart */}
