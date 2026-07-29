@@ -242,90 +242,7 @@ export default function LessonPage() {
             </div>
           )}
 
-          {/* Meta cards */}
-          <div className="mt-stack-lg grid grid-cols-1 gap-stack-md sm:grid-cols-3">
-            <div className="rounded-xl border border-outline-variant bg-surface-container-lowest p-stack-md">
-              <div className="mb-2 flex items-center gap-2 text-primary">
-                <MaterialIcon name="description" className="text-[20px]" />
-                <span className="text-label-md">Resources</span>
-              </div>
-              <p className="mb-3 text-caption text-on-surface-variant">
-                Job-aids and reference PDFs for this module.
-              </p>
-              <Link to="/library" className="text-label-md text-secondary hover:underline">
-                Open the Library
-              </Link>
-            </div>
-            <div className="rounded-xl border border-outline-variant bg-surface-container-lowest p-stack-md">
-              <div className="mb-2 flex items-center gap-2 text-primary">
-                <MaterialIcon name="forum" className="text-[20px]" />
-                <span className="text-label-md">Discussion</span>
-              </div>
-              <p className="mb-3 text-caption text-on-surface-variant">
-                Questions for your workshop group.
-              </p>
-              <a href="#discussion" className="text-label-md text-secondary hover:underline">
-                Open the discussion
-              </a>
-            </div>
-            <div className="rounded-xl border border-outline-variant bg-surface-container-lowest p-stack-md">
-              <div className="mb-2 flex items-center gap-2 text-primary">
-                <MaterialIcon name="quiz" className="text-[20px]" />
-                <span className="text-label-md">Assessment</span>
-              </div>
-              <p className="mb-3 text-caption text-on-surface-variant">
-                {module.type === "read"
-                  ? "This module has no quiz."
-                  : module.type === "capstone"
-                  ? "Run the live simulation to complete the pathway."
-                  : "Test your knowledge and log evidence."}
-              </p>
-              {module.type === "quiz" ? (
-                <Link
-                  to={`/quiz/${module.id}`}
-                  className="text-label-md text-secondary hover:underline"
-                >
-                  Start quiz
-                </Link>
-              ) : module.type === "capstone" ? (
-                <Link
-                  to="/capstone"
-                  className="text-label-md text-secondary hover:underline"
-                >
-                  Launch simulation
-                </Link>
-              ) : (
-                <span className="text-label-md text-outline">—</span>
-              )}
-            </div>
-          </div>
-
-          {/* Practice & apply — interactive exercises */}
-          {module.activities?.length > 0 && (
-            <div id="practice" className="mt-stack-lg scroll-mt-24 rounded-xl border border-outline-variant bg-surface-container-lowest p-stack-lg">
-              <h2 className="mb-stack-md text-headline-md text-primary">
-                Practice &amp; apply
-              </h2>
-              <div className="space-y-stack-lg">
-                {module.activities.map((a, i) => (
-                  <div
-                    key={i}
-                    className={
-                      i > 0 ? "border-t border-outline-variant pt-stack-lg" : ""
-                    }
-                  >
-                    {renderActivity(a, module.accent)}
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-          <Discussion moduleId={module.id} accent={module.accent} />
-        </div>
-
-        {/* Sidebar: notes / transcript + progress */}
-        <div className="col-span-12 space-y-gutter lg:col-span-4">
-          <div id="lesson-notes" className="scroll-mt-24 overflow-hidden rounded-xl border border-outline-variant bg-surface-container-lowest">
+          <div id="lesson-notes" className="mt-stack-lg scroll-mt-24 overflow-hidden rounded-xl border border-outline-variant bg-surface-container-lowest">
             <div className="flex border-b border-outline-variant">
               <button
                 onClick={() => setTab("notes")}
@@ -349,7 +266,7 @@ export default function LessonPage() {
               </button>
             </div>
 
-            <div className="custom-scrollbar max-h-[600px] overflow-y-auto p-stack-lg">
+            <div className="p-stack-lg">
               {tab === "notes" ? (
                 <>
                   {module.tldr && (
@@ -491,6 +408,90 @@ export default function LessonPage() {
             </div>
           </div>
 
+
+          {/* Meta cards */}
+          <div className="mt-stack-lg grid grid-cols-1 gap-stack-md sm:grid-cols-3">
+            <div className="rounded-xl border border-outline-variant bg-surface-container-lowest p-stack-md">
+              <div className="mb-2 flex items-center gap-2 text-primary">
+                <MaterialIcon name="description" className="text-[20px]" />
+                <span className="text-label-md">Resources</span>
+              </div>
+              <p className="mb-3 text-caption text-on-surface-variant">
+                Job-aids and reference PDFs for this module.
+              </p>
+              <Link to="/library" className="text-label-md text-secondary hover:underline">
+                Open the Library
+              </Link>
+            </div>
+            <div className="rounded-xl border border-outline-variant bg-surface-container-lowest p-stack-md">
+              <div className="mb-2 flex items-center gap-2 text-primary">
+                <MaterialIcon name="forum" className="text-[20px]" />
+                <span className="text-label-md">Discussion</span>
+              </div>
+              <p className="mb-3 text-caption text-on-surface-variant">
+                Questions for your workshop group.
+              </p>
+              <a href="#discussion" className="text-label-md text-secondary hover:underline">
+                Open the discussion
+              </a>
+            </div>
+            <div className="rounded-xl border border-outline-variant bg-surface-container-lowest p-stack-md">
+              <div className="mb-2 flex items-center gap-2 text-primary">
+                <MaterialIcon name="quiz" className="text-[20px]" />
+                <span className="text-label-md">Assessment</span>
+              </div>
+              <p className="mb-3 text-caption text-on-surface-variant">
+                {module.type === "read"
+                  ? "This module has no quiz."
+                  : module.type === "capstone"
+                  ? "Run the live simulation to complete the pathway."
+                  : "Test your knowledge and log evidence."}
+              </p>
+              {module.type === "quiz" ? (
+                <Link
+                  to={`/quiz/${module.id}`}
+                  className="text-label-md text-secondary hover:underline"
+                >
+                  Start quiz
+                </Link>
+              ) : module.type === "capstone" ? (
+                <Link
+                  to="/capstone"
+                  className="text-label-md text-secondary hover:underline"
+                >
+                  Launch simulation
+                </Link>
+              ) : (
+                <span className="text-label-md text-outline">—</span>
+              )}
+            </div>
+          </div>
+
+          {/* Practice & apply — interactive exercises */}
+          {module.activities?.length > 0 && (
+            <div id="practice" className="mt-stack-lg scroll-mt-24 rounded-xl border border-outline-variant bg-surface-container-lowest p-stack-lg">
+              <h2 className="mb-stack-md text-headline-md text-primary">
+                Practice &amp; apply
+              </h2>
+              <div className="space-y-stack-lg">
+                {module.activities.map((a, i) => (
+                  <div
+                    key={i}
+                    className={
+                      i > 0 ? "border-t border-outline-variant pt-stack-lg" : ""
+                    }
+                  >
+                    {renderActivity(a, module.accent)}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+          <Discussion moduleId={module.id} accent={module.accent} />
+        </div>
+
+        {/* Sidebar: notes / transcript + progress */}
+        <div className="col-span-12 space-y-gutter lg:col-span-4">
           {/* Progress card */}
           <div className="rounded-xl border border-outline-variant bg-surface-container-lowest p-stack-md">
             <div className="mb-2 flex items-center justify-between">
