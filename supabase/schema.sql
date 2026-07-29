@@ -114,3 +114,24 @@ drop trigger if exists on_auth_user_created on auth.users;
 create trigger on_auth_user_created
   after insert on auth.users
   for each row execute function public.handle_new_user();
+
+-- 5) DISCUSSION COMMENTS ------------------------------------------------------
+-- Per-module workshop discussion. Signed-in learners read all, post as themselves.
+create table if not exists public.comments (
+  id          uuid primary key default gen_random_uuid(),
+  user_id     uuid not null references public.profiles (id) on delete cascade,
+  module_id   text not null,
+  author_name text not null,
+  body        text not null check (char_length(body) between 1 and 2000),
+  created_at  timestamptz not null default now()
+);
+alter table public.comments enable row level security;
+drop policy if exists comments_read_all on public.comments;
+create policy comments_read_all on public.comments
+  for select using (auth.role() = 'authenticated');
+drop policy if exists comments_insert_own on public.comments;
+create policy comments_insert_own on public.comments
+  for insert with check (user_id = auth.uid());
+drop policy if exists comments_delete_own on public.comments;
+create policy comments_delete_own on public.comments
+  for delete using (user_id = auth.uid() or public.is_staff());

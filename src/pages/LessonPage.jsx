@@ -11,6 +11,7 @@ import ChecklistActivity from "../components/activities/ChecklistActivity.jsx";
 import MatchActivity from "../components/activities/MatchActivity.jsx";
 import SwipeActivity from "../components/activities/SwipeActivity.jsx";
 import MemoryActivity from "../components/activities/MemoryActivity.jsx";
+import Discussion from "../components/Discussion.jsx";
 
 // Maps an activity `type` to its component.
 function renderActivity(a, accent) {
@@ -240,9 +241,9 @@ export default function LessonPage() {
               <p className="mb-3 text-caption text-on-surface-variant">
                 Questions for your workshop group.
               </p>
-              <button className="text-label-md text-secondary hover:underline">
-                12 comments
-              </button>
+              <a href="#discussion" className="text-label-md text-secondary hover:underline">
+                Open the discussion
+              </a>
             </div>
             <div className="rounded-xl border border-outline-variant bg-surface-container-lowest p-stack-md">
               <div className="mb-2 flex items-center gap-2 text-primary">
@@ -296,6 +297,7 @@ export default function LessonPage() {
               </div>
             </div>
           )}
+          <Discussion moduleId={module.id} accent={module.accent} />
         </div>
 
         {/* Sidebar: notes / transcript + progress */}
