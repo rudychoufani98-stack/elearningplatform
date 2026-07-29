@@ -11,6 +11,7 @@ export default function LoginPage() {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirm, setConfirm] = useState("");
   const [error, setError] = useState(null);
   const [notice, setNotice] = useState(null);
   const [busy, setBusy] = useState(false);
@@ -23,6 +24,8 @@ export default function LoginPage() {
       return setError("Please enter your full name.");
     if (password.length < 8)
       return setError("Password must be at least 8 characters.");
+    if (mode === "signup" && password !== confirm)
+      return setError("Passwords do not match.");
     setBusy(true);
     const err =
       mode === "signin"
@@ -133,6 +136,31 @@ export default function LoginPage() {
                 placeholder="At least 8 characters"
               />
             </label>
+            {mode === "signup" && (
+              <label className="block">
+                <span className="mb-1 block text-label-md text-on-surface-variant">
+                  Confirm password
+                </span>
+                <input
+                  type="password"
+                  required
+                  value={confirm}
+                  onChange={(e) => setConfirm(e.target.value)}
+                  autoComplete="new-password"
+                  className={`w-full rounded-lg border bg-white px-4 py-3 text-body-md focus:outline-none focus:ring-2 ${
+                    confirm && confirm !== password
+                      ? "border-rose-400 focus:border-rose-400 focus:ring-rose-200"
+                      : "border-outline-variant focus:border-secondary focus:ring-secondary/20"
+                  }`}
+                  placeholder="Repeat your password"
+                />
+                {confirm && confirm !== password && (
+                  <span className="mt-1 block text-caption text-rose-600">
+                    Passwords do not match yet.
+                  </span>
+                )}
+              </label>
+            )}
 
             {error && (
               <p className="flex items-start gap-2 rounded-lg bg-rose-50 p-3 text-caption text-rose-700">
@@ -160,6 +188,7 @@ export default function LoginPage() {
             <button
               onClick={() => {
                 setMode(mode === "signin" ? "signup" : "signin");
+                setConfirm("");
                 setError(null);
                 setNotice(null);
               }}
