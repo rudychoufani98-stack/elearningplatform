@@ -89,21 +89,8 @@ export default function LoginPage() {
             </span>
             <span className="text-headline-md font-bold">{platform.brand}</span>
           </div>
-          <div>
-            <p className="text-caption font-bold uppercase tracking-widest text-secondary-fixed">
-              {platform.center}
-            </p>
-            <h1 className="mt-2 text-headline-lg leading-tight">
-              {course.title}
-            </h1>
-            <p className="mt-3 max-w-sm text-body-md text-white/80">
-              Six interactive modules, real policies, games and a capstone
-              simulation — your ESG pathway starts here.
-            </p>
-          </div>
-          <p className="text-caption text-white/60">
-            {platform.series} · progress is saved to your account
-          </p>
+          <h1 className="text-headline-lg leading-tight">{course.title}</h1>
+          <p className="text-caption text-white/60">{platform.center}</p>
         </div>
 
         {/* Right: the form */}
@@ -117,11 +104,7 @@ export default function LoginPage() {
           <h2 className="text-headline-md text-primary">
             {mode === "signin" ? "Welcome back" : "Create your account"}
           </h2>
-          <p className="mb-stack-md mt-1 text-body-md text-on-surface-variant">
-            {mode === "signin"
-              ? "Sign in to continue your learning."
-              : "Your progress and certificates will be saved to this account."}
-          </p>
+          <div className="mb-stack-md" />
 
           <form onSubmit={submit} className="space-y-stack-md">
             {mode === "signup" && (
