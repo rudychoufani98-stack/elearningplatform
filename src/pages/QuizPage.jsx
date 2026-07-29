@@ -463,6 +463,8 @@ export default function QuizPage() {
             passed={passed}
             questions={deck}
             answers={answers}
+            nextModule={modules[modules.findIndex((m) => m.id === target.id) + 1]}
+            onNext={(m) => navigate(m.type === "capstone" ? "/capstone" : `/module/${m.id}`)}
             onReview={() => navigate("/course")}
             onRetake={retake}
           />
@@ -1082,6 +1084,8 @@ function ResultsCard({
   passed,
   questions = [],
   answers = [],
+  nextModule,
+  onNext,
   onReview,
   onRetake,
 }) {
@@ -1202,9 +1206,17 @@ function ResultsCard({
       <div className="flex flex-col justify-center gap-stack-md sm:flex-row">
         {passed ? (
           <>
+            {nextModule && (
+              <button
+                onClick={() => onNext(nextModule)}
+                className="flex items-center justify-center gap-2 bg-gradient-to-r from-primary-container to-[#1c3a63] px-8 py-3 text-label-md font-bold text-white transition-all hover:brightness-110 active:scale-95"
+              >
+                <MaterialIcon name="lock_open" /> Start {nextModule.code}: {nextModule.title.length > 22 ? nextModule.title.slice(0, 22) + "…" : nextModule.title}
+              </button>
+            )}
             <button
               onClick={onReview}
-              className="flex items-center justify-center gap-2 bg-primary px-8 py-3 text-label-md text-on-primary transition-transform hover:opacity-90 active:scale-95"
+              className="flex items-center justify-center gap-2 border border-primary px-8 py-3 text-label-md text-primary transition-colors hover:bg-surface-container-low"
             >
               <MaterialIcon name="menu_book" /> Back to course
             </button>

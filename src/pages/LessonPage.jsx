@@ -488,6 +488,25 @@ export default function LessonPage() {
             </div>
           )}
           <Discussion moduleId={module.id} accent={module.accent} />
+
+          {/* Bottom CTA — finish the module without scrolling back up */}
+          {module.status !== "completed" && (
+            <div className="mt-stack-lg rounded-xl bg-gradient-to-r from-primary-container to-[#1c3a63] p-stack-lg text-center text-white">
+              <p className="text-headline-md">Ready for step 3?</p>
+              <p className="mx-auto mt-1 max-w-md text-body-md text-white/80">
+                {module.type === "capstone"
+                  ? "Run the simulation — 10 good calls out of 12 keeps the financing flowing."
+                  : "Score 80% on the quiz to complete this module and unlock the next one."}
+              </p>
+              <button
+                onClick={() => navigate(module.type === "capstone" ? "/capstone" : `/quiz/${module.id}`)}
+                className="mt-stack-md inline-flex items-center gap-2 rounded-lg bg-secondary-container px-10 py-3.5 text-label-md font-bold text-on-secondary-container transition-transform hover:opacity-90 active:scale-95"
+              >
+                <MaterialIcon name={module.type === "capstone" ? "sports_esports" : "quiz"} />
+                {module.type === "capstone" ? "Launch the simulation" : "Take the quiz"}
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Sidebar: notes / transcript + progress */}
