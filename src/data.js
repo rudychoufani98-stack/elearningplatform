@@ -2396,23 +2396,6 @@ export const quizzes = {
         "tip": "You only offset what you couldn't avoid, minimise or restore."
       },
       {
-        "type": "multi",
-        "tag": "Select all",
-        "prompt": "Which of these are ENVIRONMENTAL impacts?",
-        "options": [
-          "Dust",
-          "Effluent to a stream",
-          "Unpaid wages",
-          "Clearing habitat"
-        ],
-        "correct": [
-          0,
-          1,
-          3
-        ],
-        "tip": "Unpaid wages is a social/labour impact."
-      },
-      {
         "tag": "Vulnerable",
         "prompt": "Vulnerable groups need…",
         "options": [
@@ -3665,18 +3648,6 @@ export const quizzes = {
         "tip": "Anyone affected must be able to raise concerns safely."
       },
       {
-        "tag": "Subcontractors",
-        "prompt": "Subcontractors are held to the contractor’s standards through…",
-        "options": [
-          "Contracts, training and audits",
-          "Nothing",
-          "A verbal reminder only",
-          "An exemption"
-        ],
-        "correct": 0,
-        "tip": "Standards are flowed down and checked."
-      },
-      {
         "tag": "Plans",
         "difficulty": "medium",
         "prompt": "Management plans (CESMP, waste, traffic) set out…",
@@ -3688,23 +3659,6 @@ export const quizzes = {
         ],
         "correct": 0,
         "tip": "They translate risks into controls."
-      },
-      {
-        "type": "multi",
-        "tag": "Select all",
-        "prompt": "Which of these are elements of the ESMS?",
-        "options": [
-          "Policy",
-          "Training",
-          "Grievance mechanism",
-          "Dividend policy"
-        ],
-        "correct": [
-          0,
-          1,
-          2
-        ],
-        "tip": "Dividends aren't part of the ESMS."
       },
       {
         "tag": "Governance",
@@ -4230,18 +4184,6 @@ export const quizzes = {
         "tip": "Site teams collect; managers compile."
       },
       {
-        "tag": "Review",
-        "prompt": "Lenders and the IESC review reports against…",
-        "options": [
-          "The loan's ESG conditions and ESAP",
-          "The weather",
-          "Competitor prices",
-          "Staff holidays"
-        ],
-        "correct": 0,
-        "tip": "Performance is checked against agreed conditions."
-      },
-      {
         "type": "multi",
         "tag": "Select all",
         "prompt": "Which of these are LEADING indicators?",
@@ -4267,18 +4209,6 @@ export const quizzes = {
         ],
         "correct": 0,
         "tip": "Garbage in, garbage out — data must be reliable."
-      },
-      {
-        "tag": "Loop",
-        "prompt": "KPIs ultimately feed back into…",
-        "options": [
-          "The ESMS and financing decisions",
-          "Nothing",
-          "Payroll only",
-          "Marketing only"
-        ],
-        "correct": 0,
-        "tip": "They close the loop back to the ESMS and lenders."
       },
       {
         "tag": "Data quality",
@@ -4330,18 +4260,6 @@ export const quizzes = {
         "tip": "LTIFR tracks lost-time injuries per hours worked."
       },
       {
-        "tag": "Leading",
-        "prompt": "Which is a LEADING (proactive) indicator?",
-        "options": [
-          "Near-misses reported / training hours",
-          "Number of injuries",
-          "Number of fatalities",
-          "LTIFR"
-        ],
-        "correct": 0,
-        "tip": "Leading indicators predict; lagging ones (injuries) look back."
-      },
-      {
         "type": "categorize",
         "tag": "Puzzle",
         "prompt": "Sort each indicator into leading or lagging.",
@@ -4375,18 +4293,6 @@ export const quizzes = {
         ],
         "hint": "Ask: does it happen BEFORE an incident (leading) or COUNT one that already happened (lagging)?",
         "tip": "Leading indicators are things you do before an incident; lagging ones count what already happened."
-      },
-      {
-        "tag": "Reporting",
-        "prompt": "The contractor’s ESG performance data reaches lenders mainly via…",
-        "options": [
-          "Self-monitoring reports",
-          "Newspaper adverts",
-          "Word of mouth",
-          "The company website"
-        ],
-        "correct": 0,
-        "tip": "Site data is compiled into self-monitoring reports."
       },
       {
         "tag": "Review",

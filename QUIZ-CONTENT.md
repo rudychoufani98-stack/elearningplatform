@@ -4,7 +4,7 @@ Pass mark: 80% on every module.
 
 ---
 
-## M1 — Understanding ESG in PPP construction (30 questions)
+## M1 — Understanding ESG in PPP construction (29 questions)
 
 **Q1 [myth/fact]** True or false: ESG stands for Environmental, Social and Governance.
 - [x] True
@@ -58,134 +58,127 @@ Pass mark: 80% on every module.
 - [ ] A KPI
 - Explanation: You only offset what you couldn't avoid, minimise or restore.
 
-**Q9 [multi]** Which of these are ENVIRONMENTAL impacts?
-- [x] Dust
-- [x] Effluent to a stream
-- [ ] Unpaid wages
-- [x] Clearing habitat
-- Explanation: Unpaid wages is a social/labour impact.
-
-**Q10 [choice]** Vulnerable groups need…
+**Q9 [choice]** Vulnerable groups need…
 - [x] Extra care, as they are least able to cope
 - [ ] No special attention
 - [ ] To be excluded
 - [ ] Higher wages than others
 - Explanation: Impacts hit vulnerable groups hardest.
 
-**Q11 [choice +photo]** The people who live around a site and feel its impacts are the…
+**Q10 [choice +photo]** The people who live around a site and feel its impacts are the…
 - [x] Host community
 - [ ] Lenders
 - [ ] Regulators
 - [ ] Shareholders
 - Explanation: The host community lives with the project every day.
 
-**Q12 [myth/fact]** True or false: good ESG can help the contractor win future work.
+**Q11 [myth/fact]** True or false: good ESG can help the contractor win future work.
 - [x] True
 - [ ] False
 - Explanation: Reputation and a clean ESG record win bids.
 
-**Q13 [choice]** Noise and traffic disturbing neighbours is mainly a…
+**Q12 [choice]** Noise and traffic disturbing neighbours is mainly a…
 - [x] Social / community impact
 - [ ] Governance issue
 - [ ] Financial risk
 - [ ] Cultural heritage issue
 - Explanation: It affects the surrounding people — social.
 
-**Q14 [choice +photo]** Whose job is ESG on site?
+**Q13 [choice +photo]** Whose job is ESG on site?
 - [x] Everyone's
 - [ ] Only the ESG team's
 - [ ] Only management's
 - [ ] Only the lender's
 - Explanation: Every role owns a piece of ESG.
 
-**Q15 [choice]** What does “ESG” stand for?
+**Q14 [choice]** What does “ESG” stand for?
 - [x] Environmental, Social and Governance
 - [ ] Engineering, Safety and Growth
 - [ ] Energy, Sustainability and Green
 - [ ] Ethics, Standards and Guidance
 - Explanation: ESG = Environmental, Social and Governance. On site, the Environmental and Social pillars are the ones you meet most.
 
-**Q16 [choice +photo]** Which of these is an ENVIRONMENTAL impact on a construction site?
+**Q15 [choice +photo]** Which of these is an ENVIRONMENTAL impact on a construction site?
 - [x] Dust from earthworks and haulage
 - [ ] Unpaid overtime
 - [ ] A land-compensation dispute
 - [ ] Harassment at the worker camp
 - Explanation: Dust affects air quality — an environmental impact. The others are social impacts.
 
-**Q17 [order]** Put the mitigation hierarchy in the correct order — most preferred first.
+**Q16 [order]** Put the mitigation hierarchy in the correct order — most preferred first.
 - Answer: Avoid → Minimise → Restore → Offset
 - Explanation: Always try to avoid the impact first; offsetting is the last resort.
 
-**Q18 [choice]** Concrete washout, camp wastewater and sediment run-off mainly threaten…
+**Q17 [choice]** Concrete washout, camp wastewater and sediment run-off mainly threaten…
 - [x] Water
 - [ ] Air
 - [ ] Biodiversity only
 - [ ] Cultural heritage
 - Explanation: These are effluents that pollute water if they are not controlled.
 
-**Q19 [choice]** What is the correct order of the mitigation hierarchy?
+**Q18 [choice]** What is the correct order of the mitigation hierarchy?
 - [x] Avoid → Minimise → Restore → Offset
 - [ ] Offset → Restore → Minimise → Avoid
 - [ ] Minimise → Avoid → Offset → Restore
 - [ ] Restore → Avoid → Offset → Minimise
 - Explanation: Always try to avoid first; offsetting is the last resort.
 
-**Q20 [choice]** “Vulnerable groups” are best described as…
+**Q19 [choice]** “Vulnerable groups” are best described as…
 - [x] People least able to cope with impacts, who need special attention
 - [ ] The project's senior managers
 - [ ] The lenders financing the project
 - [ ] The largest subcontractors
 - Explanation: Vulnerable groups need particular care because impacts hit them hardest.
 
-**Q21 [multi]** Which of these are ENVIRONMENTAL impacts?
+**Q20 [multi]** Which of these are ENVIRONMENTAL impacts?
 - [x] Dust from haulage
 - [x] Concrete washout into a stream
 - [ ] Unfair dismissal of a worker
 - [x] Clearing vegetation
 - Explanation: Dust, effluent and vegetation clearing are environmental. Unfair dismissal is a social impact.
 
-**Q22 [fillblank]** Complete the definition of ESG.
+**Q21 [fillblank]** Complete the definition of ESG.
 - Answers: Environmental, Social, Governance
 - Explanation: ESG = Environmental, Social and Governance.
 
-**Q23 [hotspot +photo]** Tap the spot showing an ENVIRONMENTAL (air) impact on this site.
+**Q22 [hotspot +photo]** Tap the spot showing an ENVIRONMENTAL (air) impact on this site.
 - Correct spot: Dust from earthworks
 - Explanation: Dust from earthworks harms air quality — an environmental impact.
 
-**Q24 [choice +photo]** SOLVE THE CASE: dust from your haul trucks is drifting over the homes along this road. Applying the mitigation hierarchy, what do you consider FIRST?
+**Q23 [choice +photo]** SOLVE THE CASE: dust from your haul trucks is drifting over the homes along this road. Applying the mitigation hierarchy, what do you consider FIRST?
 - [x] Whether the haul route can avoid the homes entirely
 - [ ] Offering compensation to the residents
 - [ ] Planting trees somewhere else as an offset
 - [ ] Nothing — dust is normal on projects
 - Explanation: AVOID comes first: can the route bypass the homes? Only then minimise (wet the road, slow the trucks), restore, and offset last.
 
-**Q25 [choice +photo]** SOLVE THE CASE: community members walk this route daily — the same road your trucks now use. What is the right response?
+**Q24 [choice +photo]** SOLVE THE CASE: community members walk this route daily — the same road your trucks now use. What is the right response?
 - [x] Speed limits, flagmen and community engagement about safe timings
 - [ ] Keep normal truck speeds — schedule is priority
 - [ ] Ban residents from using the road
 - [ ] Wait until an accident happens, then react
 - Explanation: Community health & safety: control the hazard (speed, flagmen, timings) and engage the community — never shift the burden onto them.
 
-**Q26 [order]** You notice a leaking fuel drum on site. Put your response in the right order.
+**Q25 [order]** You notice a leaking fuel drum on site. Put your response in the right order.
 - Answer: Spot — notice the leak → Report — raise it through site channels → Mitigate — contain it with the spill kit → Share — the lesson goes into the toolbox talk
 - Explanation: Spot → Report → Mitigate → Share: every worker's ESG routine.
 
-**Q27 [fillblank]** Complete the stakeholder rule.
+**Q26 [fillblank]** Complete the stakeholder rule.
 - Answers: stakeholder, vulnerable
 - Explanation: Stakeholders = anyone affected or able to affect the project; vulnerable groups are least able to cope.
 
-**Q28 [categorize]** Sort each impact: Environmental or Social?
+**Q27 [categorize]** Sort each impact: Environmental or Social?
 - Fuel spill into the soil → Environmental
 - A land-compensation dispute → Social
 - Generator exhaust fumes → Environmental
 - In-migration pressure on the village → Social
 - Explanation: Spills and fumes hit the environment; land disputes and in-migration hit people.
 
-**Q29 [diagramtap]** The mitigation hierarchy. Tap the step where you COMPENSATE for what could not be prevented or repaired.
+**Q28 [diagramtap]** The mitigation hierarchy. Tap the step where you COMPENSATE for what could not be prevented or repaired.
 - Boxes: Avoid → Minimise → Restore → Offset · Correct: Offset
 - Explanation: Offset = compensating for residual impacts — always the final step, never the first.
 
-**Q30 [connect]** Link each ESG pillar to its example.
+**Q29 [connect]** Link each ESG pillar to its example.
 - Environmental → Concrete washout reaching a stream
 - Social → Worker-camp living conditions
 - Governance → Refusing a facilitation payment
@@ -554,7 +547,7 @@ Pass mark: 80% on every module.
 
 ---
 
-## M4 — The ESMS (36 questions)
+## M4 — The ESMS (34 questions)
 
 **Q1 [myth/fact]** True or false: the ESMS only works if it is lived on site, not just filed.
 - [x] True
@@ -568,217 +561,203 @@ Pass mark: 80% on every module.
 - [ ] Paid to use
 - Explanation: Anyone affected must be able to raise concerns safely.
 
-**Q3 [choice]** Subcontractors are held to the contractor’s standards through…
-- [x] Contracts, training and audits
-- [ ] Nothing
-- [ ] A verbal reminder only
-- [ ] An exemption
-- Explanation: Standards are flowed down and checked.
-
-**Q4 [choice]** Management plans (CESMP, waste, traffic) set out…
+**Q3 [choice]** Management plans (CESMP, waste, traffic) set out…
 - [x] How each risk is controlled
 - [ ] The project budget
 - [ ] Only the schedule
 - [ ] The canteen menu
 - Explanation: They translate risks into controls.
 
-**Q5 [multi]** Which of these are elements of the ESMS?
-- [x] Policy
-- [x] Training
-- [x] Grievance mechanism
-- [ ] Dividend policy
-- Explanation: Dividends aren't part of the ESMS.
-
-**Q6 [choice]** Who is ultimately accountable for ESG on the project?
+**Q4 [choice]** Who is ultimately accountable for ESG on the project?
 - [x] Top management
 - [ ] The newest worker
 - [ ] The community
 - [ ] The bank
 - Explanation: Accountability sits at the top.
 
-**Q7 [myth/fact]** True or false: it's acceptable to retaliate against a worker who raises a minor grievance.
+**Q5 [myth/fact]** True or false: it's acceptable to retaliate against a worker who raises a minor grievance.
 - [ ] True
 - [x] False
 - Explanation: Never — retaliation destroys the mechanism and breaches the Code of Conduct.
 
-**Q8 [choice]** Emergency preparedness covers…
+**Q6 [choice]** Emergency preparedness covers…
 - [x] Plans and drills for incidents like spills or fires
 - [ ] Payroll
 - [ ] Marketing
 - [ ] Sales targets
 - Explanation: It readies the team for accidents and emergencies.
 
-**Q9 [choice +photo]** ESMS training includes…
+**Q7 [choice +photo]** ESMS training includes…
 - [x] Inductions and toolbox talks
 - [ ] Only a final exam
 - [ ] Nothing
 - [ ] Managers only
 - Explanation: Everyone is trained for their role.
 
-**Q10 [choice]** The overall aim of running the ESMS on PDCA is…
+**Q8 [choice]** The overall aim of running the ESMS on PDCA is…
 - [x] Continual improvement
 - [ ] To eliminate reporting
 - [ ] To maximise output only
 - [ ] A one-time audit
 - Explanation: PDCA keeps performance improving.
 
-**Q11 [myth/fact]** True or false: subcontractors are exempt from the contractor’s ESG rules.
+**Q9 [myth/fact]** True or false: subcontractors are exempt from the contractor’s ESG rules.
 - [ ] True
 - [x] False
 - Explanation: They must meet the same standards.
 
-**Q12 [choice +photo]** The ESMS is…
+**Q10 [choice +photo]** The ESMS is…
 - [x] The system the contractor uses to manage ESG in daily practice
 - [ ] A one-off report
 - [ ] An accounting ledger
 - [ ] A marketing brochure
 - Explanation: Policy, plans, procedures and roles — run on Plan-Do-Check-Act.
 
-**Q13 [choice]** A RACI chart clarifies…
+**Q11 [choice]** A RACI chart clarifies…
 - [x] Who is Responsible, Accountable, Consulted and Informed
 - [ ] The project budget
 - [ ] The site layout
 - [ ] The delivery schedule
 - Explanation: RACI assigns clear ownership for each ESG activity.
 
-**Q14 [choice]** A grievance mechanism lets workers and communities…
+**Q12 [choice]** A grievance mechanism lets workers and communities…
 - [x] Raise concerns safely and have them resolved, without retaliation
 - [ ] Buy company shares
 - [ ] Skip required training
 - [ ] Set their own pay
 - Explanation: It must be accessible and retaliation-free.
 
-**Q15 [choice]** How are subcontractors held to the contractor’s ESG standards?
+**Q13 [choice]** How are subcontractors held to the contractor’s ESG standards?
 - [x] Flowed down through contracts, training and audits
 - [ ] They are exempt
 - [ ] Only by a verbal reminder
 - [ ] They are not
 - Explanation: Their conduct is the contractor’s responsibility.
 
-**Q16 [choice]** The ESMS continually improves through which cycle?
+**Q14 [choice]** The ESMS continually improves through which cycle?
 - [x] Plan – Do – Check – Act
 - [ ] Buy – Build – Sell
 - [ ] Start – Stop
 - [ ] Plan – Approve – Forget
 - Explanation: PDCA turns the ESMS into a system that keeps getting better.
 
-**Q17 [multi]** Which of these are parts of the ESMS?
+**Q15 [multi]** Which of these are parts of the ESMS?
 - [x] Management plans
 - [x] Grievance mechanism
 - [x] Training
 - [ ] The company's dividend policy
 - Explanation: Plans, grievances and training are ESMS elements; dividends are not.
 
-**Q18 [order]** Order the PDCA improvement cycle.
+**Q16 [order]** Order the PDCA improvement cycle.
 - Answer: Plan → Do → Check → Act
 - Explanation: Plan it, do it, check it, then act on what you learned.
 
-**Q19 [fillblank]** Complete the improvement cycle.
+**Q17 [fillblank]** Complete the improvement cycle.
 - Answers: Plan, Check
 - Explanation: Plan – Do – Check – Act (PDCA) drives continual improvement.
 
-**Q20 [choice +photo]** SOLVE THE CASE: a worker on this site is told to enter an unshored trench and refuses because it looks unsafe. Under the OHS policy, the worker is…
+**Q18 [choice +photo]** SOLVE THE CASE: a worker on this site is told to enter an unshored trench and refuses because it looks unsafe. Under the OHS policy, the worker is…
 - [x] Right — every worker may stop work under dangerous conditions, and management must address it
 - [ ] Wrong — only supervisors can stop work
 - [ ] Wrong — refusing work is always misconduct
 - [ ] Right, but he should be sent home unpaid
 - Explanation: The right to stop unsafe work belongs to every worker — management must promptly address the concern, never punish it.
 
-**Q21 [choice +photo]** SOLVE THE CASE: these community members are upset about night-time noise and want answers. The correct channel is…
+**Q19 [choice +photo]** SOLVE THE CASE: these community members are upset about night-time noise and want answers. The correct channel is…
 - [x] The grievance mechanism — register it, acknowledge, investigate, respond and close
 - [ ] A quiet cash payment to the loudest person
 - [ ] Ignore them — they're not employees
 - [ ] Tell security to keep them away
 - Explanation: Community complaints go through the grievance mechanism — registered, acknowledged, investigated, resolved, no retaliation.
 
-**Q22 [order]** Put the grievance steps in the correct order.
+**Q20 [order]** Put the grievance steps in the correct order.
 - Answer: Receive & register the complaint → Acknowledge it to the person → Investigate the facts → Resolve, respond and close
 - Explanation: Register → acknowledge → investigate → resolve & close — inside the target window, with no retaliation.
 
-**Q23 [fillblank]** Complete the site rules.
+**Q21 [fillblank]** Complete the site rules.
 - Answers: 0.00, 50%
 - Explanation: BAC 0.00 — zero tolerance; local hiring target ≥ 50% of the workforce.
 
-**Q24 [categorize]** Sort each situation into the RACI letter that fits the person described.
+**Q22 [categorize]** Sort each situation into the RACI letter that fits the person described.
 - HSE supervisor doing the daily inspection → Responsible (does it)
 - Project director signing the report → Accountable (answers for it)
 - Community officer logging a grievance → Responsible (does it)
 - Managing Director owning the ESG policy → Accountable (answers for it)
 - Explanation: R does the task; A owns the result — exactly one A per activity.
 
-**Q25 [multi]** Which PPE is mandatory for EVERYONE on site, every day?
+**Q23 [multi]** Which PPE is mandatory for EVERYONE on site, every day?
 - [x] Hard hat
 - [x] Hi-vis vest
 - [x] Safety boots
 - [ ] A necktie
 - Explanation: Hard hat, hi-vis and safety boots are the everyday minimum; gloves and eye protection are added per task.
 
-**Q26 [myth/fact]** True or false: PPE alone is enough for working at height.
+**Q24 [myth/fact]** True or false: PPE alone is enough for working at height.
 - [ ] True
 - [x] False
 - Explanation: Myth — at height you also need a harness clipped to an anchor point or guardrails, an inspected platform, and a permit to work.
 
-**Q27 [choice +photo]** SOLVE THE CASE: this crew is about to fix roof tiles. They have hard hats and hi-vis — what must ALSO be true before the first tile moves?
+**Q25 [choice +photo]** SOLVE THE CASE: this crew is about to fix roof tiles. They have hard hats and hi-vis — what must ALSO be true before the first tile moves?
 - [x] Harness anchored (or edge protection), an inspected tagged platform, and a permit to work at height
 - [ ] Nothing — hard hats cover it
 - [ ] Only a verbal OK from the foreman
 - [ ] They should work faster to spend less time at height
 - Explanation: Height work demands fall protection (harness/guardrails), an inspected platform and a permit — no anchor, no inspection, no work.
 
-**Q28 [diagramtap]** The PDCA loop. Tap the step where you MEASURE whether the plan actually worked.
+**Q26 [diagramtap]** The PDCA loop. Tap the step where you MEASURE whether the plan actually worked.
 - Boxes: Plan → Do → Check → Act · Correct: Check
 - Explanation: Check = measure performance against the plan; Act then fixes what Check found.
 
-**Q29 [connect]** Link each policy to its headline rule.
+**Q27 [connect]** Link each policy to its headline rule.
 - OHS policy → Any worker may stop unsafe work
 - Alcohol & drugs → BAC 0.00 — zero tolerance
 - Subcontractor policy → Target at least 50% local hiring
 - GBVSH policy → Zero tolerance, confidential reporting
 - Explanation: Stop-work right, zero alcohol, 50% local, zero tolerance for GBVSH.
 
-**Q30 [choice]** A worker sees a dangerous condition. Under the OHS policy they may…
+**Q28 [choice]** A worker sees a dangerous condition. Under the OHS policy they may…
 - [x] Stop work immediately — it is their right
 - [ ] Keep working and mention it next week
 - [ ] Only stop if a manager agrees first
 - [ ] Never stop work
 - Explanation: Every worker has the right to stop work under dangerous conditions; management must respond promptly.
 
-**Q31 [choice]** The HR policy caps working time at…
+**Q29 [choice]** The HR policy caps working time at…
 - [x] 48 regular + 12 overtime hours a week, with 1 rest day in 7
 - [ ] 60 regular hours, no rest days
 - [ ] 40 hours with unlimited overtime
 - [ ] No limit if the project is late
 - Explanation: Max 48 regular + 12 overtime hours per week, and at least one rest day every seven days.
 
-**Q32 [choice]** The Blood Alcohol Concentration (BAC) allowed on site is…
+**Q30 [choice]** The Blood Alcohol Concentration (BAC) allowed on site is…
 - [x] 0.00 — zero tolerance
 - [ ] 0.05
 - [ ] 0.08
 - [ ] Whatever local law allows
 - Explanation: BAC 0.00 is required on site; 0.01 or higher means immediate removal from the project.
 
-**Q33 [choice]** The policy on gender-based violence and sexual harassment is…
+**Q31 [choice]** The policy on gender-based violence and sexual harassment is…
 - [x] Zero tolerance — with training, confidential reporting and survivor support
 - [ ] Handled informally between colleagues
 - [ ] Only for managers
 - [ ] Only investigated if there are witnesses
 - Explanation: Zero tolerance: mandatory training, confidential channels, survivor support, no retaliation.
 
-**Q34 [choice]** The subcontractor policy sets a local employment target of at least…
+**Q32 [choice]** The subcontractor policy sets a local employment target of at least…
 - [x] 50%
 - [ ] 5%
 - [ ] 10%
 - [ ] 90%
 - Explanation: Subcontractors must target at least 50% local employment, with commitments to female participation.
 
-**Q35 [choice]** Under the anti-corruption and AML policies, which payment is acceptable?
+**Q33 [choice]** Under the anti-corruption and AML policies, which payment is acceptable?
 - [x] A documented bank transfer to a screened supplier
 - [ ] A small cash 'facilitation payment' to speed a permit
 - [ ] A generous gift to win a contract
 - [ ] A payment to a sanctioned entity, if discreet
 - Explanation: No bribes, no facilitation payments, no cash — only traceable payments to screened counterparties.
 
-**Q36 [multi]** Which of these are real rules from the ESMS policy suite?
+**Q34 [multi]** Which of these are real rules from the ESMS policy suite?
 - [x] Right to stop unsafe work
 - [x] BAC 0.00 on site
 - [x] At least one rest day every 7 days
@@ -787,7 +766,7 @@ Pass mark: 80% on every module.
 
 ---
 
-## M5 — KPIs and reporting (25 questions)
+## M5 — KPIs and reporting (21 questions)
 
 **Q1 [myth/fact]** True or false: what gets measured gets managed.
 - [x] True
@@ -815,133 +794,105 @@ Pass mark: 80% on every module.
 - [ ] No one
 - Explanation: Site teams collect; managers compile.
 
-**Q5 [choice]** Lenders and the IESC review reports against…
-- [x] The loan's ESG conditions and ESAP
-- [ ] The weather
-- [ ] Competitor prices
-- [ ] Staff holidays
-- Explanation: Performance is checked against agreed conditions.
-
-**Q6 [multi]** Which of these are LEADING indicators?
+**Q5 [multi]** Which of these are LEADING indicators?
 - [x] Near-misses reported
 - [x] Training hours
 - [x] Inspections completed
 - [ ] Lost-time injuries
 - Explanation: Lost-time injuries are lagging.
 
-**Q7 [myth/fact]** True or false: unreliable KPI data erodes lender trust.
+**Q6 [myth/fact]** True or false: unreliable KPI data erodes lender trust.
 - [x] True
 - [ ] False
 - Explanation: Garbage in, garbage out — data must be reliable.
 
-**Q8 [choice]** KPIs ultimately feed back into…
-- [x] The ESMS and financing decisions
-- [ ] Nothing
-- [ ] Payroll only
-- [ ] Marketing only
-- Explanation: They close the loop back to the ESMS and lenders.
-
-**Q9 [choice]** Good ESG data must be…
+**Q7 [choice]** Good ESG data must be…
 - [x] Accurate, timely and verifiable
 - [ ] Vague and late
 - [ ] Hidden from the IESC
 - [ ] Estimated once a year
 - Explanation: The IESC must be able to check it.
 
-**Q10 [choice]** The reporting chain STARTS with…
+**Q8 [choice]** The reporting chain STARTS with…
 - [x] Site teams collecting the data
 - [ ] The lender
 - [ ] The IESC
 - [ ] The media
 - Explanation: Data starts at the source — the site.
 
-**Q11 [choice]** TRIR, spills and grievances-closed are examples of…
+**Q9 [choice]** TRIR, spills and grievances-closed are examples of…
 - [x] ESG KPIs
 - [ ] Tax codes
 - [ ] Marketing metrics
 - [ ] Loan terms
 - Explanation: They measure ESG performance.
 
-**Q12 [choice]** Which is a common SAFETY KPI?
+**Q10 [choice]** Which is a common SAFETY KPI?
 - [x] LTIFR (lost-time injury frequency rate)
 - [ ] Gross profit margin
 - [ ] Website visits
 - [ ] Office rent
 - Explanation: LTIFR tracks lost-time injuries per hours worked.
 
-**Q13 [choice]** Which is a LEADING (proactive) indicator?
-- [x] Near-misses reported / training hours
-- [ ] Number of injuries
-- [ ] Number of fatalities
-- [ ] LTIFR
-- Explanation: Leading indicators predict; lagging ones (injuries) look back.
-
-**Q14 [categorize]** Sort each indicator into leading or lagging.
+**Q11 [categorize]** Sort each indicator into leading or lagging.
 - Near-misses reported → Leading (predicts)
 - Safety training hours → Leading (predicts)
 - Lost-time injuries → Lagging (looks back)
 - Number of spills → Lagging (looks back)
 - Explanation: Leading indicators are things you do before an incident; lagging ones count what already happened.
 
-**Q15 [choice]** The contractor’s ESG performance data reaches lenders mainly via…
-- [x] Self-monitoring reports
-- [ ] Newspaper adverts
-- [ ] Word of mouth
-- [ ] The company website
-- Explanation: Site data is compiled into self-monitoring reports.
-
-**Q16 [choice]** Lenders and the IESC review the reports against…
+**Q12 [choice]** Lenders and the IESC review the reports against…
 - [x] The loan's ESG conditions and ESAP progress
 - [ ] The weather
 - [ ] Competitor prices
 - [ ] Staff holidays
 - Explanation: They check performance against the agreed conditions.
 
-**Q17 [choice]** KPIs ultimately feed back into…
+**Q13 [choice]** KPIs ultimately feed back into…
 - [x] The ESMS and financing decisions (continuous improvement)
 - [ ] Nothing
 - [ ] Only payroll
 - [ ] Marketing only
 - Explanation: KPIs close the loop back to Module 3 and the ESMS.
 
-**Q18 [fillblank]** Complete the indicators sentence.
+**Q14 [fillblank]** Complete the indicators sentence.
 - Answers: Leading, lagging
 - Explanation: Leading indicators are proactive; lagging indicators look back at what happened.
 
-**Q19 [choice +photo]** SOLVE THE CASE: trucks pass this street daily. Traffic complaints were 2 in May, 5 in June, 9 in July — all answered on time. What is the KPI telling you?
+**Q15 [choice +photo]** SOLVE THE CASE: trucks pass this street daily. Traffic complaints were 2 in May, 5 in June, 9 in July — all answered on time. What is the KPI telling you?
 - [x] A worsening trend — act now, even though each complaint was handled
 - [ ] Nothing — every complaint was closed on time
 - [ ] Good news — people enjoy complaining
 - [ ] The data must be wrong
 - Explanation: The TREND is the signal: 2→5→9 is a red flag even with perfect closure — fix the cause (speeds, routes, timings), not just the complaints.
 
-**Q20 [choice +photo]** SOLVE THE CASE: this crew reported 12 near-misses this month and zero injuries. The neighbouring crew reported zero of each. Who worries you more?
+**Q16 [choice +photo]** SOLVE THE CASE: this crew reported 12 near-misses this month and zero injuries. The neighbouring crew reported zero of each. Who worries you more?
 - [x] The crew reporting nothing — silence usually means non-reporting, not safety
 - [ ] The crew with 12 near-misses — they're clearly dangerous
 - [ ] Neither — zero injuries is all that matters
 - [ ] Both equally
 - Explanation: High near-miss reporting with no injuries = a crew that sees and reports risk. Zero-zero usually means nobody is reporting.
 
-**Q21 [order]** Put the reporting chain in order — from site to lender.
+**Q17 [order]** Put the reporting chain in order — from site to lender.
 - Answer: Site teams fill the daily forms → The ESG/HSE manager checks and compiles → The project director signs off → Lenders and the IESC review the report
 - Explanation: Form → compile → sign → review: the same number travels the whole chain, so it must be right at the source.
 
-**Q22 [fillblank]** Complete the LTIFR formula.
+**Q18 [fillblank]** Complete the LTIFR formula.
 - Answers: 1,000,000, hours worked
 - Explanation: LTIFR = lost-time injuries × 1,000,000 ÷ hours worked — size-adjusted so projects can be compared.
 
-**Q23 [categorize]** Sort each number into the KPI family it belongs to.
+**Q19 [categorize]** Sort each number into the KPI family it belongs to.
 - LTIFR → Safety
 - Grievances closed on time → Social
 - Toolbox talks held → Safety
 - Local employment % → Social
 - Explanation: LTIFR and toolbox talks are safety KPIs; grievance closure and local employment are social KPIs.
 
-**Q24 [diagramtap]** The reporting chain. Tap the link where the data is VERIFIED for the lenders.
+**Q20 [diagramtap]** The reporting chain. Tap the link where the data is VERIFIED for the lenders.
 - Boxes: Site forms → ESG manager compiles → Director signs → IESC verifies · Correct: IESC verifies
 - Explanation: The IESC independently verifies the reports on the lenders' behalf — the last link before the banks rely on the numbers.
 
-**Q25 [connect]** Link each KPI to what it tells you.
+**Q21 [connect]** Link each KPI to what it tells you.
 - LTIFR → Lost-time injuries per million hours
 - Near-misses reported → Leading signal — eyes are open
 - Grievances closed on time → The mechanism is working
