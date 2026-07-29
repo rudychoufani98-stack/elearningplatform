@@ -15,11 +15,19 @@ export default function LoginPage() {
   const [error, setError] = useState(null);
   const [notice, setNotice] = useState(null);
   const [busy, setBusy] = useState(false);
+  const [fails, setFails] = useState(0);
+  const [lockUntil, setLockUntil] = useState(() =>
+    Number(localStorage.getItem("skk-login-lock") || 0)
+  );
 
   async function submit(e) {
     e.preventDefault();
     setError(null);
     setNotice(null);
+    if (mode === "signin" && Date.now() < lockUntil)
+      return setError(
+        `Too many failed attempts. Try again in ${Math.ceil((lockUntil - Date.now()) / 60000)} minute(s).`
+      );
     if (mode === "signup" && fullName.trim().length < 2)
       return setError("Please enter your full name.");
     if (mode === "signup") {
@@ -40,7 +48,22 @@ export default function LoginPage() {
         ? await signIn(email.trim(), password)
         : await signUp(email.trim(), password, fullName.trim());
     setBusy(false);
-    if (err) return setError(err);
+    if (err) {
+      if (mode === "signin") {
+        const n = fails + 1;
+        if (n >= 5) {
+          const until = Date.now() + 2 * 60 * 1000;
+          setLockUntil(until);
+          setFails(0);
+          try { localStorage.setItem("skk-login-lock", String(until)); } catch {}
+          return setError("Too many failed attempts — sign-in is locked for 2 minutes.");
+        }
+        setFails(n);
+        return setError(`${err} (${5 - n} attempts left before a temporary lock)`);
+      }
+      return setError(err);
+    }
+    setFails(0);
     if (mode === "signup")
       setNotice(
         "Account created. If email confirmation is enabled, check your inbox — otherwise you are now signed in."
