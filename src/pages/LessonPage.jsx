@@ -242,7 +242,12 @@ export default function LessonPage() {
             </div>
           )}
 
-          <div id="lesson-notes" className="mt-stack-lg scroll-mt-24 overflow-hidden rounded-xl border border-outline-variant bg-surface-container-lowest">
+          <div className="mt-stack-lg flex items-center gap-2">
+            <span className="rounded-full bg-primary-container px-3 py-1 text-caption font-bold uppercase tracking-widest text-white">Step 1</span>
+            <span className="text-label-md font-bold text-primary">Read the lesson first</span>
+            <MaterialIcon name="arrow_downward" className="text-[18px] text-secondary" />
+          </div>
+          <div id="lesson-notes" className="mt-2 scroll-mt-24 overflow-hidden rounded-xl border border-outline-variant bg-surface-container-lowest">
             <div className="flex border-b border-outline-variant">
               <button
                 onClick={() => setTab("notes")}
@@ -470,6 +475,10 @@ export default function LessonPage() {
           {/* Practice & apply — interactive exercises */}
           {module.activities?.length > 0 && (
             <div id="practice" className="mt-stack-lg scroll-mt-24 rounded-xl border border-outline-variant bg-surface-container-lowest p-stack-lg">
+              <div className="mb-1 flex items-center gap-2">
+                <span className="rounded-full bg-primary-container px-3 py-1 text-caption font-bold uppercase tracking-widest text-white">Step 2</span>
+                <span className="text-label-md font-bold text-primary">Practice with the games — not graded</span>
+              </div>
               <h2 className="mb-stack-md text-headline-md text-primary">
                 Practice &amp; apply
               </h2>
@@ -492,7 +501,8 @@ export default function LessonPage() {
           {/* Bottom CTA — finish the module without scrolling back up */}
           {module.status !== "completed" && (
             <div className="mt-stack-lg rounded-xl bg-gradient-to-r from-primary-container to-[#1c3a63] p-stack-lg text-center text-white">
-              <p className="text-headline-md">Ready for step 3?</p>
+              <span className="rounded-full bg-white/15 px-3 py-1 text-caption font-bold uppercase tracking-widest text-secondary-fixed">Step 3</span>
+              <p className="mt-2 text-headline-md">{module.type === "capstone" ? "Run the simulation" : "Take the quiz"}</p>
               <p className="mx-auto mt-1 max-w-md text-body-md text-white/80">
                 {module.type === "capstone"
                   ? "Run the simulation — 10 good calls out of 12 keeps the financing flowing."
