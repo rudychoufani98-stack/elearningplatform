@@ -16,6 +16,14 @@ export default function DashboardPage() {
 
   // Drives mount animations (bars grow, ring fills).
   const [mounted, setMounted] = useState(false);
+  const [welcomed, setWelcomed] = useState(() => {
+    try { return localStorage.getItem("skk-welcome-v1") === "1"; } catch { return true; }
+  });
+  function dismissWelcome(go) {
+    try { localStorage.setItem("skk-welcome-v1", "1"); } catch {}
+    setWelcomed(true);
+    if (go) navigate("/module/m1");
+  }
   useEffect(() => {
     const t = requestAnimationFrame(() => setMounted(true));
     return () => cancelAnimationFrame(t);
@@ -36,6 +44,45 @@ export default function DashboardPage() {
 
   return (
     <div className="mx-auto max-w-[1280px] px-margin-mobile py-stack-lg md:px-margin-desktop">
+      {!welcomed && progress.completed === 0 && (
+        <div className="fixed inset-0 z-[90] flex items-center justify-center bg-[#0d1c32]/70 px-6 backdrop-blur-sm">
+          <div className="animate-pop w-full max-w-md overflow-hidden rounded-2xl bg-white text-center shadow-2xl">
+            <div className="bg-gradient-to-br from-primary-container to-[#1c3a63] px-stack-lg py-stack-lg text-white">
+              <MaterialIcon name="school" fill className="text-5xl text-secondary-fixed" />
+              <h2 className="mt-2 text-headline-md">Welcome to your ESG pathway</h2>
+              <p className="mt-1 text-body-md text-white/80">
+                6 modules · games &amp; quizzes · one certificate
+              </p>
+            </div>
+            <div className="space-y-3 p-stack-lg text-left">
+              {[
+                ["menu_book", "Read each short, illustrated lesson"],
+                ["extension", "Play the practice games — they don't count"],
+                ["quiz", "Pass the quiz (80%) to unlock the next module"],
+              ].map(([ic, t], i) => (
+                <p key={i} className="flex items-center gap-3 text-body-md text-on-surface">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-surface-container-low">
+                    <MaterialIcon name={ic} className="text-[18px] text-secondary" />
+                  </span>
+                  {t}
+                </p>
+              ))}
+              <button
+                onClick={() => dismissWelcome(true)}
+                className="mt-2 flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-primary-container to-[#1c3a63] py-3.5 text-label-md font-bold text-white transition-all hover:brightness-110 active:scale-[0.98]"
+              >
+                Start Module 1 <MaterialIcon name="arrow_forward" />
+              </button>
+              <button
+                onClick={() => dismissWelcome(false)}
+                className="w-full py-1 text-caption text-on-surface-variant hover:text-primary"
+              >
+                I'll look around first
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       {/* Welcome */}
       <section className="mb-stack-lg animate-fade-up">
         <h1 className="mb-2 text-headline-lg text-primary md:text-headline-xl">

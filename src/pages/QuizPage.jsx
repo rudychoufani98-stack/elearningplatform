@@ -222,7 +222,7 @@ export default function QuizPage() {
   const [selLeft, setSelLeft] = useState(null); // connect: selected left item
   const [showHint, setShowHint] = useState(false);
   const [revealed, setRevealed] = useState(false);
-  const [phase, setPhase] = useState("quiz"); // "quiz" | "results"
+  const [phase, setPhase] = useState("intro"); // "intro" | "quiz" | "results"
   const [timeLeft, setTimeLeft] = useState(15 * 60);
   const [confirmExit, setConfirmExit] = useState(null); // route to leave to, or null
 
@@ -479,7 +479,45 @@ export default function QuizPage() {
       )}
 
       <main className="flex min-h-screen flex-col items-center px-margin-mobile pb-margin-desktop pt-32 md:px-margin-desktop">
-        {phase === "results" ? (
+        {phase === "intro" ? (
+          <div className="animate-pop w-full max-w-[560px] rounded-xl border border-outline-variant bg-surface-container-lowest p-stack-lg text-center shadow-xl md:p-12">
+            <span
+              className="mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-2xl text-white"
+              style={{ background: target.accent ?? "#0d1c32" }}
+            >
+              <MaterialIcon name={target.icon} className="text-3xl" />
+            </span>
+            <p className="text-caption font-bold uppercase tracking-widest text-secondary">
+              {target.code} · Quiz
+            </p>
+            <h1 className="mt-1 text-headline-md text-primary">{target.title}</h1>
+            <div className="mx-auto mt-stack-md grid max-w-sm grid-cols-3 gap-2 text-center">
+              <div className="rounded-lg bg-surface-container-low py-3">
+                <p className="text-headline-md font-bold text-primary">{total}</p>
+                <p className="text-caption text-on-surface-variant">questions</p>
+              </div>
+              <div className="rounded-lg bg-surface-container-low py-3">
+                <p className="text-headline-md font-bold text-primary">80%</p>
+                <p className="text-caption text-on-surface-variant">to pass</p>
+              </div>
+              <div className="rounded-lg bg-surface-container-low py-3">
+                <p className="text-headline-md font-bold text-primary">15</p>
+                <p className="text-caption text-on-surface-variant">minutes</p>
+              </div>
+            </div>
+            <ul className="mx-auto mt-stack-md max-w-sm space-y-1.5 text-left">
+              <li className="flex items-center gap-2 text-caption text-on-surface-variant"><MaterialIcon name="extension" className="text-[16px] text-secondary" /> A mix of games: puzzles, diagrams, photos and cards</li>
+              <li className="flex items-center gap-2 text-caption text-on-surface-variant"><MaterialIcon name="lightbulb" className="text-[16px] text-secondary" /> Hints available on the tricky ones</li>
+              <li className="flex items-center gap-2 text-caption text-on-surface-variant"><MaterialIcon name="refresh" className="text-[16px] text-secondary" /> Not 80%? You can retake it as many times as you like</li>
+            </ul>
+            <button
+              onClick={() => { setPhase("quiz"); setTimeLeft(15 * 60); }}
+              className="mt-stack-lg inline-flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-primary-container to-[#1c3a63] py-3.5 text-label-md font-bold text-white transition-all hover:brightness-110 active:scale-[0.98] sm:w-auto sm:px-14"
+            >
+              I'm ready — start <MaterialIcon name="arrow_forward" />
+            </button>
+          </div>
+        ) : phase === "results" ? (
           <ResultsCard
             correct={correctCount}
             total={total}
