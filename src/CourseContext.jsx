@@ -185,7 +185,7 @@ export function useCourse() {
 
 // DEV SWITCH: while the course content is being built and tested, every
 // module is open. Set back to false before rollout to restore path-locking.
-const UNLOCK_ALL = true;
+const UNLOCK_ALL = false;
 
 // A module is unlocked if it's already started/finished, it's first in the
 // path, or the module immediately before it in the path is completed.
