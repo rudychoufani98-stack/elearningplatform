@@ -156,17 +156,18 @@ export default function CoursePage() {
                       <p className="text-caption text-on-surface-variant">
                         {m.summary}
                       </p>
-                      {isCurrent && (
-                        <div className="mt-4 flex items-center gap-2">
+                      {unlocked && (
+                        <div className="mt-3 flex flex-wrap items-center gap-2">
                           <button
                             onClick={() => navigate(`/module/${m.id}`)}
-                            className="bg-primary px-4 py-1 text-caption font-bold text-on-primary"
+                            className="flex items-center gap-1.5 rounded-lg bg-primary px-4 py-1.5 text-caption font-bold text-on-primary transition-opacity hover:opacity-90"
                           >
-                            RESUME
+                            <MaterialIcon name="menu_book" className="text-[14px]" />
+                            {m.status === "completed" ? "REVIEW THE LESSON" : "READ THE LESSON"}
                           </button>
-                          {m.progress && (
-                            <span className="self-center text-caption text-outline">
-                              {m.progress.current} of {m.progress.total} sections
+                          {m.type === "quiz" && m.status !== "completed" && (
+                            <span className="text-caption text-outline">
+                              then pass its quiz (80%) to unlock the next module
                             </span>
                           )}
                         </div>
@@ -182,14 +183,7 @@ export default function CoursePage() {
                         <MaterialIcon name="lock" className="text-[14px]" /> Locked
                       </span>
                     )}
-                    {!locked && m.status !== "completed" && !isCurrent && (
-                      <Link
-                        to={`/module/${m.id}`}
-                        className="self-center text-caption font-bold text-primary hover:underline"
-                      >
-                        Open
-                      </Link>
-                    )}
+
                   </div>
                 );
               })}

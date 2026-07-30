@@ -41,7 +41,7 @@ function renderActivity(a, accent) {
 export default function LessonPage() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { modules, progress, completeModule } = useCourse();
+  const { modules, progress, completeModule, showToast } = useCourse();
   const [tab, setTab] = useState("notes");
 
   // "Mark as read" per lesson section, persisted per module.
@@ -75,6 +75,12 @@ export default function LessonPage() {
   }
 
   const module = modules.find((m) => m.id === id);
+  const allRead =
+    !module?.lesson?.length ||
+    module.lesson.every((s) => readSections.includes(s.heading));
+  const readCount = module?.lesson
+    ? module.lesson.filter((s) => readSections.includes(s.heading)).length
+    : 0;
   if (!module) {
     return (
       <div className="mx-auto max-w-[1280px] p-stack-lg">
@@ -508,13 +514,23 @@ export default function LessonPage() {
                   ? "Run the simulation — 10 good calls out of 12 keeps the financing flowing."
                   : "Score 80% on the quiz to complete this module and unlock the next one."}
               </p>
-              <button
-                onClick={() => navigate(module.type === "capstone" ? "/capstone" : `/quiz/${module.id}`)}
-                className="mt-stack-md inline-flex items-center gap-2 rounded-lg bg-secondary-container px-10 py-3.5 text-label-md font-bold text-on-secondary-container transition-transform hover:opacity-90 active:scale-95"
-              >
-                <MaterialIcon name={module.type === "capstone" ? "sports_esports" : "quiz"} />
-                {module.type === "capstone" ? "Launch the simulation" : "Take the quiz"}
-              </button>
+              {allRead ? (
+                <button
+                  onClick={() => navigate(module.type === "capstone" ? "/capstone" : `/quiz/${module.id}`)}
+                  className="mt-stack-md inline-flex items-center gap-2 rounded-lg bg-secondary-container px-10 py-3.5 text-label-md font-bold text-on-secondary-container transition-transform hover:opacity-90 active:scale-95"
+                >
+                  <MaterialIcon name={module.type === "capstone" ? "sports_esports" : "quiz"} />
+                  {module.type === "capstone" ? "Launch the simulation" : "Take the quiz"}
+                </button>
+              ) : (
+                <a
+                  href="#lesson-notes"
+                  className="mt-stack-md inline-flex items-center gap-2 rounded-lg border-2 border-dashed border-white/40 px-10 py-3.5 text-label-md font-bold text-white/90 transition-colors hover:bg-white/10"
+                >
+                  <MaterialIcon name="lock" />
+                  Read the lesson first — {readCount}/{module.lesson.length} sections ticked
+                </a>
+              )}
             </div>
           )}
         </div>
@@ -564,10 +580,17 @@ export default function LessonPage() {
               </button>
             ) : (
               <button
-                onClick={() => navigate(`/quiz/${module.id}`)}
-                className="flex w-full items-center justify-center gap-2 bg-primary py-3 text-label-md text-on-primary transition-opacity hover:opacity-90"
+                onClick={() => {
+                  if (!allRead) {
+                    showToast(`Read the lesson first — tick all ${module.lesson.length} sections (${readCount} done)`);
+                    return;
+                  }
+                  navigate(`/quiz/${module.id}`);
+                }}
+                className={`flex w-full items-center justify-center gap-2 py-3 text-label-md transition-opacity ${allRead ? "bg-primary text-on-primary hover:opacity-90" : "cursor-not-allowed bg-surface-container-high text-on-surface-variant"}`}
               >
-                <MaterialIcon name="quiz" /> Take the quiz to complete
+                <MaterialIcon name={allRead ? "quiz" : "lock"} />
+                {allRead ? "Take the quiz to complete" : `Read the lesson first (${readCount}/${module.lesson.length})`}
               </button>
             )}
           </div>

@@ -250,6 +250,19 @@ export default function QuizPage() {
     );
   }
 
+  // The lesson must be fully read (all sections ticked) before starting.
+  let lessonRead = true;
+  if (target?.lesson?.length) {
+    try {
+      const ticked = JSON.parse(
+        localStorage.getItem(`skykapital-read-${target.id}`) || "[]"
+      );
+      lessonRead = target.lesson.every((s) => ticked.includes(s.heading));
+    } catch {
+      lessonRead = true;
+    }
+  }
+
   const question = deck[index];
   const total = deck.length;
   const selected = answers[index];
@@ -510,12 +523,27 @@ export default function QuizPage() {
               <li className="flex items-center gap-2 text-caption text-on-surface-variant"><MaterialIcon name="lightbulb" className="text-[16px] text-secondary" /> Hints available on the tricky ones</li>
               <li className="flex items-center gap-2 text-caption text-on-surface-variant"><MaterialIcon name="refresh" className="text-[16px] text-secondary" /> Not 80%? You can retake it as many times as you like</li>
             </ul>
+            {!lessonRead && (
+              <p className="mx-auto mt-stack-md flex max-w-sm items-center gap-2 rounded-lg bg-amber-50 p-3 text-caption text-amber-800">
+                <MaterialIcon name="lock" className="text-[18px] text-amber-500" />
+                Finish the lesson first — tick every section as read, then come back.
+              </p>
+            )}
+            {!lessonRead ? (
+              <button
+                onClick={() => navigate(`/module/${target.id}`)}
+                className="mt-stack-md inline-flex w-full items-center justify-center gap-2 rounded-lg bg-primary py-3.5 text-label-md font-bold text-on-primary transition-opacity hover:opacity-90 sm:w-auto sm:px-14"
+              >
+                <MaterialIcon name="menu_book" /> Back to the lesson
+              </button>
+            ) : (
             <button
               onClick={() => { setPhase("quiz"); setTimeLeft(15 * 60); }}
               className="mt-stack-lg inline-flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-primary-container to-[#1c3a63] py-3.5 text-label-md font-bold text-white transition-all hover:brightness-110 active:scale-[0.98] sm:w-auto sm:px-14"
             >
               I'm ready — start <MaterialIcon name="arrow_forward" />
             </button>
+            )}
           </div>
         ) : phase === "results" ? (
           <ResultsCard
