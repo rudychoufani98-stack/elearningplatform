@@ -135,3 +135,11 @@ create policy comments_insert_own on public.comments
 drop policy if exists comments_delete_own on public.comments;
 create policy comments_delete_own on public.comments
   for delete using (user_id = auth.uid() or public.is_staff());
+
+-- ============================================================================
+-- SECURITY HARDENING (run once) — prevent role self-escalation.
+-- Without this, a user could UPDATE their own profiles.role to 'admin' via
+-- the REST API. Column-level grants limit self-service to full_name only.
+-- ============================================================================
+revoke update on public.profiles from authenticated, anon;
+grant update (full_name) on public.profiles to authenticated;
