@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { CourseProvider } from "./CourseContext.jsx";
 import { AuthProvider, useAuth } from "./AuthContext.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
+import ResetPage from "./pages/ResetPage.jsx";
 import ErrorBoundary from "./components/ErrorBoundary.jsx";
 import Toast from "./components/Toast.jsx";
 import MainLayout from "./components/layout/MainLayout.jsx";
@@ -55,6 +56,9 @@ export default function App() {
         <ScrollToTop />
         <Gate>
         <Routes>
+          {/* Password reset (from the email link) */}
+          <Route path="/reset" element={<ResetPage />} />
+
           {/* Focused assessment — no side/top app chrome */}
           <Route path="/quiz" element={<QuizPage />} />
           <Route path="/quiz/:moduleId" element={<QuizPage />} />

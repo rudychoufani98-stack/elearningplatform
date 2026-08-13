@@ -144,9 +144,7 @@ export default function TopNav() {
           <MaterialIcon name="notifications" />
           <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-secondary ring-2 ring-white" />
         </button>
-        <button className="rounded-full p-2 text-on-surface-variant transition-colors hover:bg-surface-container-high hover:text-primary">
-          <MaterialIcon name="help" />
-        </button>
+        <HelpMenu />
         <AccountMenu
           enabled={enabled}
           displayName={displayName}
@@ -158,6 +156,57 @@ export default function TopNav() {
         />
       </div>
     </header>
+  );
+}
+
+// The "?" button: a quick how-it-works refresher for anyone who feels lost.
+function HelpMenu() {
+  const [open, setOpen] = useState(false);
+  return (
+    <div
+      className="relative"
+      onBlur={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget)) setOpen(false);
+      }}
+    >
+      <button
+        onClick={() => setOpen(!open)}
+        title="How it works"
+        className={`rounded-full p-2 transition-colors hover:bg-surface-container-high hover:text-primary ${open ? "bg-surface-container-high text-primary" : "text-on-surface-variant"}`}
+      >
+        <MaterialIcon name="help" />
+      </button>
+      {open && (
+        <div className="animate-fade-up absolute right-0 top-full z-50 mt-2 w-80 overflow-hidden rounded-xl border border-outline-variant bg-white shadow-xl">
+          <div className="border-b border-outline-variant bg-surface-container-low px-stack-md py-3">
+            <p className="text-label-md font-bold text-primary">How the platform works</p>
+          </div>
+          <div className="space-y-3 p-stack-md">
+            {[
+              ["menu_book", "Read the lesson", "Open a module and tick each section as you read it."],
+              ["extension", "Play the practice games", "Puzzles and cards to make it stick — nothing is graded."],
+              ["quiz", "Pass the quiz", "80% completes the module and unlocks the next one."],
+              ["workspace_premium", "Finish all 6 modules", "Your certificate appears in Training Evidence."],
+            ].map(([ic, t, d]) => (
+              <div key={t} className="flex items-start gap-3">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-surface-container-low">
+                  <MaterialIcon name={ic} className="text-[18px] text-secondary" />
+                </span>
+                <span>
+                  <span className="block text-label-md font-bold text-primary">{t}</span>
+                  <span className="block text-caption text-on-surface-variant">{d}</span>
+                </span>
+              </div>
+            ))}
+            <p className="rounded-lg bg-surface-container-low p-3 text-caption text-on-surface-variant">
+              <strong>Stuck on a word?</strong> Tap the jargon-buster chips at the
+              top of any lesson. <strong>Stuck on a question?</strong> Look for the
+              "Need a hint?" button.
+            </p>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
 

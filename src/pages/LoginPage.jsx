@@ -2,6 +2,7 @@ import { useState } from "react";
 import Logo from "../components/Logo.jsx";
 import MaterialIcon from "../components/MaterialIcon.jsx";
 import { useAuth } from "../AuthContext.jsx";
+import { supabase, isSupabaseConfigured } from "../lib/supabase.js";
 import { platform, course } from "../data.js";
 
 // Branded sign-in / sign-up screen shown before anything else when auth is on.
@@ -15,10 +16,25 @@ export default function LoginPage() {
   const [error, setError] = useState(null);
   const [notice, setNotice] = useState(null);
   const [busy, setBusy] = useState(false);
+  const [showPw, setShowPw] = useState(false);
   const [fails, setFails] = useState(0);
   const [lockUntil, setLockUntil] = useState(() =>
     Number(localStorage.getItem("skk-login-lock") || 0)
   );
+
+  async function forgotPassword() {
+    setError(null);
+    setNotice(null);
+    if (!email.trim())
+      return setError("Type your email above first, then click Forgot password.");
+    if (!isSupabaseConfigured) return;
+    const { error: err } = await supabase.auth.resetPasswordForEmail(
+      email.trim(),
+      { redirectTo: window.location.origin + "/reset" }
+    );
+    if (err) return setError(err.message);
+    setNotice("Reset link sent — check your inbox (and spam folder).");
+  }
 
   async function submit(e) {
     e.preventDefault();
@@ -140,15 +156,34 @@ export default function LoginPage() {
               <span className="mb-1 block text-label-md text-on-surface-variant">
                 Password
               </span>
-              <input
-                type="password"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                autoComplete={mode === "signin" ? "current-password" : "new-password"}
-                className="w-full rounded-lg border border-outline-variant bg-white px-4 py-3 text-body-md focus:border-secondary focus:outline-none focus:ring-2 focus:ring-secondary/20"
-                placeholder={mode === "signin" ? "Your password" : "10+ characters, letters and numbers"}
-              />
+              <div className="relative">
+                <input
+                  type={showPw ? "text" : "password"}
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  autoComplete={mode === "signin" ? "current-password" : "new-password"}
+                  className="w-full rounded-lg border border-outline-variant bg-white px-4 py-3 pr-12 text-body-md focus:border-secondary focus:outline-none focus:ring-2 focus:ring-secondary/20"
+                  placeholder={mode === "signin" ? "Your password" : "10+ characters, letters and numbers"}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPw(!showPw)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-outline hover:text-primary"
+                  title={showPw ? "Hide password" : "Show password"}
+                >
+                  <MaterialIcon name={showPw ? "visibility_off" : "visibility"} className="text-[20px]" />
+                </button>
+              </div>
+              {mode === "signin" && (
+                <button
+                  type="button"
+                  onClick={forgotPassword}
+                  className="mt-1.5 text-caption font-semibold text-secondary hover:underline"
+                >
+                  Forgot password?
+                </button>
+              )}
             </label>
             {mode === "signup" && (
               <label className="block">
@@ -156,7 +191,7 @@ export default function LoginPage() {
                   Confirm password
                 </span>
                 <input
-                  type="password"
+                  type={showPw ? "text" : "password"}
                   required
                   value={confirm}
                   onChange={(e) => setConfirm(e.target.value)}
