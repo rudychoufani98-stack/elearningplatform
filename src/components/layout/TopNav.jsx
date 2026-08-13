@@ -140,10 +140,7 @@ export default function TopNav() {
             </div>
           )}
         </div>
-        <button className="relative rounded-full p-2 text-on-surface-variant transition-colors hover:bg-surface-container-high hover:text-primary">
-          <MaterialIcon name="notifications" />
-          <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-secondary ring-2 ring-white" />
-        </button>
+        <NextStepMenu />
         <HelpMenu />
         <AccountMenu
           enabled={enabled}
@@ -156,6 +153,88 @@ export default function TopNav() {
         />
       </div>
     </header>
+  );
+}
+
+// The bell: no fake notifications — it tells the learner their real next step.
+function NextStepMenu() {
+  const navigate = useNavigate();
+  const { modules, progress } = useCourse();
+  const [open, setOpen] = useState(false);
+  const next =
+    modules.find((m) => m.status === "in_progress") ||
+    modules.find((m) => m.status !== "completed");
+  const done = !next;
+  return (
+    <div
+      className="relative"
+      onBlur={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget)) setOpen(false);
+      }}
+    >
+      <button
+        onClick={() => setOpen(!open)}
+        title="Your next step"
+        className={`relative rounded-full p-2 transition-colors hover:bg-surface-container-high hover:text-primary ${open ? "bg-surface-container-high text-primary" : "text-on-surface-variant"}`}
+      >
+        <MaterialIcon name="notifications" />
+        {!done && (
+          <span className="absolute right-1.5 top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-secondary text-[9px] font-bold text-white ring-2 ring-white">
+            1
+          </span>
+        )}
+      </button>
+      {open && (
+        <div className="animate-fade-up absolute right-0 top-full z-50 mt-2 w-80 overflow-hidden rounded-xl border border-outline-variant bg-white shadow-xl">
+          <div className="border-b border-outline-variant bg-surface-container-low px-stack-md py-3">
+            <p className="text-label-md font-bold text-primary">Your next step</p>
+          </div>
+          {done ? (
+            <div className="p-stack-md text-center">
+              <MaterialIcon name="celebration" fill className="text-4xl text-secondary" />
+              <p className="mt-1 text-label-md font-bold text-primary">
+                Pathway complete!
+              </p>
+              <button
+                onMouseDown={(e) => {
+                  e.preventDefault();
+                  setOpen(false);
+                  navigate("/evidence");
+                }}
+                className="mt-2 w-full rounded-lg bg-primary py-2.5 text-label-md font-bold text-on-primary hover:opacity-90"
+              >
+                View your certificate
+              </button>
+            </div>
+          ) : (
+            <button
+              onMouseDown={(e) => {
+                e.preventDefault();
+                setOpen(false);
+                navigate(next.type === "capstone" ? "/capstone" : `/module/${next.id}`);
+              }}
+              className="flex w-full items-start gap-3 p-stack-md text-left transition-colors hover:bg-surface-container-low"
+            >
+              <span
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-white"
+                style={{ background: next.accent ?? "#0d1c32" }}
+              >
+                <MaterialIcon name={next.icon} className="text-[22px]" />
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="block text-label-md font-bold text-primary">
+                  {next.status === "in_progress" ? "Continue" : "Start"} {next.code}: {next.title}
+                </span>
+                <span className="mt-0.5 block text-caption text-on-surface-variant">
+                  {progress.completed} of {progress.total} modules done · {next.duration}
+                </span>
+              </span>
+              <MaterialIcon name="arrow_forward" className="shrink-0 self-center text-secondary" />
+            </button>
+          )}
+        </div>
+      )}
+    </div>
   );
 }
 

@@ -36,8 +36,15 @@ function Gate({ children }) {
   if (!enabled) return children; // local demo mode — no auth configured
   if (loading)
     return (
-      <div className="flex min-h-screen items-center justify-center bg-surface">
-        <p className="text-body-md text-on-surface-variant">Loading…</p>
+      <div className="flex min-h-screen flex-col items-center justify-center gap-3 bg-surface">
+        <span className="animate-pop flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary-container to-[#1c3a63] shadow-lg">
+          <svg viewBox="0 0 24 24" className="h-8 w-8 animate-pulse text-white" fill="currentColor" aria-hidden="true">
+            <path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z" />
+          </svg>
+        </span>
+        <p className="text-caption font-bold uppercase tracking-widest text-on-surface-variant">
+          Skykapital Academy
+        </p>
       </div>
     );
   if (!session) return <LoginPage />;
