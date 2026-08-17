@@ -222,3 +222,28 @@ begin
   update public.profiles set project_id = proj where id = target;
 end;
 $$;
+
+-- ============================================================================
+-- HARDENING v2 (run once) — private documents + single-admin model.
+-- ============================================================================
+-- Documents bucket becomes PRIVATE: files readable only via signed URLs
+-- requested by signed-in users.
+update storage.buckets set public = false where id = 'client-docs';
+drop policy if exists client_docs_read_signed on storage.objects;
+create policy client_docs_read_signed on storage.objects
+  for select to authenticated
+  using (bucket_id = 'client-docs');
+
+-- Single-admin model: the role function can no longer grant 'admin'.
+create or replace function public.set_user_role(target uuid, new_role text)
+returns void language plpgsql security definer set search_path = public as $$
+begin
+  if not exists (select 1 from public.profiles where id = auth.uid() and role = 'admin') then
+    raise exception 'Only the administrator can change roles.';
+  end if;
+  if new_role not in ('learner','manager') then
+    raise exception 'Invalid role.';
+  end if;
+  update public.profiles set role = new_role where id = target;
+end;
+$$;

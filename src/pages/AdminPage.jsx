@@ -8,6 +8,12 @@ import { client } from "../config/clients.js";
 
 const DOC_CATEGORIES = ["Governance & Ethics", "HSE", "People & Community", "Management System", "Other"];
 
+// Documents live in a PRIVATE bucket — access is via short-lived signed links.
+async function openDoc(path) {
+  const { data, error } = await supabase.storage.from("client-docs").createSignedUrl(path, 3600);
+  if (!error && data?.signedUrl) window.open(data.signedUrl, "_blank", "noopener");
+}
+
 // The Skykapital administration console — organised PER PROJECT.
 // Home = project cards. Open a project = manage ITS users and ITS documents.
 export default function AdminPage({ standalone = false }) {
@@ -215,12 +221,14 @@ function Home({ projects, people, docs, email, onOpen, onOpenShared, reload }) {
 /* ------------------------------ WORKSPACE ------------------------------ */
 function Workspace({ project, shared, projects, people, docs, isAdmin, onBack, reload }) {
   const [tab, setTab] = useState(shared ? "docs" : "users");
+  const [confirmDel, setConfirmDel] = useState(false);
   const title = shared ? "Shared — all projects" : project?.name ?? "Project";
   const pid = shared ? null : project?.id;
 
   async function removeProject() {
     if (!project) return;
     const { error } = await supabase.from("projects").delete().eq("id", project.id);
+    setConfirmDel(false);
     if (!error) {
       onBack();
       reload();
@@ -240,9 +248,30 @@ function Workspace({ project, shared, projects, people, docs, isAdmin, onBack, r
           <h1 className="text-headline-lg text-primary">{title}</h1>
         </div>
         {!shared && isAdmin && (
-          <button onClick={removeProject} className="flex items-center gap-1 rounded-lg border border-outline-variant px-3 py-2 text-caption font-bold text-on-surface-variant hover:border-error hover:text-error">
+          <button onClick={() => setConfirmDel(true)} className="flex items-center gap-1 rounded-lg border border-outline-variant px-3 py-2 text-caption font-bold text-on-surface-variant hover:border-error hover:text-error">
             <MaterialIcon name="delete" className="text-[16px]" /> Delete project
           </button>
+        )}
+        {confirmDel && (
+          <div className="fixed inset-0 z-[90] flex items-center justify-center bg-[#0d1c32]/60 px-6 backdrop-blur-sm" onClick={() => setConfirmDel(false)}>
+            <div className="animate-pop w-full max-w-sm rounded-2xl bg-white p-stack-lg text-center shadow-2xl" onClick={(e) => e.stopPropagation()}>
+              <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-rose-50">
+                <MaterialIcon name="delete_forever" className="text-3xl text-rose-500" />
+              </div>
+              <h2 className="text-headline-md text-primary">Delete "{project?.name}"?</h2>
+              <p className="mx-auto mt-1 max-w-xs text-body-md text-on-surface-variant">
+                Its documents will disappear from Resources and its users will be left without a project. This cannot be undone.
+              </p>
+              <div className="mt-stack-md flex gap-2">
+                <button onClick={() => setConfirmDel(false)} className="flex-1 rounded-lg bg-primary py-3 text-label-md font-bold text-on-primary hover:opacity-90">
+                  Keep it
+                </button>
+                <button onClick={removeProject} className="flex-1 rounded-lg border border-outline-variant py-3 text-label-md text-on-surface-variant transition-colors hover:border-rose-300 hover:text-rose-600">
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
         )}
       </div>
 
@@ -282,8 +311,9 @@ function TabBtn({ active, icon, onClick, children }) {
 
 /* --------------------------- PROJECT · USERS --------------------------- */
 function ProjectUsers({ project, people, isAdmin, reload }) {
-  const members = people.filter((u) => u.project_id === project.id);
-  const others = people.filter((u) => u.project_id !== project.id);
+  // Only learners are managed here — the admin (you) is not a project member.
+  const members = people.filter((u) => u.project_id === project.id && u.role !== "admin");
+  const others = people.filter((u) => u.project_id !== project.id && u.role !== "admin");
   const [addId, setAddId] = useState("");
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const [busy, setBusy] = useState(false);
@@ -313,13 +343,6 @@ function ProjectUsers({ project, people, isAdmin, reload }) {
     setBusy(false);
     setMsg(`Account created and added to ${project.name}. Share the temporary password with ${form.name}.`);
     setForm({ name: "", email: "", password: "" });
-    reload();
-  }
-
-  async function setRole(id, role) {
-    setErr(null);
-    const { error } = await supabase.rpc("set_user_role", { target: id, new_role: role });
-    if (error) return setErr(error.message);
     reload();
   }
 
@@ -389,16 +412,9 @@ function ProjectUsers({ project, people, isAdmin, reload }) {
                 <tr key={r.id} className="border-b border-surface-container last:border-0">
                   <td className="px-stack-md py-stack-md text-body-md text-primary">{r.full_name || "—"}</td>
                   <td className="px-stack-md py-stack-md">
-                    {isAdmin ? (
-                      <select value={r.role} onChange={(e) => setRole(r.id, e.target.value)}
-                        className="rounded-lg border border-outline-variant bg-white px-2 py-1.5 text-body-md">
-                        <option value="learner">learner</option>
-                        <option value="manager">manager</option>
-                        <option value="admin">admin</option>
-                      </select>
-                    ) : (
-                      <span className="text-body-md text-on-surface-variant">{r.role}</span>
-                    )}
+                    <span className="rounded-full bg-surface-container-low px-2.5 py-0.5 text-caption font-semibold text-on-surface-variant">
+                      Learner
+                    </span>
                   </td>
                   <td className="px-stack-md py-stack-md text-body-md text-on-surface-variant">{(r.created_at || "").slice(0, 10)}</td>
                   <td className="px-stack-md py-stack-md text-right">
@@ -439,14 +455,13 @@ function ProjectDocs({ pid, shared, docs, reload }) {
       setBusy(false);
       return setErr(upErr.message + " — has the storage bucket 'client-docs' been created? (see setup SQL)");
     }
-    const { data: pub } = supabase.storage.from("client-docs").getPublicUrl(path);
     const { error: insErr } = await supabase.from("client_documents").insert({
       title: form.title.trim(),
       note: form.note.trim(),
       category: form.category,
       project_id: pid,
       path,
-      url: pub.publicUrl,
+      url: "",
     });
     setBusy(false);
     if (insErr) return setErr(insErr.message);
@@ -511,7 +526,7 @@ function ProjectDocs({ pid, shared, docs, reload }) {
                 <span className="block truncate text-label-md font-semibold text-primary">{r.title}</span>
                 <span className="text-caption text-on-surface-variant">{r.category}{r.note ? ` · ${r.note}` : ""}</span>
               </span>
-              <a href={r.url} target="_blank" rel="noreferrer" className="text-label-md font-bold text-secondary hover:underline">Open</a>
+              <button onClick={() => openDoc(r.path)} className="text-label-md font-bold text-secondary hover:underline">Open</button>
               <button onClick={() => remove(r)} title="Remove" className="rounded-full p-2 text-outline hover:text-error">
                 <MaterialIcon name="delete" className="text-[20px]" />
               </button>

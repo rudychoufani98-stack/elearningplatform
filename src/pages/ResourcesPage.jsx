@@ -51,12 +51,15 @@ export default function ResourcesPage() {
           </h2>
           <div className="grid grid-cols-1 gap-stack-md md:grid-cols-2">
             {visibleDocs.map((d) => (
-              <a
+              <button
                 key={d.id}
-                href={d.url}
-                target="_blank"
-                rel="noreferrer"
-                className="lift group flex items-start gap-3 rounded-xl border border-outline-variant bg-surface-container-lowest p-stack-md"
+                onClick={async () => {
+                  const { data } = await supabase.storage
+                    .from("client-docs")
+                    .createSignedUrl(d.path, 3600);
+                  if (data?.signedUrl) window.open(data.signedUrl, "_blank", "noopener");
+                }}
+                className="lift group flex items-start gap-3 rounded-xl border border-outline-variant bg-surface-container-lowest p-stack-md text-left"
               >
                 <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-rose-50">
                   <MaterialIcon name="picture_as_pdf" className="text-rose-500" />
@@ -71,7 +74,7 @@ export default function ResourcesPage() {
                   </span>
                 </span>
                 <MaterialIcon name="open_in_new" className="shrink-0 text-outline" />
-              </a>
+              </button>
             ))}
           </div>
         </section>
