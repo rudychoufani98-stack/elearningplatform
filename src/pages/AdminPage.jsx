@@ -328,10 +328,11 @@ async function printCertificate(p) {
   if (!w) return;
   const { SKYKAPITAL_LOGO } = await import("../assets/skykapitalLogoB64.js");
   w.document.write(`<!doctype html><html><head><title>Certificate ${p.certNo}</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <style>
   @page { size: A4 landscape; margin: 0; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: Georgia, 'Times New Roman', serif; color: #001b3d; background: #ffffff; }
+  body { font-family: 'Source Serif 4', Georgia, serif; color: #001b3d; background: #ffffff; }
   .cert { width: 100vw; height: 100vh; position: relative; background: #ffffff; text-align: center; }
   .frame { position: absolute; inset: 34px; border: 3px solid #775a19; }
   .frame2 { position: absolute; inset: 43px; border: 1px solid #775a19; opacity: 0.4; }
@@ -341,19 +342,18 @@ async function printCertificate(p) {
   .c3 { bottom: 22px; left: 22px; border-bottom-width: 3px; border-left-width: 3px; }
   .c4 { bottom: 22px; right: 22px; border-bottom-width: 3px; border-right-width: 3px; }
   .inner { position: absolute; inset: 60px; display: flex; flex-direction: column; align-items: center; }
-  .logo { height: 92px; margin-top: 4px; }
-  h1 { font-size: 42px; letter-spacing: 7px; color: #001b3d; margin-top: 34px; }
-  .certify { font-style: italic; font-size: 17px; color: #775a19; margin-top: 14px; }
-  .name { font-size: 46px; font-style: italic; color: #001b3d; margin-top: 26px; }
-  .rule { width: 620px; border-top: 1px solid #c4c6cf; margin-top: 10px; }
-  .completed { font-size: 19px; color: #44474e; margin-top: 26px; }
-  .course { font-size: 21px; font-weight: bold; color: #001b3d; margin-top: 8px; }
-  .detail { font-family: Arial, sans-serif; font-size: 11px; color: #44474e; margin-top: 16px; }
-  .row { display: flex; justify-content: space-between; width: 720px; margin-top: auto; padding-bottom: 34px; }
-  .col { width: 220px; }
-  .col .val { font-family: Arial, sans-serif; font-weight: bold; font-size: 14px; height: 22px; }
-  .col .ln { border-top: 1.5px solid #001b3d; margin-top: 4px; padding-top: 8px; font-family: Arial, sans-serif; font-size: 10px; letter-spacing: 3px; color: #001b3d; font-weight: bold; }
-  .verify { position: absolute; bottom: 44px; left: 0; right: 0; font-family: Arial, sans-serif; font-size: 9px; color: #74777f; }
+  .logo { height: 80px; margin-top: 4px; }
+  h1 { font-size: 46px; font-weight: 600; letter-spacing: 0.1em; color: #001b3d; margin-top: 40px; }
+  .certify { font-style: italic; font-size: 17px; color: #775a19; margin-top: 12px; }
+  .name { font-size: 46px; font-style: italic; color: #001b3d; margin-top: 44px; }
+  .rule { width: 740px; border-top: 1px solid #c4c6cf; margin-top: 12px; }
+  .completed { font-size: 23px; color: #44474e; margin-top: 30px; }
+  .course { font-size: 23px; font-weight: 700; color: #001b3d; margin-top: 8px; }
+  .row { display: flex; justify-content: space-between; width: 780px; margin-top: auto; padding-bottom: 30px; }
+  .col { width: 200px; }
+  .col.wide { width: 260px; }
+  .col .val { font-family: Manrope, Arial, sans-serif; font-weight: 700; font-size: 14px; height: 22px; }
+  .col .ln { border-top: 1.5px solid #001b3d; margin-top: 4px; padding-top: 8px; font-family: Manrope, Arial, sans-serif; font-size: 11px; letter-spacing: 0.1em; color: #001b3d; font-weight: 700; }
 </style></head><body>
 <div class="cert">
   <div class="frame"></div><div class="frame2"></div>
@@ -368,7 +368,7 @@ async function printCertificate(p) {
     <div class="course">${course.title}</div>
     <div class="row">
       <div class="col"><div class="val">${p.last}</div><div class="ln">DATE</div></div>
-      <div class="col"><div class="val"></div><div class="ln">AUTHORIZED SIGNATORY</div></div>
+      <div class="col wide"><div class="val"></div><div class="ln">AUTHORIZED SIGNATORY</div></div>
     </div>
   </div>
 </div>

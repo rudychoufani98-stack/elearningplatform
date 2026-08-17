@@ -1,14 +1,14 @@
 // The official Skykapital certificate — exact match of the approved mockup:
-// white paper, bronze double border with corner ornaments, small centred
-// logo, large serif title, italic name over a thin rule, DATE and
-// AUTHORIZED SIGNATORY blocks. Nothing else on the page.
-// jsPDF is loaded on demand so it never weighs down the app bundle.
+// Source Serif 4 typography (embedded), mockup colors (#001b3d navy,
+// #775a19 bronze, #44474e grey), bronze double border with corner
+// ornaments, small centred logo, DATE and AUTHORIZED SIGNATORY blocks.
+// jsPDF + fonts are loaded on demand so they never weigh down the app bundle.
 
-const BRONZE = [119, 90, 25]; // #775a19
-const BRONZE_LIGHT = [201, 189, 163]; // bronze at 40% on white
-const NAVY = [0, 27, 61]; // #001b3d
-const GREY = [68, 71, 78]; // #44474e
-const LINE_GREY = [196, 198, 207]; // #c4c6cf
+const BRONZE = [119, 90, 25]; // #775a19  (mockup "secondary")
+const BRONZE_LIGHT = [201, 189, 163]; // bronze at 40% on white (inner border)
+const NAVY = [0, 27, 61]; // #001b3d  (mockup "primary-container")
+const GREY = [68, 71, 78]; // #44474e  (mockup "on-surface-variant")
+const LINE_GREY = [196, 198, 207]; // #c4c6cf (mockup "outline-variant")
 
 // jsPDF's align:"center" ignores charSpace, so letterspaced text must be
 // centred by hand.
@@ -25,14 +25,25 @@ export async function buildCertificatePdf({
   clientShort,
   totalModules = 6,
 }) {
-  const [{ jsPDF }, logo] = await Promise.all([
+  const [{ jsPDF }, logo, fonts] = await Promise.all([
     import("jspdf"),
     import("../assets/skykapitalLogoB64.js"),
+    import("../assets/certFonts.js"),
   ]);
   const doc = new jsPDF({ orientation: "landscape", unit: "mm", format: "a4" });
   const W = 297;
   const H = 210;
   const CX = W / 2;
+
+  // Real mockup typography: Source Serif 4
+  doc.addFileToVFS("SS4-Semibold.ttf", fonts.SS4_SEMIBOLD);
+  doc.addFont("SS4-Semibold.ttf", "SS4", "semibold");
+  doc.addFileToVFS("SS4-It.ttf", fonts.SS4_ITALIC);
+  doc.addFont("SS4-It.ttf", "SS4", "italic");
+  doc.addFileToVFS("SS4-Regular.ttf", fonts.SS4_REGULAR);
+  doc.addFont("SS4-Regular.ttf", "SS4", "normal");
+  doc.addFileToVFS("SS4-Bold.ttf", fonts.SS4_BOLD);
+  doc.addFont("SS4-Bold.ttf", "SS4", "bold");
 
   // Verification data lives in the PDF metadata (not on the visual design)
   doc.setProperties({
@@ -62,37 +73,37 @@ export async function buildCertificatePdf({
   doc.setDrawColor(...BRONZE_LIGHT).setLineWidth(0.25).rect(12, 12, W - 24, H - 24);
 
   // Small centred logo (512x256 → 2:1)
-  const lw = 40;
+  const lw = 44;
   doc.addImage(logo.SKYKAPITAL_LOGO, "PNG", CX - lw / 2, 20, lw, lw / 2);
 
-  // Title — large, wide letterspacing
-  doc.setFont("times", "bold").setFontSize(30).setTextColor(...NAVY);
-  centered(doc, "CERTIFICATE OF ACHIEVEMENT", CX, 65, 2.4);
-  doc.setFont("times", "italic").setFontSize(11.5).setTextColor(...BRONZE);
-  doc.text("This is to certify that", CX, 77, { align: "center" });
+  // Title — 48px semibold, 0.1em tracking (mockup display-lg)
+  doc.setFont("SS4", "semibold").setFontSize(36).setTextColor(...NAVY);
+  centered(doc, "CERTIFICATE OF ACHIEVEMENT", CX, 67, 1.27);
+  doc.setFont("SS4", "italic").setFontSize(13.5).setTextColor(...BRONZE);
+  doc.text("This is to certify that", CX, 79, { align: "center" });
 
   // Recipient name over a thin rule
-  doc.setFont("times", "italic").setFontSize(34).setTextColor(...NAVY);
-  doc.text(name || "—", CX, 110, { align: "center" });
+  doc.setFont("SS4", "italic").setFontSize(36).setTextColor(...NAVY);
+  doc.text(name || "—", CX, 112, { align: "center" });
   doc.setDrawColor(...LINE_GREY).setLineWidth(0.3);
-  doc.line(CX - 100, 117, CX + 100, 117);
+  doc.line(CX - 105, 118.5, CX + 105, 118.5);
 
   // Program
-  doc.setFont("times", "normal").setFontSize(15).setTextColor(...GREY);
-  doc.text("Has successfully completed the", CX, 134, { align: "center" });
-  doc.setFont("times", "bold").setFontSize(16).setTextColor(...NAVY);
-  doc.text(doc.splitTextToSize(courseTitle, 210), CX, 144, { align: "center" });
+  doc.setFont("SS4", "normal").setFontSize(18).setTextColor(...GREY);
+  doc.text("Has successfully completed the", CX, 136, { align: "center" });
+  doc.setFont("SS4", "bold").setFontSize(18).setTextColor(...NAVY);
+  doc.text(doc.splitTextToSize(courseTitle, 220), CX, 147, { align: "center" });
 
-  // Footer — date (left) and signature (right), nothing else
-  const lineY = 177;
+  // Footer — date (left, narrower) and signature (right, wider) like the mockup
+  const lineY = 179;
   doc.setDrawColor(...NAVY).setLineWidth(0.35);
-  doc.line(39, lineY, 90, lineY);
-  doc.line(W - 90, lineY, W - 39, lineY);
+  doc.line(38, lineY, 91, lineY);
+  doc.line(W - 109, lineY, W - 38, lineY);
   doc.setFont("helvetica", "bold").setFontSize(10).setTextColor(...NAVY);
   doc.text(date || "", 64.5, lineY - 2.5, { align: "center" });
-  doc.setFont("helvetica", "bold").setFontSize(7.5).setTextColor(...NAVY);
-  centered(doc, "DATE", 64.5, lineY + 6, 1.8);
-  centered(doc, "AUTHORIZED SIGNATORY", W - 64.5, lineY + 6, 1.8);
+  doc.setFont("helvetica", "bold").setFontSize(9).setTextColor(...NAVY);
+  centered(doc, "DATE", 64.5, lineY + 6.5, 0.35);
+  centered(doc, "AUTHORIZED SIGNATORY", W - 73.5, lineY + 6.5, 0.35);
 
   return doc;
 }
