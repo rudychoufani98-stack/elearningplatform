@@ -33,7 +33,7 @@ function ScrollToTop() {
 
 // Everything behind the sign-in wall when auth is enabled.
 function Gate({ children }) {
-  const { enabled, loading, session } = useAuth();
+  const { enabled, loading, session, profile } = useAuth();
   if (!enabled) return children; // local demo mode — no auth configured
   if (loading)
     return (
@@ -49,6 +49,8 @@ function Gate({ children }) {
       </div>
     );
   if (!session) return <LoginPage />;
+  // Admins have a dedicated console — no access to the learning side.
+  if (profile?.role === "admin") return <AdminPage standalone />;
   return children;
 }
 

@@ -2,13 +2,19 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import MaterialIcon from "../components/MaterialIcon.jsx";
 import { supabase, isSupabaseConfigured } from "../lib/supabase.js";
+import { useAuth } from "../AuthContext.jsx";
 import { resourceCategories } from "../data.js";
 
 // "Resources" — company policies & official documents, grouped by category.
 // Items with real content link to their in-app reading; others are placeholders.
 export default function ResourcesPage() {
   // Documents uploaded by the administrator (Supabase) — shown first.
+  // Shared documents (no project) + those of the learner's own project.
+  const { profile } = useAuth();
   const [clientDocs, setClientDocs] = useState([]);
+  const visibleDocs = clientDocs.filter(
+    (d) => !d.project_id || d.project_id === profile?.project_id
+  );
   useEffect(() => {
     if (!isSupabaseConfigured) return;
     supabase
@@ -37,14 +43,14 @@ export default function ResourcesPage() {
       </p>
 
       <div className="space-y-stack-lg">
-        {clientDocs.length > 0 && (
+        {visibleDocs.length > 0 && (
         <section className="mb-gutter">
           <h2 className="mb-stack-md flex items-center gap-2 text-headline-md text-primary">
             <MaterialIcon name="cloud_done" className="text-secondary" />
             Company documents
           </h2>
           <div className="grid grid-cols-1 gap-stack-md md:grid-cols-2">
-            {clientDocs.map((d) => (
+            {visibleDocs.map((d) => (
               <a
                 key={d.id}
                 href={d.url}

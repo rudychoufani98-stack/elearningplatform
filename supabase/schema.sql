@@ -190,3 +190,35 @@ drop policy if exists client_docs_delete on storage.objects;
 create policy client_docs_delete on storage.objects
   for delete to authenticated
   using (bucket_id = 'client-docs' and public.is_staff());
+
+-- ============================================================================
+-- PROJECTS (run once) — group users & documents per project.
+-- ============================================================================
+create table if not exists public.projects (
+  id          uuid primary key default gen_random_uuid(),
+  name        text not null unique,
+  created_at  timestamptz not null default now()
+);
+alter table public.projects enable row level security;
+drop policy if exists projects_read on public.projects;
+create policy projects_read on public.projects
+  for select using (auth.role() = 'authenticated');
+drop policy if exists projects_staff_write on public.projects;
+create policy projects_staff_write on public.projects
+  for all using (public.is_staff()) with check (public.is_staff());
+
+alter table public.profiles
+  add column if not exists project_id uuid references public.projects (id) on delete set null;
+alter table public.client_documents
+  add column if not exists project_id uuid references public.projects (id) on delete cascade;
+
+-- Admin-only assignment of a user to a project.
+create or replace function public.set_user_project(target uuid, proj uuid)
+returns void language plpgsql security definer set search_path = public as $$
+begin
+  if not exists (select 1 from public.profiles where id = auth.uid() and role = 'admin') then
+    raise exception 'Only the administrator can assign projects.';
+  end if;
+  update public.profiles set project_id = proj where id = target;
+end;
+$$;
