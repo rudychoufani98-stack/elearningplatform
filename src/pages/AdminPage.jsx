@@ -321,60 +321,11 @@ function TabBtn({ active, icon, onClick, children }) {
 /* ------------------------- PROJECT · PROGRESS ------------------------- */
 const TOTAL_MODULES = 6;
 
-// Opens a print-ready Skykapital certificate for a certified learner —
-// same light classic design as the PDF (bronze borders, real logo).
-async function printCertificate(p) {
-  const w = window.open("", "_blank", "noopener,width=900,height=650");
-  if (!w) return;
-  const { SKYKAPITAL_LOGO } = await import("../assets/skykapitalLogoB64.js");
-  w.document.write(`<!doctype html><html><head><title>Certificate ${p.certNo}</title>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700&family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
-<style>
-  @page { size: A4 landscape; margin: 0; }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Source Serif 4', Georgia, serif; color: #001b3d; background: #ffffff; }
-  .cert { width: 100vw; height: 100vh; position: relative; background: #ffffff; text-align: center; }
-  .frame { position: absolute; inset: 34px; border: 3px solid #775a19; }
-  .frame2 { position: absolute; inset: 43px; border: 1px solid #775a19; opacity: 0.4; }
-  .corner { position: absolute; width: 32px; height: 32px; border: 0 solid #775a19; }
-  .c1 { top: 22px; left: 22px; border-top-width: 3px; border-left-width: 3px; }
-  .c2 { top: 22px; right: 22px; border-top-width: 3px; border-right-width: 3px; }
-  .c3 { bottom: 22px; left: 22px; border-bottom-width: 3px; border-left-width: 3px; }
-  .c4 { bottom: 22px; right: 22px; border-bottom-width: 3px; border-right-width: 3px; }
-  .inner { position: absolute; inset: 60px; display: flex; flex-direction: column; align-items: center; }
-  .logo { height: 80px; margin-top: 4px; }
-  h1 { font-size: 46px; font-weight: 600; letter-spacing: 0.1em; color: #001b3d; margin-top: 40px; }
-  .certify { font-style: italic; font-size: 17px; color: #775a19; margin-top: 12px; }
-  .name { font-size: 46px; font-style: italic; color: #001b3d; margin-top: 44px; }
-  .rule { width: 740px; border-top: 1px solid #c4c6cf; margin-top: 12px; }
-  .completed { font-size: 23px; color: #44474e; margin-top: 30px; }
-  .course { font-size: 23px; font-weight: 700; color: #001b3d; margin-top: 8px; }
-  .row { display: flex; justify-content: space-between; width: 780px; margin-top: auto; padding-bottom: 30px; }
-  .col { width: 200px; }
-  .col.wide { width: 260px; }
-  .col .val { font-family: Manrope, Arial, sans-serif; font-weight: 700; font-size: 14px; height: 22px; }
-  .col .ln { border-top: 1.5px solid #001b3d; margin-top: 4px; padding-top: 8px; font-family: Manrope, Arial, sans-serif; font-size: 11px; letter-spacing: 0.1em; color: #001b3d; font-weight: 700; }
-</style></head><body>
-<div class="cert">
-  <div class="frame"></div><div class="frame2"></div>
-  <div class="corner c1"></div><div class="corner c2"></div><div class="corner c3"></div><div class="corner c4"></div>
-  <div class="inner">
-    <img class="logo" src="${SKYKAPITAL_LOGO}" alt="Skykapital" />
-    <h1>CERTIFICATE OF ACHIEVEMENT</h1>
-    <div class="certify">This is to certify that</div>
-    <div class="name">${p.full_name || "—"}</div>
-    <div class="rule"></div>
-    <div class="completed">Has successfully completed the</div>
-    <div class="course">${course.title}</div>
-    <div class="row">
-      <div class="col"><div class="val">${p.last}</div><div class="ln">DATE</div></div>
-      <div class="col wide"><div class="val"></div><div class="ln">AUTHORIZED SIGNATORY</div></div>
-    </div>
-  </div>
-</div>
-<script>window.onload = () => setTimeout(() => window.print(), 300);</scr` + `ipt>
-</body></html>`);
-  w.document.close();
+// Opens the print-ready certificate page (the user's approved mockup,
+// rendered by CertificatePrintPage) in a new tab — it auto-prints.
+function printCertificate(p) {
+  const q = new URLSearchParams({ name: p.full_name || '', course: course.title, date: p.last });
+  window.open('/certificate-print?' + q.toString(), '_blank', 'noopener');
 }
 
 function ProjectProgress({ project, people }) {

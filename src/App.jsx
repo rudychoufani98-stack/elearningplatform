@@ -17,6 +17,7 @@ import ResourcesPage from "./pages/ResourcesPage.jsx";
 import EvidencePage from "./pages/EvidencePage.jsx";
 import CapstonePage from "./pages/CapstonePage.jsx";
 import QuizPage from "./pages/QuizPage.jsx";
+import CertificatePrintPage from "./pages/CertificatePrintPage.jsx";
 
 // Jump back to the top on every route change (SPAs otherwise keep the old
 // scroll position, which feels broken when "changing page").
@@ -34,6 +35,7 @@ function ScrollToTop() {
 // Everything behind the sign-in wall when auth is enabled.
 function Gate({ children }) {
   const { enabled, loading, session, profile } = useAuth();
+  const { pathname } = useLocation();
   if (!enabled) return children; // local demo mode — no auth configured
   if (loading)
     return (
@@ -49,6 +51,8 @@ function Gate({ children }) {
       </div>
     );
   if (!session) return <LoginPage />;
+  // Print-ready certificate view (opened by the admin console's Print button)
+  if (pathname === "/certificate-print") return <CertificatePrintPage />;
   // Admins have a dedicated console — no access to the learning side.
   if (profile?.role === "admin") return <AdminPage standalone />;
   return children;
