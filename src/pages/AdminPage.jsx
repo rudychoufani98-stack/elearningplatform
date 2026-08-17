@@ -6,6 +6,7 @@ import { supabase, isSupabaseConfigured, adminCreateAccount } from "../lib/supab
 import { useAuth } from "../AuthContext.jsx";
 import { client } from "../config/clients.js";
 import { course } from "../data.js";
+import { downloadCertificatePdf } from "../lib/certificate.js";
 
 const DOC_CATEGORIES = ["Governance & Ethics", "HSE", "People & Community", "Management System", "Other"];
 
@@ -444,6 +445,22 @@ function ProjectProgress({ project, people }) {
                         <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2.5 py-0.5 text-caption font-bold text-emerald-700">
                           <MaterialIcon name="workspace_premium" className="text-[14px]" /> {p.certNo}
                         </span>
+                        <button
+                          onClick={() =>
+                            downloadCertificatePdf({
+                              name: p.full_name,
+                              certNo: p.certNo,
+                              date: p.last,
+                              courseTitle: course.title,
+                              clientShort: client.clientShort,
+                              totalModules: TOTAL_MODULES,
+                            })
+                          }
+                          title="Download the certificate as PDF"
+                          className="inline-flex items-center gap-1 rounded-lg border border-outline-variant px-2.5 py-1 text-caption font-bold text-primary transition-colors hover:border-secondary hover:text-secondary"
+                        >
+                          <MaterialIcon name="download" className="text-[14px]" /> PDF
+                        </button>
                         <button
                           onClick={() => printCertificate(p)}
                           title="Print the certificate"

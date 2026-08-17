@@ -4,6 +4,8 @@ import MaterialIcon from "../components/MaterialIcon.jsx";
 import { useCourse } from "../CourseContext.jsx";
 import { course } from "../data.js";
 import { useAuth } from "../AuthContext.jsx";
+import { downloadCertificatePdf } from "../lib/certificate.js";
+import { client } from "../config/clients.js";
 
 // Training-evidence register — completed modules logged as project record.
 export default function EvidencePage() {
@@ -101,10 +103,23 @@ export default function EvidencePage() {
               {progress.earnedQuizPoints}/{progress.totalQuizPoints} quiz points
             </span>
             <button
-              onClick={() => window.print()}
+              onClick={() =>
+                downloadCertificatePdf({
+                  name: learnerName,
+                  certNo: user?.id
+                    ? "SKA-" + user.id.replace(/-/g, "").slice(0, 10).toUpperCase()
+                    : "SKA-DEMO",
+                  date:
+                    completed.map((m) => m.completedOn).filter(Boolean).sort().slice(-1)[0] ??
+                    new Date().toISOString().slice(0, 10),
+                  courseTitle: course.title,
+                  clientShort: client.clientShort,
+                  totalModules: progress.total,
+                })
+              }
               className="ml-auto flex items-center gap-2 rounded-lg bg-secondary-container px-5 py-2.5 text-label-md font-bold text-on-secondary-container transition-transform hover:opacity-90 active:scale-95"
             >
-              <MaterialIcon name="print" className="text-[18px]" /> Print certificate
+              <MaterialIcon name="download" className="text-[18px]" /> Download PDF certificate
             </button>
           </div>
         </div>
