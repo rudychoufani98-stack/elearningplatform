@@ -1,10 +1,23 @@
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import MaterialIcon from "../components/MaterialIcon.jsx";
+import { supabase, isSupabaseConfigured } from "../lib/supabase.js";
 import { resourceCategories } from "../data.js";
 
 // "Resources" — company policies & official documents, grouped by category.
 // Items with real content link to their in-app reading; others are placeholders.
 export default function ResourcesPage() {
+  // Documents uploaded by the administrator (Supabase) — shown first.
+  const [clientDocs, setClientDocs] = useState([]);
+  useEffect(() => {
+    if (!isSupabaseConfigured) return;
+    supabase
+      .from("client_documents")
+      .select("*")
+      .order("category", { ascending: true })
+      .then(({ data }) => setClientDocs(data ?? []));
+  }, []);
+
   return (
     <div className="mx-auto max-w-[1280px] px-margin-mobile py-stack-lg md:px-margin-desktop">
       <nav className="mb-stack-md flex items-center gap-2 text-caption text-outline">
@@ -24,7 +37,41 @@ export default function ResourcesPage() {
       </p>
 
       <div className="space-y-stack-lg">
-        {resourceCategories.map((cat) => (
+        {clientDocs.length > 0 && (
+        <section className="mb-gutter">
+          <h2 className="mb-stack-md flex items-center gap-2 text-headline-md text-primary">
+            <MaterialIcon name="cloud_done" className="text-secondary" />
+            Company documents
+          </h2>
+          <div className="grid grid-cols-1 gap-stack-md md:grid-cols-2">
+            {clientDocs.map((d) => (
+              <a
+                key={d.id}
+                href={d.url}
+                target="_blank"
+                rel="noreferrer"
+                className="lift group flex items-start gap-3 rounded-xl border border-outline-variant bg-surface-container-lowest p-stack-md"
+              >
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-rose-50">
+                  <MaterialIcon name="picture_as_pdf" className="text-rose-500" />
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block truncate text-label-md font-semibold text-primary group-hover:text-secondary">
+                    {d.title}
+                  </span>
+                  <span className="block text-caption text-on-surface-variant">
+                    {d.category}
+                    {d.note ? ` · ${d.note}` : ""}
+                  </span>
+                </span>
+                <MaterialIcon name="open_in_new" className="shrink-0 text-outline" />
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {resourceCategories.map((cat) => (
           <section key={cat.title}>
             <h2 className="mb-stack-md flex items-center gap-2 text-label-md font-bold uppercase tracking-widest text-outline">
               {cat.title}

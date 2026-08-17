@@ -151,6 +151,7 @@ export default function TopNav() {
           onSignOut={signOut}
           onGoEvidence={() => navigate("/evidence")}
           onChangePassword={() => navigate("/reset")}
+          onAdmin={["admin", "manager"].includes(profile?.role) ? () => navigate("/admin") : null}
         />
       </div>
     </header>
@@ -292,7 +293,7 @@ function HelpMenu() {
 
 // Avatar with a dropdown: account details, quick links, and a styled
 // sign-out confirmation — everything hangs under the initial.
-function AccountMenu({ enabled, displayName, initial, email, role, onSignOut, onGoEvidence, onChangePassword }) {
+function AccountMenu({ enabled, displayName, initial, email, role, onSignOut, onGoEvidence, onChangePassword, onAdmin }) {
   const [open, setOpen] = useState(false);
   const [confirming, setConfirming] = useState(false);
 
@@ -385,6 +386,19 @@ function AccountMenu({ enabled, displayName, initial, email, role, onSignOut, on
                 <MaterialIcon name="verified" className="text-secondary" />
                 My progress & evidence
               </button>
+              {onAdmin && (
+                <button
+                  onMouseDown={(e) => {
+                    e.preventDefault();
+                    close();
+                    onAdmin();
+                  }}
+                  className="flex w-full items-center gap-3 px-stack-md py-3 text-left text-body-md text-on-surface transition-colors hover:bg-surface-container-low"
+                >
+                  <MaterialIcon name="admin_panel_settings" className="text-secondary" />
+                  Administration
+                </button>
+              )}
               {enabled && (
                 <button
                   onMouseDown={(e) => {

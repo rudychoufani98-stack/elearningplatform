@@ -143,3 +143,50 @@ create policy comments_delete_own on public.comments
 -- ============================================================================
 revoke update on public.profiles from authenticated, anon;
 grant update (full_name) on public.profiles to authenticated;
+
+-- ============================================================================
+-- ADMIN CONSOLE (run once) — client documents + role management RPC + storage.
+-- ============================================================================
+create table if not exists public.client_documents (
+  id          uuid primary key default gen_random_uuid(),
+  title       text not null,
+  note        text,
+  category    text not null default 'Other',
+  path        text not null,
+  url         text not null,
+  created_at  timestamptz not null default now()
+);
+alter table public.client_documents enable row level security;
+drop policy if exists client_docs_read on public.client_documents;
+create policy client_docs_read on public.client_documents
+  for select using (auth.role() = 'authenticated');
+drop policy if exists client_docs_staff_write on public.client_documents;
+create policy client_docs_staff_write on public.client_documents
+  for all using (public.is_staff()) with check (public.is_staff());
+
+-- Role changes go through this admin-only function (direct updates are revoked).
+create or replace function public.set_user_role(target uuid, new_role text)
+returns void language plpgsql security definer set search_path = public as $$
+begin
+  if not exists (select 1 from public.profiles where id = auth.uid() and role = 'admin') then
+    raise exception 'Only the administrator can change roles.';
+  end if;
+  if new_role not in ('learner','manager','admin') then
+    raise exception 'Invalid role.';
+  end if;
+  update public.profiles set role = new_role where id = target;
+end;
+$$;
+
+-- Storage bucket for the client documents (public read; staff write).
+insert into storage.buckets (id, name, public)
+values ('client-docs', 'client-docs', true)
+on conflict (id) do nothing;
+drop policy if exists client_docs_upload on storage.objects;
+create policy client_docs_upload on storage.objects
+  for insert to authenticated
+  with check (bucket_id = 'client-docs' and public.is_staff());
+drop policy if exists client_docs_delete on storage.objects;
+create policy client_docs_delete on storage.objects
+  for delete to authenticated
+  using (bucket_id = 'client-docs' and public.is_staff());

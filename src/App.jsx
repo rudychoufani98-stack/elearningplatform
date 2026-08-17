@@ -4,6 +4,7 @@ import { CourseProvider } from "./CourseContext.jsx";
 import { AuthProvider, useAuth } from "./AuthContext.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import ResetPage from "./pages/ResetPage.jsx";
+import AdminPage from "./pages/AdminPage.jsx";
 import ErrorBoundary from "./components/ErrorBoundary.jsx";
 import Toast from "./components/Toast.jsx";
 import MainLayout from "./components/layout/MainLayout.jsx";
@@ -80,6 +81,7 @@ export default function App() {
             <Route path="/resources" element={<ResourcesPage />} />
             <Route path="/resources/:docId" element={<DocumentPage />} />
             <Route path="/evidence" element={<EvidencePage />} />
+            <Route path="/admin" element={<AdminPage />} />
             <Route path="/capstone" element={<CapstonePage />} />
           </Route>
         </Routes>
