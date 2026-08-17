@@ -60,6 +60,35 @@ export default function LessonPage() {
       setReadSections([]);
     }
   }, [id]);
+  // Sections tick themselves as the learner scrolls through them — no
+  // clicking required (the manual toggle still works as an override).
+  useEffect(() => {
+    const els = document.querySelectorAll("[data-sec]");
+    if (!els.length) return;
+    const key = `skykapital-read-${id}`;
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((en) => {
+          if (!en.isIntersecting) return;
+          const h = en.target.getAttribute("data-sec");
+          setReadSections((prev) => {
+            if (prev.includes(h)) return prev;
+            const next = [...prev, h];
+            try {
+              localStorage.setItem(key, JSON.stringify(next));
+            } catch {
+              /* ignore */
+            }
+            return next;
+          });
+        });
+      },
+      { threshold: 0.35 }
+    );
+    els.forEach((el) => obs.observe(el));
+    return () => obs.disconnect();
+  }, [id, module?.lesson?.length]);
+
   function toggleRead(heading) {
     setReadSections((prev) => {
       const next = prev.includes(heading)
@@ -307,7 +336,7 @@ export default function LessonPage() {
                   {module.lesson?.length > 0 && (
                     <div className="mb-4">
                       <div className="mb-1 flex items-center justify-between text-caption text-on-surface-variant">
-                        <span>Your reading</span>
+                        <span>Your reading — sections tick automatically as you scroll</span>
                         <span className="font-semibold" style={{ color: module.accent }}>
                           {module.lesson.filter((s) => readSections.includes(s.heading)).length}
                           /{module.lesson.length} sections read
@@ -325,7 +354,7 @@ export default function LessonPage() {
                     </div>
                   )}
                   {module.lesson?.map((section) => (
-                    <div key={section.heading} className="mb-6">
+                    <div key={section.heading} data-sec={section.heading} className="mb-6">
                       <h3 className="mb-2 flex items-center gap-2 text-label-md font-bold uppercase tracking-wide text-primary">
                         <span
                           className="h-2.5 w-2.5 rounded-full"
