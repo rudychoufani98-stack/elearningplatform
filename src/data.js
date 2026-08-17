@@ -1,15 +1,19 @@
 // ESG course content ("Creating Our Sustainability Pathway") presented inside
 // the Skykapital Europe platform design. No backend — seeds CourseContext.
 
+import { client } from "./config/clients.js";
+
+export { client };
+
 export const platform = {
   brand: "Skykapital Europe",
-  center: "Skykapital ESG Learning Center",
-  series: "ESG Foundation Series",
+  center: client.center,
+  series: client.series,
 };
 
 export const course = {
-  title: "Creating Our Sustainability Pathway",
-  subtitle: "Embrace the journey",
+  title: client.courseTitle,
+  subtitle: client.courseSubtitle,
   learner: "Alexandre",
   totalQuizPoints: 48,
   duration: "60–70 min",
@@ -1252,7 +1256,7 @@ export const resourceCategories = [
     title: "Governance & Ethics",
     items: [
       {
-        title: "HITECH Code of Conduct",
+        title: `${client.clientShort} Code of Conduct`,
         note: "Ethical standards for all staff, contractors & partners.",
         icon: "gavel",
         accent: "#6366f1",
@@ -1574,15 +1578,15 @@ export const capstoneSim = {
 // summary for on-screen study; the full signed source is embedded via `pdf`.
 export const documents = {
   "code-of-conduct": {
-    title: "HITECH Code of Conduct",
-    org: "HITECH Construction Company Limited — Builders & Civil Engineers",
-    ref: "IMS-HSE-Pol-014 · Version 1 · April 2025",
-    owner: "Approved by Dany Abboud, Managing Director",
+    title: `${client.clientShort} Code of Conduct`,
+    org: client.clientLegal,
+    ref: client.codeOfConduct.ref,
+    owner: client.codeOfConduct.owner,
     accent: "#6366f1",
-    pdf: "/docs/hitech-code-of-conduct.pdf",
+    pdf: client.codeOfConduct.pdf,
     acknowledge: true,
     intro:
-      "The ethical principles and behavioural standards expected of all HITECH employees, contractors, consultants, suppliers and partners, across every operation and project site in Nigeria and internationally. It is part of HITECH’s ESMS and is read alongside the ESMS policies and HR Employment Handbook.",
+      `The ethical principles and behavioural standards expected of all ${client.clientShort} employees, contractors, consultants, suppliers and partners, across every operation and project site. It is part of the company's ESMS and is read alongside the ESMS policies and HR Employment Handbook.`,
     sections: [
       {
         title: "Commitment & compliance",
