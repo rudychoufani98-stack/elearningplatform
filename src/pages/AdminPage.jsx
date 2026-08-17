@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import MaterialIcon from "../components/MaterialIcon.jsx";
 import Logo from "../components/Logo.jsx";
-import { supabase, isSupabaseConfigured } from "../lib/supabase.js";
+import { supabase, isSupabaseConfigured, adminCreateAccount } from "../lib/supabase.js";
 import { useAuth } from "../AuthContext.jsx";
 import { client } from "../config/clients.js";
 
@@ -304,14 +304,12 @@ function ProjectUsers({ project, people, isAdmin, reload }) {
     if (form.password.length < 10 || !/[a-zA-Z]/.test(form.password) || !/[0-9]/.test(form.password))
       return setErr("Temporary password: at least 10 characters with letters and numbers.");
     setBusy(true);
-    const { data, error } = await supabase.functions.invoke("create-user", {
-      body: { email: form.email.trim(), password: form.password, full_name: form.name.trim() },
-    });
-    if (error || data?.error) {
+    const res = await adminCreateAccount(form.email.trim(), form.password, form.name.trim());
+    if (res.error) {
       setBusy(false);
-      return setErr((data?.error || error.message) + " — if the function isn't deployed, use the Supabase dashboard (Authentication → Add user).");
+      return setErr(res.error + ' — check Supabase Auth settings: "Allow new users to sign up" must be ON.');
     }
-    if (data?.id) await supabase.rpc("set_user_project", { target: data.id, proj: project.id });
+    if (res.id) await supabase.rpc("set_user_project", { target: res.id, proj: project.id });
     setBusy(false);
     setMsg(`Account created and added to ${project.name}. Share the temporary password with ${form.name}.`);
     setForm({ name: "", email: "", password: "" });
