@@ -82,6 +82,11 @@ export default function EvidencePage() {
             Certificate of completion
           </p>
           <h2 className="mt-1 text-headline-lg">{learnerName}</h2>
+          {user?.id && (
+            <p className="mt-0.5 text-caption tracking-widest text-secondary-fixed">
+              Certificate no. SKA-{user.id.replace(/-/g, "").slice(0, 10).toUpperCase()}
+            </p>
+          )}
           <p className="mt-1 max-w-xl text-body-md text-white/80">
             has completed all {progress.total} modules of “{course.title}” —
             passing every assessment and the capstone simulation.

@@ -275,10 +275,15 @@ function Workspace({ project, shared, projects, people, docs, isAdmin, onBack, r
         )}
       </div>
 
-      <div className="mb-stack-md flex gap-2">
+      <div className="mb-stack-md flex flex-wrap gap-2">
         {!shared && (
           <TabBtn active={tab === "users"} icon="group" onClick={() => setTab("users")}>
             Users
+          </TabBtn>
+        )}
+        {!shared && (
+          <TabBtn active={tab === "progress"} icon="insights" onClick={() => setTab("progress")}>
+            Progress & certificates
           </TabBtn>
         )}
         <TabBtn active={tab === "docs"} icon="folder_open" onClick={() => setTab("docs")}>
@@ -286,7 +291,9 @@ function Workspace({ project, shared, projects, people, docs, isAdmin, onBack, r
         </TabBtn>
       </div>
 
-      {tab === "users" && !shared ? (
+      {tab === "progress" && !shared ? (
+        <ProjectProgress project={project} people={people} />
+      ) : tab === "users" && !shared ? (
         <ProjectUsers project={project} projects={projects} people={people} isAdmin={isAdmin} reload={reload} />
       ) : (
         <ProjectDocs pid={pid} shared={shared} docs={docs.filter((d) => (shared ? !d.project_id : d.project_id === pid))} reload={reload} />
@@ -306,6 +313,106 @@ function TabBtn({ active, icon, onClick, children }) {
       <MaterialIcon name={icon} className="text-[18px]" />
       {children}
     </button>
+  );
+}
+
+/* ------------------------- PROJECT · PROGRESS ------------------------- */
+const TOTAL_MODULES = 6;
+
+function ProjectProgress({ project, people }) {
+  const members = people.filter((u) => u.project_id === project.id && u.role !== "admin");
+  const [rows, setRows] = useState(null);
+
+  useEffect(() => {
+    const ids = members.map((m) => m.id);
+    if (ids.length === 0) {
+      setRows([]);
+      return;
+    }
+    supabase
+      .from("module_progress")
+      .select("*")
+      .in("user_id", ids)
+      .then(({ data }) => setRows(data ?? []));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [project.id, people.length]);
+
+  const per = members.map((m) => {
+    const mine = (rows ?? []).filter((r) => r.user_id === m.id && r.status === "completed");
+    const last = mine.map((r) => r.updated_at).sort().slice(-1)[0];
+    const pts = mine.reduce((s, r) => s + (r.earned ?? 0), 0);
+    return {
+      ...m,
+      done: mine.length,
+      certified: mine.length >= TOTAL_MODULES,
+      last: last ? last.slice(0, 10) : "—",
+      pts,
+      certNo: "SKA-" + m.id.replace(/-/g, "").slice(0, 10).toUpperCase(),
+    };
+  });
+  const certified = per.filter((p) => p.certified).length;
+
+  return (
+    <div className="space-y-gutter">
+      <div className="flex flex-wrap gap-gutter">
+        <div className="rounded-xl border border-outline-variant bg-surface-container-lowest px-stack-lg py-stack-md">
+          <p className="text-caption uppercase tracking-wider text-on-surface-variant">Learners</p>
+          <p className="text-headline-lg text-primary">{members.length}</p>
+        </div>
+        <div className="rounded-xl border border-outline-variant bg-surface-container-lowest px-stack-lg py-stack-md">
+          <p className="text-caption uppercase tracking-wider text-on-surface-variant">Certified</p>
+          <p className="text-headline-lg text-primary">
+            {certified}
+            <span className="text-headline-md text-outline">/{members.length}</span>
+          </p>
+        </div>
+      </div>
+
+      <div className="overflow-x-auto rounded-xl border border-outline-variant bg-surface-container-lowest">
+        <table className="w-full min-w-[680px] text-left">
+          <thead>
+            <tr className="border-b border-outline-variant text-caption uppercase tracking-wider text-on-surface-variant">
+              <th className="px-stack-md py-stack-sm font-semibold">Name</th>
+              <th className="px-stack-md py-stack-sm font-semibold">Modules completed</th>
+              <th className="px-stack-md py-stack-sm font-semibold">Certificate</th>
+              <th className="px-stack-md py-stack-sm font-semibold">Last activity</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows === null ? (
+              <tr><td colSpan={4} className="px-stack-md py-stack-lg text-center text-on-surface-variant">Loading…</td></tr>
+            ) : per.length === 0 ? (
+              <tr><td colSpan={4} className="px-stack-md py-stack-lg text-center text-on-surface-variant">No learners in this project yet.</td></tr>
+            ) : (
+              per.map((p) => (
+                <tr key={p.id} className="border-b border-surface-container last:border-0">
+                  <td className="px-stack-md py-stack-md text-body-md text-primary">{p.full_name || "—"}</td>
+                  <td className="px-stack-md py-stack-md">
+                    <span className="mr-2 text-body-md font-bold text-primary">{p.done}/{TOTAL_MODULES}</span>
+                    <span className="inline-block h-1.5 w-28 overflow-hidden rounded-full bg-surface-container-high align-middle">
+                      <span className="block h-full rounded-full bg-secondary" style={{ width: (p.done / TOTAL_MODULES) * 100 + "%" }} />
+                    </span>
+                  </td>
+                  <td className="px-stack-md py-stack-md">
+                    {p.certified ? (
+                      <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2.5 py-0.5 text-caption font-bold text-emerald-700">
+                        <MaterialIcon name="workspace_premium" className="text-[14px]" /> {p.certNo}
+                      </span>
+                    ) : (
+                      <span className="text-caption text-outline">In progress</span>
+                    )}
+                  </td>
+                  <td className="px-stack-md py-stack-md text-body-md text-on-surface-variant">{p.last}</td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+      <p className="text-caption text-on-surface-variant">
+        These records come from the central database — the foundation for externally verifiable certification.
+      </p>
+    </div>
   );
 }
 

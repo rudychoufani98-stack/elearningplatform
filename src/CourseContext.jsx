@@ -8,6 +8,7 @@ import {
 } from "react";
 import { modules as seedModules, moduleAccents, moduleImages } from "./data.js";
 import { useAuth } from "./AuthContext.jsx";
+import { supabase, isSupabaseConfigured } from "./lib/supabase.js";
 
 const CourseContext = createContext(null);
 const STORAGE_KEY = "skykapital-progress-v1";
@@ -68,6 +69,45 @@ export function CourseProvider({ children }) {
     setModules(d.modules);
     setAcknowledgements(d.acknowledgements);
     loadedKey.current = storageKey;
+    // Signed in: the DATABASE is the source of truth for completions —
+    // records survive any device and can back real certification.
+    if (authEnabled && user && isSupabaseConfigured) {
+      (async () => {
+        const { data: mp } = await supabase
+          .from("module_progress")
+          .select("*")
+          .eq("user_id", user.id);
+        const { data: acks } = await supabase
+          .from("acknowledgements")
+          .select("*")
+          .eq("user_id", user.id);
+        if (mp?.length)
+          setModules((prev) =>
+            prev.map((m) => {
+              const r = mp.find((x) => x.module_id === m.id);
+              if (r && r.status === "completed" && m.status !== "completed")
+                return {
+                  ...m,
+                  status: "completed",
+                  completedOn: m.completedOn ?? (r.updated_at || "").slice(0, 10),
+                  score: m.score
+                    ? { ...m.score, earned: r.earned ?? m.score.earned }
+                    : m.score,
+                };
+              return m;
+            })
+          );
+        if (acks?.length)
+          setAcknowledgements(
+            acks.map((a) => ({
+              id: a.doc_id,
+              title: a.doc_title,
+              name: a.signed_name,
+              date: (a.signed_at || "").slice(0, 10),
+            }))
+          );
+      })();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [storageKey]);
   const [toast, setToast] = useState(null);
@@ -122,6 +162,24 @@ export function CourseProvider({ children }) {
   // Marks a module complete and records a quiz score if provided.
   function completeModule(id, earned) {
     let message = "Module completed";
+    // Permanent record in the database (per account, tamper-resistant).
+    if (authEnabled && user && isSupabaseConfigured) {
+      const m0 = modules.find((m) => m.id === id);
+      const total = m0?.score?.total ?? null;
+      supabase
+        .from("module_progress")
+        .upsert(
+          {
+            user_id: user.id,
+            module_id: id,
+            status: "completed",
+            earned: earned ?? total,
+            total,
+          },
+          { onConflict: "user_id,module_id" }
+        )
+        .then(() => {});
+    }
     setModules((prev) =>
       prev.map((m) => {
         if (m.id !== id) return m;
@@ -145,6 +203,15 @@ export function CourseProvider({ children }) {
 
   // Records a read-and-agree acknowledgement (e-signature) for a document.
   function acknowledge({ id, title, name, date }) {
+    if (authEnabled && user && isSupabaseConfigured) {
+      supabase
+        .from("acknowledgements")
+        .upsert(
+          { user_id: user.id, doc_id: id, doc_title: title, signed_name: name },
+          { onConflict: "user_id,doc_id" }
+        )
+        .then(() => {});
+    }
     setAcknowledgements((prev) => {
       if (prev.some((a) => a.id === id)) return prev; // already signed
       return [...prev, { id, title, name, date }];
