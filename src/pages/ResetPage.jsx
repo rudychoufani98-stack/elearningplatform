@@ -75,6 +75,9 @@ export default function ResetPage() {
         ) : (
           <>
             <h1 className="text-headline-md text-primary">Choose a new password</h1>
+            <p className="mt-1 text-caption text-on-surface-variant">
+              10+ characters with letters and numbers. You'll stay signed in.
+            </p>
             <form onSubmit={submit} className="mt-stack-md space-y-stack-md">
               <label className="block">
                 <span className="mb-1 block text-label-md text-on-surface-variant">

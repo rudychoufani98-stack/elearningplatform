@@ -8,7 +8,9 @@ import { platform, course } from "../data.js";
 // Branded sign-in / sign-up screen shown before anything else when auth is on.
 export default function LoginPage() {
   const { signIn, signUp } = useAuth();
-  const [mode, setMode] = useState("signin"); // "signin" | "signup"
+  // Public sign-up is disabled: accounts are created by the Skykapital
+  // administrator for each client company. Learners only sign in.
+  const mode = "signin";
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -233,18 +235,8 @@ export default function LoginPage() {
           </form>
 
           <p className="mt-stack-md text-center text-caption text-on-surface-variant">
-            {mode === "signin" ? "New here?" : "Already have an account?"}{" "}
-            <button
-              onClick={() => {
-                setMode(mode === "signin" ? "signup" : "signin");
-                setConfirm("");
-                setError(null);
-                setNotice(null);
-              }}
-              className="font-bold text-secondary hover:underline"
-            >
-              {mode === "signin" ? "Create an account" : "Sign in"}
-            </button>
+            No account yet? Access is set up by your training administrator —
+            contact them to be added.
           </p>
         </div>
       </div>
