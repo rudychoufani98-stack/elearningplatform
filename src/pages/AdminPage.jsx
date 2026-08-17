@@ -532,17 +532,30 @@ function ProjectUsers({ project, people, isAdmin, reload }) {
     e.preventDefault();
     setMsg(null);
     setErr(null);
-    if (form.password.length < 10 || !/[a-zA-Z]/.test(form.password) || !/[0-9]/.test(form.password))
-      return setErr("Temporary password: at least 10 characters with letters and numbers.");
     setBusy(true);
-    const res = await adminCreateAccount(form.email.trim(), form.password, form.name.trim());
+    // The account is created with a strong random password the admin never
+    // sees — the learner sets their own via the invitation email.
+    const bytes = new Uint8Array(24);
+    crypto.getRandomValues(bytes);
+    const randomPw = "Sk1-" + Array.from(bytes, (b) => "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"[b % 62]).join("");
+    const email = form.email.trim();
+    const res = await adminCreateAccount(email, randomPw, form.name.trim());
     if (res.error) {
       setBusy(false);
       return setErr(res.error + ' — check Supabase Auth settings: "Allow new users to sign up" must be ON.');
     }
     if (res.id) await supabase.rpc("set_user_project", { target: res.id, proj: project.id });
+    // Invitation email: Supabase sends the "Reset password" template, which
+    // lands the learner on /reset to choose their own password.
+    const { error: mailErr } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: window.location.origin + "/reset",
+    });
     setBusy(false);
-    setMsg(`Account created and added to ${project.name}. Share the temporary password with ${form.name}.`);
+    if (mailErr) {
+      setMsg(`Account created and added to ${project.name}, but the invitation email failed (${mailErr.message}). Ask ${form.name} to use “Forgotten password” on the sign-in page.`);
+    } else {
+      setMsg(`Account created and added to ${project.name}. An invitation email was sent to ${email} — ${form.name} will choose their own password.`);
+    }
     setForm({ name: "", email: "", password: "" });
     reload();
   }
@@ -554,20 +567,20 @@ function ProjectUsers({ project, people, isAdmin, reload }) {
         <h2 className="mb-1 flex items-center gap-2 text-headline-md text-primary">
           <MaterialIcon name="person_add" className="text-secondary" /> Add a user to {project.name}
         </h2>
-        <form onSubmit={createUser} className="grid grid-cols-1 gap-stack-md sm:grid-cols-3">
+        <p className="mb-3 text-caption text-on-surface-variant">
+          The person receives an automatic invitation email and chooses their own password — nothing to share manually.
+        </p>
+        <form onSubmit={createUser} className="grid grid-cols-1 gap-stack-md sm:grid-cols-2">
           <input type="text" required placeholder="Full name" value={form.name}
             onChange={(e) => setForm({ ...form, name: e.target.value })}
             className="rounded-lg border border-outline-variant bg-white px-4 py-3 text-body-md focus:border-secondary focus:outline-none" />
           <input type="email" required placeholder="Work email" value={form.email}
             onChange={(e) => setForm({ ...form, email: e.target.value })}
             className="rounded-lg border border-outline-variant bg-white px-4 py-3 text-body-md focus:border-secondary focus:outline-none" />
-          <input type="text" required placeholder="Temporary password" value={form.password}
-            onChange={(e) => setForm({ ...form, password: e.target.value })}
-            className="rounded-lg border border-outline-variant bg-white px-4 py-3 text-body-md focus:border-secondary focus:outline-none" />
           <button type="submit" disabled={busy}
-            className="flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-primary-container to-[#1c3a63] px-6 py-3 text-label-md font-bold text-white transition-all hover:brightness-110 disabled:opacity-60 sm:col-span-3 sm:w-auto">
+            className="flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-primary-container to-[#1c3a63] px-6 py-3 text-label-md font-bold text-white transition-all hover:brightness-110 disabled:opacity-60 sm:col-span-2 sm:w-auto">
             <MaterialIcon name="person_add" className="text-[18px]" />
-            {busy ? "Creating…" : "Create the account"}
+            {busy ? "Creating & sending invite…" : "Create account & send invitation"}
           </button>
         </form>
 
