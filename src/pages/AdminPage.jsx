@@ -321,67 +321,58 @@ function TabBtn({ active, icon, onClick, children }) {
 /* ------------------------- PROJECT · PROGRESS ------------------------- */
 const TOTAL_MODULES = 6;
 
-// Opens a print-ready Skykapital certificate for a certified learner.
-function printCertificate(p) {
+// Opens a print-ready Skykapital certificate for a certified learner —
+// same light classic design as the PDF (bronze borders, real logo).
+async function printCertificate(p) {
   const w = window.open("", "_blank", "noopener,width=900,height=650");
   if (!w) return;
-  const starSvg = (size, color) =>
-    `<svg viewBox="0 0 100 100" width="${size}" height="${size}" fill="${color}"><path d="M3 3 Q50 50 97 3 Q50 50 97 97 Q50 50 3 97 Q50 50 3 3 Z"/></svg>`;
+  const { SKYKAPITAL_LOGO } = await import("../assets/skykapitalLogoB64.js");
   w.document.write(`<!doctype html><html><head><title>Certificate ${p.certNo}</title>
 <style>
   @page { size: A4 landscape; margin: 0; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: Georgia, 'Times New Roman', serif; color: #0d1c32; background: #fcfbf8; }
-  .cert { width: 100vw; height: 100vh; display: flex; flex-direction: column; background: #fcfbf8; }
-  .band { background: #0d1c32; color: white; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; height: 76px; border-bottom: 4px solid #c99a2e; }
-  .brand { display: flex; align-items: center; gap: 14px; font-family: Arial, sans-serif; font-weight: bold; letter-spacing: 5px; font-size: 16px; }
-  .series { font-family: Arial, sans-serif; font-size: 11px; letter-spacing: 4px; color: #e2cb94; }
-  .main { flex: 1; text-align: center; padding: 26px 60px 0; position: relative; }
-  .corner { position: absolute; width: 46px; height: 46px; border: 3px solid #c99a2e; }
-  .c1 { top: 18px; left: 34px; border-right: 0; border-bottom: 0; }
-  .c2 { top: 18px; right: 34px; border-left: 0; border-bottom: 0; }
-  .c3 { bottom: 14px; left: 34px; border-right: 0; border-top: 0; }
-  .c4 { bottom: 14px; right: 34px; border-left: 0; border-top: 0; }
-  h1 { font-size: 52px; letter-spacing: 6px; margin-top: 18px; }
-  .sub { font-family: Arial, sans-serif; font-size: 13px; letter-spacing: 10px; color: #c99a2e; font-weight: bold; margin-top: 6px; }
-  .presented { font-style: italic; color: #5a6472; margin-top: 26px; font-size: 15px; }
-  .name { font-size: 44px; font-style: italic; font-weight: bold; margin-top: 8px; }
-  .rule { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 10px auto 0; width: 420px; }
-  .rule .l { flex: 1; border-top: 2px solid #c99a2e; }
-  .body { font-size: 16px; color: #2d3440; max-width: 660px; margin: 22px auto 0; line-height: 1.7; }
-  .row { display: flex; align-items: flex-end; justify-content: space-between; max-width: 860px; margin: 34px auto 0; }
-  .col { width: 260px; text-align: center; }
-  .sig { font-style: italic; font-size: 19px; }
-  .dt { font-family: Arial, sans-serif; font-weight: bold; font-size: 16px; }
-  .col .ln { border-top: 1.5px solid #0d1c32; margin-top: 6px; padding-top: 7px; font-family: Arial, sans-serif; font-size: 10px; letter-spacing: 2px; color: #5a6472; }
-  .seal { width: 118px; height: 118px; border: 3.5px solid #c99a2e; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; box-shadow: inset 0 0 0 6px #fcfbf8, inset 0 0 0 7px #c99a2e; }
-  .seal span { font-family: Arial, sans-serif; font-size: 8px; letter-spacing: 2px; color: #c99a2e; font-weight: bold; }
-  .foot { background: #0d1c32; color: #d2d8e2; font-family: Arial, sans-serif; font-size: 10.5px; letter-spacing: 1px; text-align: center; padding: 14px 0; border-top: 4px solid #c99a2e; }
+  body { font-family: Georgia, 'Times New Roman', serif; color: #001b3d; background: #ffffff; }
+  .cert { width: 100vw; height: 100vh; position: relative; background: #ffffff; text-align: center; }
+  .frame { position: absolute; inset: 34px; border: 3px solid #775a19; }
+  .frame2 { position: absolute; inset: 43px; border: 1px solid #775a19; opacity: 0.4; }
+  .corner { position: absolute; width: 32px; height: 32px; border: 0 solid #775a19; }
+  .c1 { top: 22px; left: 22px; border-top-width: 3px; border-left-width: 3px; }
+  .c2 { top: 22px; right: 22px; border-top-width: 3px; border-right-width: 3px; }
+  .c3 { bottom: 22px; left: 22px; border-bottom-width: 3px; border-left-width: 3px; }
+  .c4 { bottom: 22px; right: 22px; border-bottom-width: 3px; border-right-width: 3px; }
+  .inner { position: absolute; inset: 60px; display: flex; flex-direction: column; align-items: center; }
+  .logo { height: 92px; margin-top: 4px; }
+  h1 { font-size: 42px; letter-spacing: 7px; color: #001b3d; margin-top: 34px; }
+  .certify { font-style: italic; font-size: 17px; color: #775a19; margin-top: 14px; }
+  .name { font-size: 46px; font-style: italic; color: #001b3d; margin-top: 26px; }
+  .rule { width: 620px; border-top: 1px solid #c4c6cf; margin-top: 10px; }
+  .completed { font-size: 19px; color: #44474e; margin-top: 26px; }
+  .course { font-size: 21px; font-weight: bold; color: #001b3d; margin-top: 8px; }
+  .detail { font-family: Arial, sans-serif; font-size: 11px; color: #44474e; margin-top: 16px; }
+  .row { display: flex; justify-content: space-between; width: 720px; margin-top: auto; padding-bottom: 34px; }
+  .col { width: 220px; }
+  .col .val { font-family: Arial, sans-serif; font-weight: bold; font-size: 14px; height: 22px; }
+  .col .ln { border-top: 1.5px solid #001b3d; margin-top: 4px; padding-top: 8px; font-family: Arial, sans-serif; font-size: 10px; letter-spacing: 3px; color: #001b3d; font-weight: bold; }
+  .verify { position: absolute; bottom: 44px; left: 0; right: 0; font-family: Arial, sans-serif; font-size: 9px; color: #74777f; }
 </style></head><body>
 <div class="cert">
-  <div class="band">
-    <div class="brand">${starSvg(30, "#c99a2e")}SKYKAPITAL EUROPE</div>
-    <div class="series">ESG FOUNDATION SERIES</div>
-  </div>
-  <div class="main">
-    <div class="corner c1"></div><div class="corner c2"></div><div class="corner c3"></div><div class="corner c4"></div>
-    <h1>CERTIFICATE</h1>
-    <div class="sub">OF COMPLETION</div>
-    <div class="presented">This certificate is proudly presented to</div>
+  <div class="frame"></div><div class="frame2"></div>
+  <div class="corner c1"></div><div class="corner c2"></div><div class="corner c3"></div><div class="corner c4"></div>
+  <div class="inner">
+    <img class="logo" src="${SKYKAPITAL_LOGO}" alt="Skykapital" />
+    <h1>CERTIFICATE OF ACHIEVEMENT</h1>
+    <div class="certify">This is to certify that</div>
     <div class="name">${p.full_name || "—"}</div>
-    <div class="rule"><div class="l"></div>${starSvg(16, "#c99a2e")}<div class="l"></div></div>
-    <div class="body">
-      for successfully completing all ${TOTAL_MODULES} modules of
-      <strong>“${course.title}”</strong> — passing every assessment with a minimum of 80%
-      and the final capstone simulation — on the ${client.clientShort} learning platform.
-    </div>
+    <div class="rule"></div>
+    <div class="completed">Has successfully completed the</div>
+    <div class="course">${course.title}</div>
+    <div class="detail">All ${TOTAL_MODULES} modules completed &nbsp;·&nbsp; assessments passed at 80% minimum &nbsp;·&nbsp; ${client.clientShort} learning platform</div>
     <div class="row">
-      <div class="col"><div class="sig">Skykapital Europe</div><div class="ln">MANAGING DIRECTOR • SKYKAPITAL EUROPE</div></div>
-      <div class="seal">${starSvg(58, "#c99a2e")}</div>
-      <div class="col"><div class="dt">${p.last}</div><div class="ln">DATE OF COMPLETION</div></div>
+      <div class="col"><div class="val">${p.last}</div><div class="ln">DATE</div></div>
+      <div class="col"><div class="val"></div><div class="ln">AUTHORIZED SIGNATORY</div></div>
     </div>
   </div>
-  <div class="foot">Certificate no. ${p.certNo} &nbsp;•&nbsp; Registered in the Skykapital central training record &nbsp;•&nbsp; Verification: quote this number to Skykapital Europe</div>
+  <div class="verify">Certificate no. ${p.certNo} &nbsp;·&nbsp; Registered in the Skykapital central training record &nbsp;·&nbsp; Verification: quote this number to Skykapital Europe</div>
 </div>
 <script>window.onload = () => setTimeout(() => window.print(), 300);</scr` + `ipt>
 </body></html>`);
