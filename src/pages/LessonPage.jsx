@@ -63,14 +63,14 @@ export default function LessonPage() {
   // Sections tick themselves as the learner scrolls through them — no
   // clicking required (the manual toggle still works as an override).
   useEffect(() => {
-    const els = document.querySelectorAll("[data-sec]");
-    if (!els.length) return;
     const key = `skykapital-read-${id}`;
-    const obs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((en) => {
-          if (!en.isIntersecting) return;
-          const h = en.target.getAttribute("data-sec");
+    let ticking = false;
+    function check() {
+      ticking = false;
+      const line = window.innerHeight * 0.65;
+      document.querySelectorAll("[data-sec]").forEach((el) => {
+        if (el.getBoundingClientRect().top < line) {
+          const h = el.getAttribute("data-sec");
           setReadSections((prev) => {
             if (prev.includes(h)) return prev;
             const next = [...prev, h];
@@ -81,13 +81,21 @@ export default function LessonPage() {
             }
             return next;
           });
-        });
-      },
-      { threshold: 0.35 }
-    );
-    els.forEach((el) => obs.observe(el));
-    return () => obs.disconnect();
-  }, [id, module?.lesson?.length]);
+        }
+      });
+    }
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      setTimeout(check, 120);
+    }
+    const t = setTimeout(check, 400); // catch sections already on screen
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      clearTimeout(t);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, [id]);
 
   function toggleRead(heading) {
     setReadSections((prev) => {
