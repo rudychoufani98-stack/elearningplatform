@@ -123,10 +123,7 @@ export async function buildCertificatePdf({
   const sy = 155;
   doc.setDrawColor(...GOLD).setLineWidth(1).circle(CX, sy, 15);
   doc.setLineWidth(0.35).circle(CX, sy, 12.8);
-  star(doc, CX, sy - 3.8, 5.2, GOLD);
-  doc.setFont("helvetica", "bold").setFontSize(5.6).setTextColor(...GOLD);
-  doc.text("SKYKAPITAL", CX, sy + 5.8, { align: "center", charSpace: 0.7 });
-  doc.text("VERIFIED", CX, sy + 9.2, { align: "center", charSpace: 1 });
+  star(doc, CX, sy, 7.5, GOLD);
 
   // Signature (left) and date (right)
   const colY = 162;

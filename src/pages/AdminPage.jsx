@@ -377,7 +377,7 @@ function printCertificate(p) {
     </div>
     <div class="row">
       <div class="col"><div class="sig">Skykapital Europe</div><div class="ln">MANAGING DIRECTOR • SKYKAPITAL EUROPE</div></div>
-      <div class="seal">${starSvg(44, "#c99a2e")}<span>SKYKAPITAL</span><span>VERIFIED</span></div>
+      <div class="seal">${starSvg(58, "#c99a2e")}</div>
       <div class="col"><div class="dt">${p.last}</div><div class="ln">DATE OF COMPLETION</div></div>
     </div>
   </div>
