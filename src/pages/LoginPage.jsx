@@ -19,10 +19,26 @@ export default function LoginPage() {
   const [notice, setNotice] = useState(null);
   const [busy, setBusy] = useState(false);
   const [showPw, setShowPw] = useState(false);
-  const [fails, setFails] = useState(0);
-  const [lockUntil, setLockUntil] = useState(() =>
-    Number(localStorage.getItem("skk-login-lock") || 0)
-  );
+  // Failed-attempt lockout is tracked PER ACCOUNT (email), not per device.
+  const [failCounts, setFailCounts] = useState({});
+  const [locks, setLocks] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("skk-login-locks") || "{}");
+    } catch {
+      return {};
+    }
+  });
+  function lockKey() {
+    return email.trim().toLowerCase();
+  }
+  function saveLocks(next) {
+    setLocks(next);
+    try {
+      localStorage.setItem("skk-login-locks", JSON.stringify(next));
+    } catch {
+      /* ignore */
+    }
+  }
 
   async function forgotPassword() {
     setError(null);
@@ -42,9 +58,10 @@ export default function LoginPage() {
     e.preventDefault();
     setError(null);
     setNotice(null);
-    if (mode === "signin" && Date.now() < lockUntil)
+    const lockedUntil = locks[lockKey()] || 0;
+    if (mode === "signin" && Date.now() < lockedUntil)
       return setError(
-        `Too many failed attempts. Try again in ${Math.ceil((lockUntil - Date.now()) / 60000)} minute(s).`
+        `Too many failed attempts for this account. Try again in ${Math.ceil((lockedUntil - Date.now()) / 60000)} minute(s).`
       );
     if (mode === "signup" && fullName.trim().length < 2)
       return setError("Please enter your full name.");
@@ -68,20 +85,27 @@ export default function LoginPage() {
     setBusy(false);
     if (err) {
       if (mode === "signin") {
-        const n = fails + 1;
+        const k = lockKey();
+        const n = (failCounts[k] || 0) + 1;
         if (n >= 5) {
-          const until = Date.now() + 2 * 60 * 1000;
-          setLockUntil(until);
-          setFails(0);
-          try { localStorage.setItem("skk-login-lock", String(until)); } catch {}
-          return setError("Too many failed attempts — sign-in is locked for 2 minutes.");
+          saveLocks({ ...locks, [k]: Date.now() + 2 * 60 * 1000 });
+          setFailCounts({ ...failCounts, [k]: 0 });
+          return setError("Too many failed attempts — this account is locked for 2 minutes.");
         }
-        setFails(n);
+        setFailCounts({ ...failCounts, [k]: n });
         return setError(`${err} (${5 - n} attempts left before a temporary lock)`);
       }
       return setError(err);
     }
-    setFails(0);
+    {
+      const k = lockKey();
+      if (failCounts[k] || locks[k]) {
+        setFailCounts({ ...failCounts, [k]: 0 });
+        const nl = { ...locks };
+        delete nl[k];
+        saveLocks(nl);
+      }
+    }
     if (mode === "signup")
       setNotice(
         "Account created. If email confirmation is enabled, check your inbox — otherwise you are now signed in."
