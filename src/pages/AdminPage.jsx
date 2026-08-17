@@ -5,6 +5,7 @@ import Logo from "../components/Logo.jsx";
 import { supabase, isSupabaseConfigured, adminCreateAccount } from "../lib/supabase.js";
 import { useAuth } from "../AuthContext.jsx";
 import { client } from "../config/clients.js";
+import { course } from "../data.js";
 
 const DOC_CATEGORIES = ["Governance & Ethics", "HSE", "People & Community", "Management System", "Other"];
 
@@ -319,6 +320,50 @@ function TabBtn({ active, icon, onClick, children }) {
 /* ------------------------- PROJECT · PROGRESS ------------------------- */
 const TOTAL_MODULES = 6;
 
+// Opens a print-ready Skykapital certificate for a certified learner.
+function printCertificate(p) {
+  const w = window.open("", "_blank", "noopener,width=900,height=650");
+  if (!w) return;
+  w.document.write(`<!doctype html><html><head><title>Certificate ${p.certNo}</title>
+<style>
+  @page { size: A4 landscape; margin: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: Georgia, 'Times New Roman', serif; color: #0d1c32; }
+  .page { width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; background: #f4f6f9; }
+  .cert { width: 92%; max-width: 980px; background: white; border: 3px solid #0d1c32; outline: 1px solid #c99a2e; outline-offset: -14px; padding: 64px 72px; text-align: center; position: relative; }
+  .brand { font-size: 14px; letter-spacing: 6px; text-transform: uppercase; color: #735c00; font-weight: bold; }
+  h1 { font-size: 34px; margin: 18px 0 6px; }
+  .sub { font-size: 13px; color: #55606e; letter-spacing: 2px; text-transform: uppercase; }
+  .name { font-size: 40px; margin: 30px 0 6px; color: #0d1c32; }
+  .line { width: 260px; border-bottom: 1.5px solid #c99a2e; margin: 0 auto 22px; }
+  .body { font-size: 15px; color: #333; max-width: 640px; margin: 0 auto; line-height: 1.6; }
+  .meta { display: flex; justify-content: space-between; margin-top: 48px; font-size: 12px; color: #55606e; }
+  .meta b { display: block; font-size: 14px; color: #0d1c32; margin-top: 4px; }
+  .seal { position: absolute; top: 40px; right: 56px; width: 84px; height: 84px; border: 2.5px solid #c99a2e; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; letter-spacing: 2px; color: #735c00; text-transform: uppercase; text-align: center; line-height: 1.3; }
+</style></head><body>
+<div class="page"><div class="cert">
+  <div class="seal">Skykapital<br/>Verified</div>
+  <div class="brand">Skykapital Europe</div>
+  <h1>Certificate of Completion</h1>
+  <div class="sub">ESG Foundation Series</div>
+  <div class="name">${p.full_name || "—"}</div>
+  <div class="line"></div>
+  <div class="body">
+    has successfully completed all ${TOTAL_MODULES} modules of
+    <strong>“${course.title}”</strong> — including every assessment (80% pass mark)
+    and the capstone simulation — delivered on the ${client.clientShort} platform.
+  </div>
+  <div class="meta">
+    <div>Certificate no.<b>${p.certNo}</b></div>
+    <div>Date of completion<b>${p.last}</b></div>
+    <div>Issued by<b>Skykapital Europe</b></div>
+  </div>
+</div></div>
+<script>window.onload = () => setTimeout(() => window.print(), 300);</scr` + `ipt>
+</body></html>`);
+  w.document.close();
+}
+
 function ProjectProgress({ project, people }) {
   const members = people.filter((u) => u.project_id === project.id && u.role !== "admin");
   const [rows, setRows] = useState(null);
@@ -395,8 +440,17 @@ function ProjectProgress({ project, people }) {
                   </td>
                   <td className="px-stack-md py-stack-md">
                     {p.certified ? (
-                      <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2.5 py-0.5 text-caption font-bold text-emerald-700">
-                        <MaterialIcon name="workspace_premium" className="text-[14px]" /> {p.certNo}
+                      <span className="inline-flex items-center gap-2">
+                        <span className="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2.5 py-0.5 text-caption font-bold text-emerald-700">
+                          <MaterialIcon name="workspace_premium" className="text-[14px]" /> {p.certNo}
+                        </span>
+                        <button
+                          onClick={() => printCertificate(p)}
+                          title="Print the certificate"
+                          className="inline-flex items-center gap-1 rounded-lg border border-outline-variant px-2.5 py-1 text-caption font-bold text-primary transition-colors hover:border-secondary hover:text-secondary"
+                        >
+                          <MaterialIcon name="print" className="text-[14px]" /> Print
+                        </button>
                       </span>
                     ) : (
                       <span className="text-caption text-outline">In progress</span>
