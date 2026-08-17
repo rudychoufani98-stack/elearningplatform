@@ -366,13 +366,11 @@ async function printCertificate(p) {
     <div class="rule"></div>
     <div class="completed">Has successfully completed the</div>
     <div class="course">${course.title}</div>
-    <div class="detail">All ${TOTAL_MODULES} modules completed &nbsp;·&nbsp; assessments passed at 80% minimum &nbsp;·&nbsp; ${client.clientShort} learning platform</div>
     <div class="row">
       <div class="col"><div class="val">${p.last}</div><div class="ln">DATE</div></div>
       <div class="col"><div class="val"></div><div class="ln">AUTHORIZED SIGNATORY</div></div>
     </div>
   </div>
-  <div class="verify">Certificate no. ${p.certNo} &nbsp;·&nbsp; Registered in the Skykapital central training record &nbsp;·&nbsp; Verification: quote this number to Skykapital Europe</div>
 </div>
 <script>window.onload = () => setTimeout(() => window.print(), 300);</scr` + `ipt>
 </body></html>`);
