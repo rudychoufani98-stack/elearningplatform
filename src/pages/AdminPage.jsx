@@ -325,41 +325,64 @@ const TOTAL_MODULES = 6;
 function printCertificate(p) {
   const w = window.open("", "_blank", "noopener,width=900,height=650");
   if (!w) return;
+  const starSvg = (size, color) =>
+    `<svg viewBox="0 0 100 100" width="${size}" height="${size}" fill="${color}"><path d="M3 3 Q50 50 97 3 Q50 50 97 97 Q50 50 3 97 Q50 50 3 3 Z"/></svg>`;
   w.document.write(`<!doctype html><html><head><title>Certificate ${p.certNo}</title>
 <style>
   @page { size: A4 landscape; margin: 0; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: Georgia, 'Times New Roman', serif; color: #0d1c32; }
-  .page { width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; background: #f4f6f9; }
-  .cert { width: 92%; max-width: 980px; background: white; border: 3px solid #0d1c32; outline: 1px solid #c99a2e; outline-offset: -14px; padding: 64px 72px; text-align: center; position: relative; }
-  .brand { font-size: 14px; letter-spacing: 6px; text-transform: uppercase; color: #735c00; font-weight: bold; }
-  h1 { font-size: 34px; margin: 18px 0 6px; }
-  .sub { font-size: 13px; color: #55606e; letter-spacing: 2px; text-transform: uppercase; }
-  .name { font-size: 40px; margin: 30px 0 6px; color: #0d1c32; }
-  .line { width: 260px; border-bottom: 1.5px solid #c99a2e; margin: 0 auto 22px; }
-  .body { font-size: 15px; color: #333; max-width: 640px; margin: 0 auto; line-height: 1.6; }
-  .meta { display: flex; justify-content: space-between; margin-top: 48px; font-size: 12px; color: #55606e; }
-  .meta b { display: block; font-size: 14px; color: #0d1c32; margin-top: 4px; }
-  .seal { position: absolute; top: 40px; right: 56px; width: 84px; height: 84px; border: 2.5px solid #c99a2e; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; letter-spacing: 2px; color: #735c00; text-transform: uppercase; text-align: center; line-height: 1.3; }
+  body { font-family: Georgia, 'Times New Roman', serif; color: #0d1c32; background: #fcfbf8; }
+  .cert { width: 100vw; height: 100vh; display: flex; flex-direction: column; background: #fcfbf8; }
+  .band { background: #0d1c32; color: white; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; height: 76px; border-bottom: 4px solid #c99a2e; }
+  .brand { display: flex; align-items: center; gap: 14px; font-family: Arial, sans-serif; font-weight: bold; letter-spacing: 5px; font-size: 16px; }
+  .series { font-family: Arial, sans-serif; font-size: 11px; letter-spacing: 4px; color: #e2cb94; }
+  .main { flex: 1; text-align: center; padding: 26px 60px 0; position: relative; }
+  .corner { position: absolute; width: 46px; height: 46px; border: 3px solid #c99a2e; }
+  .c1 { top: 18px; left: 34px; border-right: 0; border-bottom: 0; }
+  .c2 { top: 18px; right: 34px; border-left: 0; border-bottom: 0; }
+  .c3 { bottom: 14px; left: 34px; border-right: 0; border-top: 0; }
+  .c4 { bottom: 14px; right: 34px; border-left: 0; border-top: 0; }
+  h1 { font-size: 52px; letter-spacing: 6px; margin-top: 18px; }
+  .sub { font-family: Arial, sans-serif; font-size: 13px; letter-spacing: 10px; color: #c99a2e; font-weight: bold; margin-top: 6px; }
+  .presented { font-style: italic; color: #5a6472; margin-top: 26px; font-size: 15px; }
+  .name { font-size: 44px; font-style: italic; font-weight: bold; margin-top: 8px; }
+  .rule { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 10px auto 0; width: 420px; }
+  .rule .l { flex: 1; border-top: 2px solid #c99a2e; }
+  .body { font-size: 16px; color: #2d3440; max-width: 660px; margin: 22px auto 0; line-height: 1.7; }
+  .row { display: flex; align-items: flex-end; justify-content: space-between; max-width: 860px; margin: 34px auto 0; }
+  .col { width: 260px; text-align: center; }
+  .sig { font-style: italic; font-size: 19px; }
+  .dt { font-family: Arial, sans-serif; font-weight: bold; font-size: 16px; }
+  .col .ln { border-top: 1.5px solid #0d1c32; margin-top: 6px; padding-top: 7px; font-family: Arial, sans-serif; font-size: 10px; letter-spacing: 2px; color: #5a6472; }
+  .seal { width: 118px; height: 118px; border: 3.5px solid #c99a2e; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; box-shadow: inset 0 0 0 6px #fcfbf8, inset 0 0 0 7px #c99a2e; }
+  .seal span { font-family: Arial, sans-serif; font-size: 8px; letter-spacing: 2px; color: #c99a2e; font-weight: bold; }
+  .foot { background: #0d1c32; color: #d2d8e2; font-family: Arial, sans-serif; font-size: 10.5px; letter-spacing: 1px; text-align: center; padding: 14px 0; border-top: 4px solid #c99a2e; }
 </style></head><body>
-<div class="page"><div class="cert">
-  <div class="seal">Skykapital<br/>Verified</div>
-  <div class="brand">Skykapital Europe</div>
-  <h1>Certificate of Completion</h1>
-  <div class="sub">ESG Foundation Series</div>
-  <div class="name">${p.full_name || "—"}</div>
-  <div class="line"></div>
-  <div class="body">
-    has successfully completed all ${TOTAL_MODULES} modules of
-    <strong>“${course.title}”</strong> — including every assessment (80% pass mark)
-    and the capstone simulation — delivered on the ${client.clientShort} platform.
+<div class="cert">
+  <div class="band">
+    <div class="brand">${starSvg(30, "#c99a2e")}SKYKAPITAL EUROPE</div>
+    <div class="series">ESG FOUNDATION SERIES</div>
   </div>
-  <div class="meta">
-    <div>Certificate no.<b>${p.certNo}</b></div>
-    <div>Date of completion<b>${p.last}</b></div>
-    <div>Issued by<b>Skykapital Europe</b></div>
+  <div class="main">
+    <div class="corner c1"></div><div class="corner c2"></div><div class="corner c3"></div><div class="corner c4"></div>
+    <h1>CERTIFICATE</h1>
+    <div class="sub">OF COMPLETION</div>
+    <div class="presented">This certificate is proudly presented to</div>
+    <div class="name">${p.full_name || "—"}</div>
+    <div class="rule"><div class="l"></div>${starSvg(16, "#c99a2e")}<div class="l"></div></div>
+    <div class="body">
+      for successfully completing all ${TOTAL_MODULES} modules of
+      <strong>“${course.title}”</strong> — passing every assessment with a minimum of 80%
+      and the final capstone simulation — on the ${client.clientShort} learning platform.
+    </div>
+    <div class="row">
+      <div class="col"><div class="sig">Skykapital Europe</div><div class="ln">MANAGING DIRECTOR • SKYKAPITAL EUROPE</div></div>
+      <div class="seal">${starSvg(44, "#c99a2e")}<span>SKYKAPITAL</span><span>VERIFIED</span></div>
+      <div class="col"><div class="dt">${p.last}</div><div class="ln">DATE OF COMPLETION</div></div>
+    </div>
   </div>
-</div></div>
+  <div class="foot">Certificate no. ${p.certNo} &nbsp;•&nbsp; Registered in the Skykapital central training record &nbsp;•&nbsp; Verification: quote this number to Skykapital Europe</div>
+</div>
 <script>window.onload = () => setTimeout(() => window.print(), 300);</scr` + `ipt>
 </body></html>`);
   w.document.close();
