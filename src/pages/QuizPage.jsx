@@ -5,7 +5,7 @@ import Logo from "../components/Logo.jsx";
 import Confetti from "../components/Confetti.jsx";
 import { useCourse } from "../CourseContext.jsx";
 import { AnimatedNumber } from "../useCountUp.jsx";
-import { quizzes, platform } from "../data.js";
+import { quizzes, platform, libraryByModule } from "../data.js";
 
 function formatTime(s) {
   const m = Math.floor(s / 60);
@@ -250,14 +250,23 @@ export default function QuizPage() {
     );
   }
 
-  // The lesson must be fully read (all sections ticked) before starting.
+  // The course must be fully read before starting: every Library reading of
+  // this module opened, and every lesson section ticked. A completed module
+  // (retakes) is exempt.
   let lessonRead = true;
-  if (target?.lesson?.length) {
+  if (target && target.status !== "completed") {
     try {
-      const ticked = JSON.parse(
-        localStorage.getItem(`skykapital-read-${target.id}`) || "[]"
-      );
-      lessonRead = target.lesson.every((s) => ticked.includes(s.heading));
+      if (target.lesson?.length) {
+        const ticked = JSON.parse(
+          localStorage.getItem(`skykapital-read-${target.id}`) || "[]"
+        );
+        lessonRead = target.lesson.every((s) => ticked.includes(s.heading));
+      }
+      const moduleDocs = (libraryByModule[target.id] ?? []).filter((d) => d.doc);
+      if (lessonRead && moduleDocs.length > 0) {
+        const opened = JSON.parse(localStorage.getItem("skykapital-docs-read") || "[]");
+        lessonRead = moduleDocs.every((d) => opened.includes(d.doc));
+      }
     } catch {
       lessonRead = true;
     }
@@ -526,7 +535,7 @@ export default function QuizPage() {
             {!lessonRead && (
               <p className="mx-auto mt-stack-md flex max-w-sm items-center gap-2 rounded-lg bg-amber-50 p-3 text-caption text-amber-800">
                 <MaterialIcon name="lock" className="text-[18px] text-amber-500" />
-                Finish the lesson first — tick every section as read, then come back.
+                Finish the course first — open every Library reading and scroll the lesson to the end, then come back.
               </p>
             )}
             {!lessonRead ? (
@@ -534,7 +543,7 @@ export default function QuizPage() {
                 onClick={() => navigate(`/module/${target.id}`)}
                 className="mt-stack-md inline-flex w-full items-center justify-center gap-2 rounded-lg bg-primary py-3.5 text-label-md font-bold text-on-primary transition-opacity hover:opacity-90 sm:w-auto sm:px-14"
               >
-                <MaterialIcon name="menu_book" /> Back to the lesson
+                <MaterialIcon name="menu_book" /> Back to the course
               </button>
             ) : (
             <button

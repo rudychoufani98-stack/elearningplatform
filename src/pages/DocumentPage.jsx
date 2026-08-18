@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, Link, useLocation } from "react-router-dom";
+import { markDocRead } from "../lib/readingProgress.js";
 import MaterialIcon from "../components/MaterialIcon.jsx";
 import { useAuth } from "../AuthContext.jsx";
 import { useCourse, isUnlocked } from "../CourseContext.jsx";
@@ -33,6 +34,12 @@ export default function DocumentPage() {
   const [checked, setChecked] = useState(false);
   const doc = documents[docId];
   const signed = acknowledgements.find((a) => a.id === docId);
+
+  // Opening a reading counts it as read — this is what unlocks the games
+  // back on the module page.
+  useEffect(() => {
+    if (doc) markDocRead(docId);
+  }, [docId, doc]);
 
   if (!doc) {
     return (
