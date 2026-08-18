@@ -78,17 +78,17 @@ export default function DocumentPage() {
     );
   }
 
-  // Ordered reading sequence across unlocked modules (for the Next button).
-  const librarySeq = modules.flatMap((m) =>
-    isUnlocked(modules, m)
-      ? (libraryByModule[m.id] || [])
-          .filter((d) => d.doc && documents[d.doc])
-          .map((d) => ({ slug: d.doc, title: d.title }))
-      : []
-  );
-  const seqIdx = librarySeq.findIndex((x) => x.slug === docId);
+  // Reading sequence WITHIN this document's own module — after the last
+  // reading the learner is sent back to the module to continue (games, quiz),
+  // never silently pushed into another module's readings.
+  const moduleSeq = ownerModule
+    ? (libraryByModule[ownerModule.id] || [])
+        .filter((d) => d.doc && documents[d.doc])
+        .map((d) => ({ slug: d.doc, title: d.title }))
+    : [];
+  const seqIdx = moduleSeq.findIndex((x) => x.slug === docId);
   const nextInSeq =
-    parent.to === "/library" && seqIdx >= 0 ? librarySeq[seqIdx + 1] : null;
+    parent.to === "/library" && seqIdx >= 0 ? moduleSeq[seqIdx + 1] : null;
 
   return (
     <div className="mx-auto max-w-[1000px] px-margin-mobile py-stack-lg md:px-margin-desktop">
@@ -368,26 +368,37 @@ export default function DocumentPage() {
         )}
       </div>
 
-      {/* Continue through the readings */}
+      {/* Continue through the readings, then back into the module */}
       {parent.to === "/library" && (
-        <div className="mt-gutter flex items-center justify-between border-t border-outline-variant pt-stack-md">
+        <div className="mt-gutter flex flex-col items-center justify-between gap-stack-md border-t border-outline-variant pt-stack-md sm:flex-row">
           <Link
-            to="/library"
+            to={ownerModule ? `/module/${ownerModule.id}` : "/library"}
             className="flex items-center gap-1 text-label-md text-on-surface-variant hover:text-primary"
           >
-            <MaterialIcon name="arrow_back" className="text-[18px]" /> All modules
+            <MaterialIcon name="arrow_back" className="text-[18px]" />
+            {ownerModule ? `Back to ${ownerModule.code}: ${ownerModule.title}` : "All modules"}
           </Link>
           {nextInSeq ? (
             <Link
               to={`/library/${nextInSeq.slug}`}
-              className="flex items-center gap-2 bg-primary px-6 py-3 text-label-md text-on-primary transition-opacity hover:opacity-90"
+              className="flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-label-md text-on-primary transition-opacity hover:opacity-90"
             >
-              Next reading <MaterialIcon name="arrow_forward" className="text-[18px]" />
+              Next reading ({seqIdx + 2}/{moduleSeq.length}): {nextInSeq.title.length > 28 ? nextInSeq.title.slice(0, 28) + "…" : nextInSeq.title}
+              <MaterialIcon name="arrow_forward" className="text-[18px]" />
+            </Link>
+          ) : ownerModule ? (
+            <Link
+              to={`/module/${ownerModule.id}#practice`}
+              className="flex items-center gap-2 rounded-lg bg-gradient-to-r from-primary-container to-[#1c3a63] px-6 py-3 text-label-md font-bold text-white transition-all hover:brightness-110"
+            >
+              <MaterialIcon name="extension" className="text-[18px]" />
+              Readings done — continue {ownerModule.code}: practice games
+              <MaterialIcon name="arrow_forward" className="text-[18px]" />
             </Link>
           ) : (
             <Link
               to="/course"
-              className="flex items-center gap-2 bg-primary px-6 py-3 text-label-md text-on-primary transition-opacity hover:opacity-90"
+              className="flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-label-md text-on-primary transition-opacity hover:opacity-90"
             >
               Back to the course <MaterialIcon name="arrow_forward" className="text-[18px]" />
             </Link>

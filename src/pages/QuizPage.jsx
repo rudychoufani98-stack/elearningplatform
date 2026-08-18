@@ -556,6 +556,7 @@ export default function QuizPage() {
             nextModule={modules[modules.findIndex((m) => m.id === target.id) + 1]}
             onNext={(m) => navigate(m.type === "capstone" ? "/capstone" : `/module/${m.id}`)}
             onReview={() => navigate("/course")}
+            onLesson={() => navigate(`/module/${target.id}`)}
             onRetake={retake}
           />
         ) : (
@@ -1177,6 +1178,7 @@ function ResultsCard({
   nextModule,
   onNext,
   onReview,
+  onLesson,
   onRetake,
 }) {
   const [mounted, setMounted] = useState(false);
@@ -1326,10 +1328,10 @@ function ResultsCard({
               <MaterialIcon name="refresh" /> Restart the test
             </button>
             <button
-              onClick={onReview}
+              onClick={onLesson}
               className="flex items-center justify-center gap-2 border border-primary px-8 py-3 text-label-md text-primary transition-colors hover:bg-surface-container-low"
             >
-              Exit without passing
+              <MaterialIcon name="menu_book" /> Review the lesson first
             </button>
           </>
         )}

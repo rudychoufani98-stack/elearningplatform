@@ -202,10 +202,12 @@ export default function LessonPage() {
             <MaterialIcon name="chevron_left" className="mr-2" /> Previous
           </button>
           <button
-            disabled={!next}
-            onClick={() => next && navigate(`/module/${next.id}`)}
+            disabled={!next || !isUnlocked(modules, next)}
+            title={next && !isUnlocked(modules, next) ? "Pass this module's quiz to unlock the next one" : undefined}
+            onClick={() => next && isUnlocked(modules, next) && navigate(`/module/${next.id}`)}
             className="flex items-center rounded-lg bg-primary px-6 py-3 text-label-md text-on-primary transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40"
           >
+            {next && !isUnlocked(modules, next) && <MaterialIcon name="lock" className="mr-2 text-[16px]" />}
             Next Module <MaterialIcon name="chevron_right" className="ml-2" />
           </button>
         </div>

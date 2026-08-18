@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { CourseProvider } from "./CourseContext.jsx";
 import { AuthProvider, useAuth } from "./AuthContext.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
@@ -22,13 +22,27 @@ import CertificatePrintPage from "./pages/CertificatePrintPage.jsx";
 // Jump back to the top on every route change (SPAs otherwise keep the old
 // scroll position, which feels broken when "changing page").
 function ScrollToTop() {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
   useEffect(() => {
+    if (hash) {
+      // Links like /module/m1#practice land on their section, not the top.
+      // The global smooth-scroll CSS freezes programmatic scrolling, so it
+      // is switched off for the jump.
+      const t = setTimeout(() => {
+        const el = document.querySelector(hash);
+        if (!el) return;
+        const prev = document.documentElement.style.scrollBehavior;
+        document.documentElement.style.scrollBehavior = "auto";
+        el.scrollIntoView({ block: "start", behavior: "auto" });
+        document.documentElement.style.scrollBehavior = prev;
+      }, 250);
+      return () => clearTimeout(t);
+    }
     // Cover every scroll container the browser might use.
     window.scrollTo(0, 0);
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
-  }, [pathname]);
+  }, [pathname, hash]);
   return null;
 }
 
@@ -90,6 +104,9 @@ export default function App() {
             <Route path="/admin" element={<AdminPage />} />
             <Route path="/capstone" element={<CapstonePage />} />
           </Route>
+
+          {/* Any unknown address goes home instead of a blank page */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
         </Gate>
         </BrowserRouter>

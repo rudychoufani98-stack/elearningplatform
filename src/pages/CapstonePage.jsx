@@ -151,18 +151,37 @@ export default function CapstonePage() {
               : `You need ${capstoneSim.passNeeded} good calls. Restart and protect the project's ESG performance.`}
           </p>
           <div className="mt-stack-lg flex flex-col justify-center gap-stack-md sm:flex-row">
-            <button
-              onClick={restart}
-              className="flex items-center justify-center gap-2 bg-primary px-8 py-3 text-label-md text-on-primary transition-transform hover:opacity-90 active:scale-95"
-            >
-              <MaterialIcon name="refresh" /> Run it again
-            </button>
-            <Link
-              to="/course"
-              className="flex items-center justify-center gap-2 border border-primary px-8 py-3 text-label-md text-primary transition-colors hover:bg-surface-container-low"
-            >
-              Back to the course
-            </Link>
+            {passed ? (
+              <>
+                <Link
+                  to="/evidence"
+                  className="flex items-center justify-center gap-2 bg-gradient-to-r from-primary-container to-[#1c3a63] px-8 py-3 text-label-md font-bold text-white transition-all hover:brightness-110 active:scale-95"
+                >
+                  <MaterialIcon name="workspace_premium" fill /> See my progress &amp; certificate
+                </Link>
+                <button
+                  onClick={restart}
+                  className="flex items-center justify-center gap-2 border border-primary px-8 py-3 text-label-md text-primary transition-colors hover:bg-surface-container-low"
+                >
+                  <MaterialIcon name="refresh" /> Run it again
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={restart}
+                  className="flex items-center justify-center gap-2 bg-primary px-8 py-3 text-label-md text-on-primary transition-transform hover:opacity-90 active:scale-95"
+                >
+                  <MaterialIcon name="refresh" /> Run it again
+                </button>
+                <Link
+                  to="/course"
+                  className="flex items-center justify-center gap-2 border border-primary px-8 py-3 text-label-md text-primary transition-colors hover:bg-surface-container-low"
+                >
+                  Back to the course
+                </Link>
+              </>
+            )}
           </div>
         </div>
       ) : (
