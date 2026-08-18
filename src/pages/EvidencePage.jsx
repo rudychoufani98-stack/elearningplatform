@@ -9,12 +9,11 @@ import { client } from "../config/clients.js";
 
 // Training-evidence register — completed modules logged as project record.
 export default function EvidencePage() {
-  const { modules, progress, acknowledgements, resetProgress } = useCourse();
+  const { modules, progress, acknowledgements } = useCourse();
   const { profile, user } = useAuth();
   const learnerName =
     profile?.full_name || user?.user_metadata?.full_name || user?.email?.split("@")[0] || course.learner;
   const completed = modules.filter((m) => m.status === "completed");
-  const [confirmReset, setConfirmReset] = useState(false);
 
   return (
     <div className="mx-auto max-w-[1280px] px-margin-mobile py-stack-lg md:px-margin-desktop">
@@ -26,21 +25,13 @@ export default function EvidencePage() {
         <span className="text-on-surface">My progress</span>
       </nav>
 
-      <div className="mb-stack-lg flex flex-col justify-between gap-stack-md md:flex-row md:items-start">
-        <div>
-          <h1 className="mb-2 text-headline-lg text-primary md:text-headline-xl">
-            My progress & evidence
-          </h1>
-          <p className="max-w-2xl text-body-lg text-on-surface-variant">
-            Your personal record: every module you complete and every document you sign is logged here with your name, score and date — ready for the project's training-evidence register.
-          </p>
-        </div>
-        <button
-          onClick={() => setConfirmReset(true)}
-          className="flex shrink-0 items-center gap-2 self-start rounded-lg border border-outline-variant px-4 py-2 text-label-md text-on-surface-variant transition-colors hover:border-error hover:text-error"
-        >
-          <MaterialIcon name="restart_alt" className="text-[18px]" /> Reset progress
-        </button>
+      <div className="mb-stack-lg">
+        <h1 className="mb-2 text-headline-lg text-primary md:text-headline-xl">
+          My progress & evidence
+        </h1>
+        <p className="max-w-2xl text-body-lg text-on-surface-variant">
+          Your personal record: every module you complete and every document you sign is logged here with your name, score and date — ready for the project's training-evidence register.
+        </p>
       </div>
 
       <div className="mb-stack-lg flex flex-wrap gap-gutter">
@@ -301,43 +292,6 @@ export default function EvidencePage() {
           </tbody>
         </table>
       </div>
-      {confirmReset && (
-        <div
-          className="fixed inset-0 z-[90] flex items-center justify-center bg-[#0d1c32]/60 px-6 backdrop-blur-sm"
-          onClick={() => setConfirmReset(false)}
-        >
-          <div
-            className="animate-pop w-full max-w-sm rounded-2xl bg-white p-stack-lg text-center shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-rose-50">
-              <MaterialIcon name="restart_alt" className="text-3xl text-rose-500" />
-            </div>
-            <h2 className="text-headline-md text-primary">Reset all progress?</h2>
-            <p className="mx-auto mt-1 max-w-xs text-body-md text-on-surface-variant">
-              Every completed module, score and signed declaration on this
-              device will be erased. This cannot be undone.
-            </p>
-            <div className="mt-stack-md flex gap-2">
-              <button
-                onClick={() => setConfirmReset(false)}
-                className="flex-1 rounded-lg bg-primary py-3 text-label-md font-bold text-on-primary transition-opacity hover:opacity-90"
-              >
-                Keep my progress
-              </button>
-              <button
-                onClick={() => {
-                  setConfirmReset(false);
-                  resetProgress();
-                }}
-                className="flex-1 rounded-lg border border-outline-variant py-3 text-label-md text-on-surface-variant transition-colors hover:border-rose-300 hover:text-rose-600"
-              >
-                Reset
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
