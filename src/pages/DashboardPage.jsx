@@ -121,8 +121,13 @@ export default function DashboardPage() {
             <span className="block truncate text-headline-md">
               {current.order} · {current.title}
             </span>
-            <span className="text-body-md text-white/80">
-              {current.duration} · read the lesson, then pass the quiz
+            <span className="mt-1 flex flex-wrap items-center gap-1.5 text-caption text-white/85">
+              <span className="rounded-full bg-white/15 px-2.5 py-0.5">1 · Lesson</span>
+              <MaterialIcon name="chevron_right" className="text-[14px] text-white/60" />
+              <span className="rounded-full bg-white/15 px-2.5 py-0.5">2 · Practice games</span>
+              <MaterialIcon name="chevron_right" className="text-[14px] text-white/60" />
+              <span className="rounded-full bg-white/15 px-2.5 py-0.5">3 · Quiz (80%)</span>
+              <span className="ml-1 text-white/70">{current.duration}</span>
             </span>
           </span>
           <MaterialIcon name="play_circle" fill className="shrink-0 text-5xl text-secondary-fixed" />
@@ -211,7 +216,7 @@ export default function DashboardPage() {
                           m.score ? ` · ${m.score.earned}/${m.score.total} pts` : ""
                         }`
                       : unlocked
-                      ? m.duration
+                      ? `${m.duration} · Lesson → Practice games → Quiz`
                       : "Finish the previous module to unlock"}
                   </span>
                 </span>
