@@ -224,6 +224,7 @@ function Home({ projects, people, docs, email, onOpen, onOpenShared, reload }) {
 function Workspace({ project, shared, projects, people, docs, isAdmin, onBack, reload }) {
   const [tab, setTab] = useState(shared ? "docs" : "users");
   const [confirmDel, setConfirmDel] = useState(false);
+  const [delName, setDelName] = useState("");
   const title = shared ? "Shared — all projects" : project?.name ?? "Project";
   const pid = shared ? null : project?.id;
 
@@ -255,21 +256,36 @@ function Workspace({ project, shared, projects, people, docs, isAdmin, onBack, r
           </button>
         )}
         {confirmDel && (
-          <div className="fixed inset-0 z-[90] flex items-center justify-center bg-[#0d1c32]/60 px-6 backdrop-blur-sm" onClick={() => setConfirmDel(false)}>
+          <div className="fixed inset-0 z-[90] flex items-center justify-center bg-[#0d1c32]/60 px-6 backdrop-blur-sm" onClick={() => { setConfirmDel(false); setDelName(""); }}>
             <div className="animate-pop w-full max-w-sm rounded-2xl bg-white p-stack-lg text-center shadow-2xl" onClick={(e) => e.stopPropagation()}>
               <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-rose-50">
                 <MaterialIcon name="delete_forever" className="text-3xl text-rose-500" />
               </div>
               <h2 className="text-headline-md text-primary">Delete "{project?.name}"?</h2>
               <p className="mx-auto mt-1 max-w-xs text-body-md text-on-surface-variant">
-                Its documents will disappear from Resources and its users will be left without a project. This cannot be undone.
+                This is a paid, official project. Its documents disappear from Resources and its users
+                are left without a project. <strong>This cannot be undone.</strong>
               </p>
+              <p className="mt-stack-md text-caption font-bold text-on-surface-variant">
+                Type the project name to confirm:
+              </p>
+              <input
+                type="text"
+                value={delName}
+                onChange={(e) => setDelName(e.target.value)}
+                placeholder={project?.name}
+                className="mt-1 w-full rounded-lg border border-outline-variant px-4 py-2.5 text-center text-body-md focus:border-rose-400 focus:outline-none"
+              />
               <div className="mt-stack-md flex gap-2">
-                <button onClick={() => setConfirmDel(false)} className="flex-1 rounded-lg bg-primary py-3 text-label-md font-bold text-on-primary hover:opacity-90">
+                <button onClick={() => { setConfirmDel(false); setDelName(""); }} className="flex-1 rounded-lg bg-primary py-3 text-label-md font-bold text-on-primary hover:opacity-90">
                   Keep it
                 </button>
-                <button onClick={removeProject} className="flex-1 rounded-lg border border-outline-variant py-3 text-label-md text-on-surface-variant transition-colors hover:border-rose-300 hover:text-rose-600">
-                  Delete
+                <button
+                  onClick={removeProject}
+                  disabled={delName.trim() !== (project?.name ?? "")}
+                  className="flex-1 rounded-lg border py-3 text-label-md font-bold transition-colors disabled:cursor-not-allowed disabled:border-outline-variant disabled:text-outline enabled:border-rose-400 enabled:bg-rose-500 enabled:text-white enabled:hover:bg-rose-600"
+                >
+                  Delete forever
                 </button>
               </div>
             </div>
@@ -460,6 +476,7 @@ function ProjectUsers({ project, people, isAdmin, reload }) {
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState(null);
   const [err, setErr] = useState(null);
+  const [confirmRemove, setConfirmRemove] = useState(null); // {id, name}
 
   async function assign(id, proj) {
     setErr(null);
@@ -488,13 +505,23 @@ function ProjectUsers({ project, people, isAdmin, reload }) {
       setBusy(false);
       return setErr(res.error + ' — check Supabase Auth settings: "Allow new users to sign up" must be ON.');
     }
-    if (res.id) await supabase.rpc("set_user_project", { target: res.id, proj: project.id });
+    // Assign to the project — retried once, because the profile row is
+    // created by a database trigger that can lag behind the signup.
+    let projOk = false;
+    if (res.id) {
+      let { error: projErr } = await supabase.rpc("set_user_project", { target: res.id, proj: project.id });
+      if (projErr) {
+        await new Promise((r) => setTimeout(r, 1500));
+        ({ error: projErr } = await supabase.rpc("set_user_project", { target: res.id, proj: project.id }));
+      }
+      projOk = !projErr;
+    }
     // Also try the invitation email (requires the SMTP setup in EMAILS.md).
     const { error: mailErr } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: window.location.origin + "/reset",
     });
     setBusy(false);
-    setMsg({ name: form.name.trim(), email, pw: tempPw, mailOk: !mailErr });
+    setMsg({ name: form.name.trim(), email, pw: tempPw, mailOk: !mailErr, projOk });
     setForm({ name: "", email: "", password: "" });
     reload();
   }
@@ -573,6 +600,12 @@ function ProjectUsers({ project, people, isAdmin, reload }) {
             <p className="mt-2 text-caption text-emerald-800">
               This password is shown only once — {msg.name} can change it after signing in.
             </p>
+            {!msg.projOk && (
+              <p className="mt-2 rounded-lg bg-amber-50 p-2.5 text-caption font-bold text-amber-800">
+                ⚠ The account exists but could not be assigned to {project.name} — use
+                “Move an existing user into this project” below to add {msg.name}.
+              </p>
+            )}
           </div>
         )}
         {err && <p className="mt-3 rounded-lg bg-rose-50 p-3 text-caption text-rose-700">{err}</p>}
@@ -603,7 +636,7 @@ function ProjectUsers({ project, people, isAdmin, reload }) {
                   </td>
                   <td className="px-stack-md py-stack-md text-body-md text-on-surface-variant">{(r.created_at || "").slice(0, 10)}</td>
                   <td className="px-stack-md py-stack-md text-right">
-                    <button onClick={() => assign(r.id, null)} title="Remove from project"
+                    <button onClick={() => setConfirmRemove({ id: r.id, name: r.full_name || "this user" })} title="Remove from project"
                       className="rounded-full p-2 text-outline hover:text-error">
                       <MaterialIcon name="person_remove" className="text-[20px]" />
                     </button>
@@ -614,6 +647,33 @@ function ProjectUsers({ project, people, isAdmin, reload }) {
           </tbody>
         </table>
       </div>
+
+      {/* Remove-from-project confirmation — paid accounts are never one click away */}
+      {confirmRemove && (
+        <div className="fixed inset-0 z-[90] flex items-center justify-center bg-[#0d1c32]/60 px-6 backdrop-blur-sm" onClick={() => setConfirmRemove(null)}>
+          <div className="animate-pop w-full max-w-sm rounded-2xl bg-white p-stack-lg text-center shadow-2xl" onClick={(e) => e.stopPropagation()}>
+            <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-amber-50">
+              <MaterialIcon name="person_remove" className="text-3xl text-amber-500" />
+            </div>
+            <h2 className="text-headline-md text-primary">Remove {confirmRemove.name} from {project.name}?</h2>
+            <p className="mx-auto mt-1 max-w-xs text-body-md text-on-surface-variant">
+              Their account, progress and certificate records are kept — but they lose access
+              to this project's documents and leave its progress reports. You can add them back later.
+            </p>
+            <div className="mt-stack-md flex gap-2">
+              <button onClick={() => setConfirmRemove(null)} className="flex-1 rounded-lg bg-primary py-3 text-label-md font-bold text-on-primary hover:opacity-90">
+                Keep them
+              </button>
+              <button
+                onClick={() => { assign(confirmRemove.id, null); setConfirmRemove(null); }}
+                className="flex-1 rounded-lg border border-amber-400 py-3 text-label-md font-bold text-amber-700 transition-colors hover:bg-amber-50"
+              >
+                Remove from project
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
