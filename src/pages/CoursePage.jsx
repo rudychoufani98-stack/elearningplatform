@@ -18,7 +18,7 @@ export default function CoursePage() {
       <section className="mb-stack-lg">
         <nav className="mb-stack-md flex items-center gap-2 text-caption text-outline">
           <Link to="/" className="hover:text-primary">
-            Dashboard
+            Home
           </Link>
           <MaterialIcon name="chevron_right" className="text-[14px]" />
           <span className="text-on-surface">{course.title}</span>

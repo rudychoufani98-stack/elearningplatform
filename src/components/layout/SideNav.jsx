@@ -3,13 +3,14 @@ import MaterialIcon from "../MaterialIcon.jsx";
 import { platform, course } from "../../data.js";
 import { useCourse } from "../../CourseContext.jsx";
 
+// Four entries, plain words. The capstone is the last step of the course
+// (module 6) and the library is reachable from Documents — no duplicate
+// shortcuts in the menu.
 const NAV_ITEMS = [
-  { to: "/", label: "Dashboard", icon: "dashboard", end: true },
-  { to: "/course", label: "My Course", icon: "school" },
-  { to: "/library", label: "The Library", icon: "auto_stories" },
-  { to: "/resources", label: "Resources", icon: "folder_open" },
-  { to: "/capstone", label: "Capstone simulation", icon: "sports_esports" },
-  { to: "/evidence", label: "Training Evidence", icon: "verified" },
+  { to: "/", label: "Home", icon: "home", end: true },
+  { to: "/course", label: "My course", icon: "school" },
+  { to: "/resources", label: "Documents", icon: "folder_open" },
+  { to: "/evidence", label: "My progress", icon: "verified" },
 ];
 
 // Fixed left rail (desktop only). Active route gets the gold right border.

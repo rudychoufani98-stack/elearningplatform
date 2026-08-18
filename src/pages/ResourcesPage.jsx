@@ -28,19 +28,37 @@ export default function ResourcesPage() {
     <div className="mx-auto max-w-[1280px] px-margin-mobile py-stack-lg md:px-margin-desktop">
       <nav className="mb-stack-md flex items-center gap-2 text-caption text-outline">
         <Link to="/" className="hover:text-primary">
-          Dashboard
+          Home
         </Link>
         <MaterialIcon name="chevron_right" className="text-[14px]" />
-        <span className="text-on-surface">Resources</span>
+        <span className="text-on-surface">Documents</span>
       </nav>
 
       <h1 className="mb-2 text-headline-lg text-primary md:text-headline-xl">
-        Resources
+        Documents
       </h1>
       <p className="mb-stack-lg max-w-2xl text-body-lg text-on-surface-variant">
-        Company policies and official documents — read them in-app or download
-        the signed source. Your acknowledgements are logged as training evidence.
+        Everything to read in one place: your company's policies and official
+        documents, plus the course library. Signing a document here counts as
+        training evidence.
       </p>
+
+      {/* Course library — reading & glossary */}
+      <Link
+        to="/library"
+        className="mb-stack-lg flex items-center gap-stack-md rounded-xl border border-outline-variant bg-surface-container-lowest p-stack-md transition-colors hover:border-secondary"
+      >
+        <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary-container text-white">
+          <MaterialIcon name="auto_stories" className="text-[24px]" />
+        </span>
+        <span className="min-w-0 flex-1">
+          <span className="block text-label-md font-bold text-primary">The course library</span>
+          <span className="text-caption text-on-surface-variant">
+            Reading materials and the glossary used across the modules
+          </span>
+        </span>
+        <MaterialIcon name="arrow_forward" className="shrink-0 text-primary" />
+      </Link>
 
       <div className="space-y-stack-lg">
         {visibleDocs.length > 0 && (

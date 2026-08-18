@@ -418,7 +418,7 @@ export default function QuizPage() {
             onClick={() =>
               phase === "results" ? navigate("/") : setConfirmExit("/")
             }
-            title="Back to the dashboard"
+            title="Back to home"
             className="flex items-center gap-2.5 transition-opacity hover:opacity-80"
           >
             <Logo className="h-8 w-8 text-primary-container" />

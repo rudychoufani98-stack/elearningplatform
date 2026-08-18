@@ -20,16 +20,16 @@ export default function EvidencePage() {
     <div className="mx-auto max-w-[1280px] px-margin-mobile py-stack-lg md:px-margin-desktop">
       <nav className="mb-stack-md flex items-center gap-2 text-caption text-outline">
         <Link to="/" className="hover:text-primary">
-          Dashboard
+          Home
         </Link>
         <MaterialIcon name="chevron_right" className="text-[14px]" />
-        <span className="text-on-surface">Training Evidence</span>
+        <span className="text-on-surface">My progress</span>
       </nav>
 
       <div className="mb-stack-lg flex flex-col justify-between gap-stack-md md:flex-row md:items-start">
         <div>
           <h1 className="mb-2 text-headline-lg text-primary md:text-headline-xl">
-            Training Evidence
+            My progress & evidence
           </h1>
           <p className="max-w-2xl text-body-lg text-on-surface-variant">
             Your personal record: every module you complete and every document you sign is logged here with your name, score and date — ready for the project's training-evidence register.

@@ -72,7 +72,7 @@ export default function CapstonePage() {
     return (
       <div className="mx-auto max-w-[760px] px-margin-mobile py-stack-lg md:px-margin-desktop">
         <nav className="mb-stack-md flex items-center gap-2 text-caption text-outline">
-          <Link to="/" className="hover:text-primary">Dashboard</Link>
+          <Link to="/" className="hover:text-primary">Home</Link>
           <MaterialIcon name="chevron_right" className="text-[14px]" />
           <span className="text-on-surface">Capstone simulation</span>
         </nav>
@@ -101,7 +101,7 @@ export default function CapstonePage() {
   return (
     <div className="mx-auto max-w-[760px] px-margin-mobile py-stack-lg md:px-margin-desktop">
       <nav className="mb-stack-md flex items-center gap-2 text-caption text-outline">
-        <Link to="/" className="hover:text-primary">Dashboard</Link>
+        <Link to="/" className="hover:text-primary">Home</Link>
         <MaterialIcon name="chevron_right" className="text-[14px]" />
         <span className="text-on-surface">Capstone simulation</span>
       </nav>

@@ -23,7 +23,7 @@ export default function DocumentPage() {
   const { docId } = useParams();
   const location = useLocation();
   const parent = location.pathname.startsWith("/resources")
-    ? { label: "Resources", to: "/resources" }
+    ? { label: "Documents", to: "/resources" }
     : { label: "The Library", to: "/library" };
   const { modules, acknowledgements, acknowledge } = useCourse();
   const { profile, user } = useAuth();
@@ -95,7 +95,7 @@ export default function DocumentPage() {
       {/* Breadcrumb */}
       <nav className="mb-stack-md flex items-center gap-2 text-caption text-outline">
         <Link to="/" className="hover:text-primary">
-          Dashboard
+          Home
         </Link>
         <MaterialIcon name="chevron_right" className="text-[14px]" />
         <Link to={parent.to} className="hover:text-primary">

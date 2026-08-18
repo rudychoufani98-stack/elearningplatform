@@ -6,11 +6,10 @@ import MaterialIcon from "../MaterialIcon.jsx";
 
 // Compact bottom navigation for phones (the side rail is desktop-only).
 const MOBILE_ITEMS = [
-  { to: "/", label: "Home", icon: "dashboard", end: true },
+  { to: "/", label: "Home", icon: "home", end: true },
   { to: "/course", label: "Course", icon: "school" },
-  { to: "/library", label: "Library", icon: "auto_stories" },
-  { to: "/capstone", label: "Capstone", icon: "sports_esports" },
-  { to: "/evidence", label: "Evidence", icon: "verified" },
+  { to: "/resources", label: "Documents", icon: "folder_open" },
+  { to: "/evidence", label: "Progress", icon: "verified" },
 ];
 
 // App chrome for the dashboard / course / lesson / library screens.
