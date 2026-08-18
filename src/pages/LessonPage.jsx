@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import MaterialIcon from "../components/MaterialIcon.jsx";
 import { useCourse, statusMeta, isUnlocked } from "../CourseContext.jsx";
+import { libraryByModule } from "../data.js";
 import SortActivity from "../components/activities/SortActivity.jsx";
 import ScenarioActivity from "../components/activities/ScenarioActivity.jsx";
 import SliderActivity from "../components/activities/SliderActivity.jsx";
@@ -214,7 +215,7 @@ export default function LessonPage() {
       <div className="mb-stack-lg flex flex-col gap-2 rounded-xl border border-outline-variant bg-surface-container-lowest p-stack-md sm:flex-row sm:items-center">
         <a href="#lesson-notes" className="flex flex-1 items-center gap-2 rounded-lg px-3 py-2 transition-colors hover:bg-surface-container-low">
           <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary-container text-caption font-bold text-white">1</span>
-          <span className="text-label-md font-semibold text-primary">Read the lesson</span>
+          <span className="text-label-md font-semibold text-primary">Read the lesson &amp; Library readings</span>
         </a>
         <MaterialIcon name="chevron_right" className="hidden text-outline sm:block" />
         <a href="#practice" className="flex flex-1 items-center gap-2 rounded-lg px-3 py-2 transition-colors hover:bg-surface-container-low">
@@ -457,63 +458,56 @@ export default function LessonPage() {
           </div>
 
 
-          {/* Meta cards */}
-          <div className="mt-stack-lg grid grid-cols-1 gap-stack-md sm:grid-cols-3">
-            <div className="rounded-xl border border-outline-variant bg-surface-container-lowest p-stack-md">
-              <div className="mb-2 flex items-center gap-2 text-primary">
-                <MaterialIcon name="description" className="text-[20px]" />
-                <span className="text-label-md">Resources</span>
+          {/* Step 1 continued — this module's Library readings, before the games */}
+          {(libraryByModule[module.id] ?? []).length > 0 && (
+            <div className="mt-stack-lg rounded-xl border border-outline-variant bg-surface-container-lowest p-stack-lg">
+              <div className="mb-1 flex items-center gap-2">
+                <span className="rounded-full bg-primary-container px-3 py-1 text-caption font-bold uppercase tracking-widest text-white">Step 1</span>
+                <span className="text-label-md font-bold text-primary">Your readings from the Library</span>
               </div>
-              <p className="mb-3 text-caption text-on-surface-variant">
-                Job-aids and reference PDFs for this module.
+              <p className="mb-stack-md text-caption text-on-surface-variant">
+                The reference documents for this module — read them before the practice games.
               </p>
-              <Link to="/library" className="text-label-md text-secondary hover:underline">
-                Open the Library
-              </Link>
-            </div>
-            <div className="rounded-xl border border-outline-variant bg-surface-container-lowest p-stack-md">
-              <div className="mb-2 flex items-center gap-2 text-primary">
-                <MaterialIcon name="forum" className="text-[20px]" />
-                <span className="text-label-md">Discussion</span>
+              <div className="grid grid-cols-1 gap-stack-md sm:grid-cols-2">
+                {(libraryByModule[module.id] ?? []).map((d) =>
+                  d.doc ? (
+                    <Link
+                      key={d.title}
+                      to={`/library/${d.doc}`}
+                      className="lift group flex items-center gap-3 rounded-xl border border-outline-variant bg-white p-stack-md"
+                    >
+                      <span
+                        className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-white"
+                        style={{ background: module.accent }}
+                      >
+                        <MaterialIcon name={d.icon ?? "description"} className="text-[22px]" />
+                      </span>
+                      <span className="min-w-0 flex-1">
+                        <span className="block text-label-md font-semibold text-primary group-hover:text-secondary">
+                          {d.title}
+                        </span>
+                        <span className="text-caption text-on-surface-variant">Read in the Library</span>
+                      </span>
+                      <MaterialIcon name="arrow_forward" className="shrink-0 text-outline group-hover:text-secondary" />
+                    </Link>
+                  ) : (
+                    <div
+                      key={d.title}
+                      className="flex items-center gap-3 rounded-xl border border-outline-variant bg-white p-stack-md opacity-70"
+                    >
+                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-surface-container-high text-outline">
+                        <MaterialIcon name={d.icon ?? "description"} className="text-[22px]" />
+                      </span>
+                      <span className="min-w-0 flex-1">
+                        <span className="block text-label-md font-semibold text-on-surface-variant">{d.title}</span>
+                        <span className="text-caption text-outline">Coming soon</span>
+                      </span>
+                    </div>
+                  )
+                )}
               </div>
-              <p className="mb-3 text-caption text-on-surface-variant">
-                Questions for your workshop group.
-              </p>
-              <a href="#discussion" className="text-label-md text-secondary hover:underline">
-                Open the discussion
-              </a>
             </div>
-            <div className="rounded-xl border border-outline-variant bg-surface-container-lowest p-stack-md">
-              <div className="mb-2 flex items-center gap-2 text-primary">
-                <MaterialIcon name="quiz" className="text-[20px]" />
-                <span className="text-label-md">Assessment</span>
-              </div>
-              <p className="mb-3 text-caption text-on-surface-variant">
-                {module.type === "read"
-                  ? "This module has no quiz."
-                  : module.type === "capstone"
-                  ? "Run the live simulation to complete the pathway."
-                  : "Test your knowledge and log evidence."}
-              </p>
-              {module.type === "quiz" ? (
-                <Link
-                  to={`/quiz/${module.id}`}
-                  className="text-label-md text-secondary hover:underline"
-                >
-                  Start quiz
-                </Link>
-              ) : module.type === "capstone" ? (
-                <Link
-                  to="/capstone"
-                  className="text-label-md text-secondary hover:underline"
-                >
-                  Launch simulation
-                </Link>
-              ) : (
-                <span className="text-label-md text-outline">—</span>
-              )}
-            </div>
-          </div>
+          )}
 
           {/* Practice & apply — interactive exercises */}
           {module.activities?.length > 0 && (
