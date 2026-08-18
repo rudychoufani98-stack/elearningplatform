@@ -473,29 +473,28 @@ function ProjectUsers({ project, people, isAdmin, reload }) {
     setMsg(null);
     setErr(null);
     setBusy(true);
-    // The account is created with a strong random password the admin never
-    // sees — the learner sets their own via the invitation email.
-    const bytes = new Uint8Array(24);
+    // Readable temporary password the admin can hand to the learner
+    // (they can change it any time via "Change my password").
+    const bytes = new Uint8Array(8);
     crypto.getRandomValues(bytes);
-    const randomPw = "Sk1-" + Array.from(bytes, (b) => "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"[b % 62]).join("");
+    const tempPw =
+      "Sky-" +
+      Array.from(bytes.slice(0, 5), (b) => "acdefhjkmnpqrstuvwxyz"[b % 21]).join("") +
+      "-" +
+      Array.from(bytes.slice(5), (b) => "23456789"[b % 8]).join("");
     const email = form.email.trim();
-    const res = await adminCreateAccount(email, randomPw, form.name.trim());
+    const res = await adminCreateAccount(email, tempPw, form.name.trim());
     if (res.error) {
       setBusy(false);
       return setErr(res.error + ' — check Supabase Auth settings: "Allow new users to sign up" must be ON.');
     }
     if (res.id) await supabase.rpc("set_user_project", { target: res.id, proj: project.id });
-    // Invitation email: Supabase sends the "Reset password" template, which
-    // lands the learner on /reset to choose their own password.
+    // Also try the invitation email (requires the SMTP setup in EMAILS.md).
     const { error: mailErr } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: window.location.origin + "/reset",
     });
     setBusy(false);
-    if (mailErr) {
-      setMsg(`Account created and added to ${project.name}, but the invitation email failed (${mailErr.message}). Ask ${form.name} to use “Forgotten password” on the sign-in page.`);
-    } else {
-      setMsg(`Account created and added to ${project.name}. An invitation email was sent to ${email} — ${form.name} will choose their own password.`);
-    }
+    setMsg({ name: form.name.trim(), email, pw: tempPw, mailOk: !mailErr });
     setForm({ name: "", email: "", password: "" });
     reload();
   }
@@ -508,7 +507,7 @@ function ProjectUsers({ project, people, isAdmin, reload }) {
           <MaterialIcon name="person_add" className="text-secondary" /> Add a user to {project.name}
         </h2>
         <p className="mb-3 text-caption text-on-surface-variant">
-          The person receives an automatic invitation email and chooses their own password — nothing to share manually.
+          You get the sign-in details (email + temporary password) to share with the person — an invitation email is also attempted.
         </p>
         <form onSubmit={createUser} className="grid grid-cols-1 gap-stack-md sm:grid-cols-2">
           <input type="text" required placeholder="Full name" value={form.name}
@@ -543,7 +542,39 @@ function ProjectUsers({ project, people, isAdmin, reload }) {
             </button>
           </div>
         )}
-        {msg && <p className="mt-3 rounded-lg bg-emerald-50 p-3 text-caption text-emerald-800">{msg}</p>}
+        {msg && (
+          <div className="mt-3 rounded-lg border border-emerald-200 bg-emerald-50 p-stack-md">
+            <p className="mb-2 flex items-center gap-1.5 text-label-md font-bold text-emerald-800">
+              <MaterialIcon name="check_circle" fill className="text-[18px]" />
+              Account created for {msg.name} — share these sign-in details:
+            </p>
+            <div className="rounded-lg border border-emerald-200 bg-white p-3 font-mono text-body-md text-primary">
+              <p>Website: &nbsp;{window.location.origin}</p>
+              <p>Username: {msg.email}</p>
+              <p>Password: {msg.pw}</p>
+            </div>
+            <div className="mt-2 flex flex-wrap items-center gap-3">
+              <button
+                onClick={() => {
+                  navigator.clipboard?.writeText(
+                    `Your ${client.clientShort} ESG training access:\nWebsite: ${window.location.origin}\nUsername: ${msg.email}\nPassword: ${msg.pw}\n\nYou can change your password after signing in (account menu → Change my password).`
+                  );
+                }}
+                className="flex items-center gap-1.5 rounded-lg bg-emerald-600 px-4 py-2 text-caption font-bold text-white transition-opacity hover:opacity-90"
+              >
+                <MaterialIcon name="content_copy" className="text-[16px]" /> Copy the message to send
+              </button>
+              <span className="text-caption text-emerald-800">
+                {msg.mailOk
+                  ? "An invitation email was also sent."
+                  : "Invitation email not sent (SMTP not configured — see EMAILS.md). Share the details above yourself."}
+              </span>
+            </div>
+            <p className="mt-2 text-caption text-emerald-800">
+              This password is shown only once — {msg.name} can change it after signing in.
+            </p>
+          </div>
+        )}
         {err && <p className="mt-3 rounded-lg bg-rose-50 p-3 text-caption text-rose-700">{err}</p>}
       </div>
 
