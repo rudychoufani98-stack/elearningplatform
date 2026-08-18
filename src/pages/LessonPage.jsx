@@ -113,7 +113,10 @@ export default function LessonPage() {
   }
 
   const module = modules.find((m) => m.id === id);
+  // A completed module counts as read (progress can come from another
+  // device, where the local reading ticks don't exist).
   const allRead =
+    module?.status === "completed" ||
     !module?.lesson?.length ||
     module.lesson.every((s) => readSections.includes(s.heading));
   const readCount = module?.lesson
@@ -213,27 +216,68 @@ export default function LessonPage() {
         </div>
       </div>
 
-      {/* The 3-step path — tells a new user exactly what to do */}
+      {/* The 3-step path — one order, enforced: read, then play, then quiz */}
       <div className="mb-stack-lg flex flex-col gap-2 rounded-xl border border-outline-variant bg-surface-container-lowest p-stack-md sm:flex-row sm:items-center">
-        <a href="#lesson-notes" className="flex flex-1 items-center gap-2 rounded-lg px-3 py-2 transition-colors hover:bg-surface-container-low">
-          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary-container text-caption font-bold text-white">1</span>
-          <span className="text-label-md font-semibold text-primary">Read the lesson &amp; Library readings</span>
-        </a>
-        <MaterialIcon name="chevron_right" className="hidden text-outline sm:block" />
-        <a href="#practice" className="flex flex-1 items-center gap-2 rounded-lg px-3 py-2 transition-colors hover:bg-surface-container-low">
-          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary-container text-caption font-bold text-white">2</span>
-          <span className="text-label-md font-semibold text-primary">Practice with the games</span>
-        </a>
-        <MaterialIcon name="chevron_right" className="hidden text-outline sm:block" />
-        <button
-          onClick={() => navigate(module.type === "capstone" ? "/capstone" : `/quiz/${module.id}`)}
-          className="flex flex-1 items-center gap-2 rounded-lg px-3 py-2 text-left transition-colors hover:bg-surface-container-low"
+        <a
+          href="#lesson-notes"
+          className={`flex flex-1 items-center gap-2 rounded-lg px-3 py-2 transition-colors hover:bg-surface-container-low ${
+            allRead ? "" : "ring-2 ring-secondary/60"
+          }`}
         >
-          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-secondary text-caption font-bold text-white">3</span>
-          <span className="text-label-md font-semibold text-primary">
-            {module.type === "capstone" ? "Run the simulation" : "Pass the quiz (80%)"}
+          <span className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-caption font-bold text-white ${allRead ? "bg-emerald-500" : "bg-primary-container"}`}>
+            {allRead ? <MaterialIcon name="check" fill className="text-[16px]" /> : "1"}
           </span>
-        </button>
+          <span className="min-w-0">
+            <span className="block text-label-md font-semibold text-primary">Read the lesson &amp; readings</span>
+            {!allRead && (
+              <span className="text-caption text-secondary">You are here · {readCount}/{module.lesson?.length ?? 0} sections read</span>
+            )}
+          </span>
+        </a>
+        <MaterialIcon name="chevron_right" className="hidden text-outline sm:block" />
+        {allRead ? (
+          <a href="#practice" className="flex flex-1 items-center gap-2 rounded-lg px-3 py-2 ring-2 ring-secondary/60 transition-colors hover:bg-surface-container-low">
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary-container text-caption font-bold text-white">2</span>
+            <span className="min-w-0">
+              <span className="block text-label-md font-semibold text-primary">Practice with the games</span>
+              <span className="text-caption text-secondary">You are here · not graded</span>
+            </span>
+          </a>
+        ) : (
+          <div className="flex flex-1 items-center gap-2 rounded-lg px-3 py-2 opacity-60">
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-surface-container-high text-outline">
+              <MaterialIcon name="lock" className="text-[14px]" />
+            </span>
+            <span className="min-w-0">
+              <span className="block text-label-md font-semibold text-on-surface-variant">Practice with the games</span>
+              <span className="text-caption text-outline">Finish the reading first</span>
+            </span>
+          </div>
+        )}
+        <MaterialIcon name="chevron_right" className="hidden text-outline sm:block" />
+        {allRead ? (
+          <button
+            onClick={() => navigate(module.type === "capstone" ? "/capstone" : `/quiz/${module.id}`)}
+            className="flex flex-1 items-center gap-2 rounded-lg px-3 py-2 text-left transition-colors hover:bg-surface-container-low"
+          >
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-secondary text-caption font-bold text-white">3</span>
+            <span className="text-label-md font-semibold text-primary">
+              {module.type === "capstone" ? "Run the simulation" : "Pass the quiz (80%)"}
+            </span>
+          </button>
+        ) : (
+          <div className="flex flex-1 items-center gap-2 rounded-lg px-3 py-2 opacity-60">
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-surface-container-high text-outline">
+              <MaterialIcon name="lock" className="text-[14px]" />
+            </span>
+            <span className="min-w-0">
+              <span className="block text-label-md font-semibold text-on-surface-variant">
+                {module.type === "capstone" ? "Run the simulation" : "Pass the quiz (80%)"}
+              </span>
+              <span className="text-caption text-outline">Unlocks after the reading</span>
+            </span>
+          </div>
+        )}
       </div>
 
       {/* Content grid */}
@@ -511,28 +555,52 @@ export default function LessonPage() {
             </div>
           )}
 
-          {/* Practice & apply — interactive exercises */}
+          {/* Practice & apply — locked until the reading is finished, so the
+              order is always: read, then play, then quiz. */}
           {module.activities?.length > 0 && (
             <div id="practice" className="mt-stack-lg scroll-mt-24 rounded-xl border border-outline-variant bg-surface-container-lowest p-stack-lg">
               <div className="mb-1 flex items-center gap-2">
                 <span className="rounded-full bg-primary-container px-3 py-1 text-caption font-bold uppercase tracking-widest text-white">Step 2</span>
                 <span className="text-label-md font-bold text-primary">Practice with the games — not graded</span>
               </div>
-              <h2 className="mb-stack-md text-headline-md text-primary">
-                Practice &amp; apply
-              </h2>
-              <div className="space-y-stack-lg">
-                {module.activities.map((a, i) => (
-                  <div
-                    key={i}
-                    className={
-                      i > 0 ? "border-t border-outline-variant pt-stack-lg" : ""
-                    }
-                  >
-                    {renderActivity(a, module.accent)}
+              {allRead ? (
+                <>
+                  <h2 className="mb-stack-md text-headline-md text-primary">
+                    Practice &amp; apply
+                  </h2>
+                  <div className="space-y-stack-lg">
+                    {module.activities.map((a, i) => (
+                      <div
+                        key={i}
+                        className={
+                          i > 0 ? "border-t border-outline-variant pt-stack-lg" : ""
+                        }
+                      >
+                        {renderActivity(a, module.accent)}
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
+                </>
+              ) : (
+                <div className="flex flex-col items-center gap-3 rounded-xl border-2 border-dashed border-outline-variant bg-surface-container-low px-stack-md py-stack-lg text-center">
+                  <span className="flex h-14 w-14 items-center justify-center rounded-full bg-surface-container-high text-outline">
+                    <MaterialIcon name="lock" className="text-3xl" />
+                  </span>
+                  <p className="text-label-md font-bold text-primary">
+                    The games unlock when your reading is done
+                  </p>
+                  <p className="max-w-sm text-caption text-on-surface-variant">
+                    {readCount}/{module.lesson?.length ?? 0} sections read — scroll through the whole
+                    lesson above and the sections tick automatically.
+                  </p>
+                  <a
+                    href="#lesson-notes"
+                    className="mt-1 inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-2.5 text-label-md font-bold text-on-primary transition-opacity hover:opacity-90"
+                  >
+                    <MaterialIcon name="menu_book" className="text-[18px]" /> Continue the reading
+                  </a>
+                </div>
+              )}
             </div>
           )}
           <Discussion moduleId={module.id} accent={module.accent} />
