@@ -503,7 +503,12 @@ function ProjectUsers({ project, people, isAdmin, reload }) {
     const res = await adminCreateAccount(email, tempPw, form.name.trim());
     if (res.error) {
       setBusy(false);
-      return setErr(res.error + ' — check Supabase Auth settings: "Allow new users to sign up" must be ON.');
+      const hint = /rate limit/i.test(res.error)
+        ? ' — Supabase is trying to send confirmation emails: turn OFF "Confirm email" (Supabase → Authentication → Sign In / Providers → Email), then try again in about an hour.'
+        : /already exists|Confirm email/i.test(res.error)
+        ? ""
+        : ' — check Supabase Auth settings: "Allow new users to sign up" must be ON.';
+      return setErr(res.error + hint);
     }
     // Assign to the project — retried once, because the profile row is
     // created by a database trigger that can lag behind the signup.
@@ -516,12 +521,12 @@ function ProjectUsers({ project, people, isAdmin, reload }) {
       }
       projOk = !projErr;
     }
-    // Also try the invitation email (requires the SMTP setup in EMAILS.md).
-    const { error: mailErr } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: window.location.origin + "/reset",
-    });
+    // No automatic email: Supabase's built-in mailer is limited to ~2/hour
+    // and burning it here blocks account creation itself. The credentials
+    // card below is the reliable flow; email invitations can come back once
+    // custom SMTP is configured (EMAILS.md).
     setBusy(false);
-    setMsg({ name: form.name.trim(), email, pw: tempPw, mailOk: !mailErr, projOk });
+    setMsg({ name: form.name.trim(), email, pw: tempPw, projOk });
     setForm({ name: "", email: "", password: "" });
     reload();
   }
@@ -592,9 +597,7 @@ function ProjectUsers({ project, people, isAdmin, reload }) {
                 <MaterialIcon name="content_copy" className="text-[16px]" /> Copy the message to send
               </button>
               <span className="text-caption text-emerald-800">
-                {msg.mailOk
-                  ? "An invitation email was also sent."
-                  : "Invitation email not sent (SMTP not configured — see EMAILS.md). Share the details above yourself."}
+                Send these details yourself (WhatsApp, email…) — no automatic email is sent.
               </span>
             </div>
             <p className="mt-2 text-caption text-emerald-800">
