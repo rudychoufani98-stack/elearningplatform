@@ -28,5 +28,22 @@ export async function adminCreateAccount(email, password, fullName) {
     options: { data: { full_name: fullName } },
   });
   if (error) return { error: error.message };
+  // Supabase quirk: signing up an EXISTING email silently succeeds but
+  // changes nothing (the returned user has no identities). Without this
+  // check the admin would hand out a password that does not work.
+  if (data.user && (data.user.identities?.length ?? 0) === 0) {
+    return {
+      error:
+        "An account with this email ALREADY EXISTS — the shown password would not work. Delete the old account first (Supabase dashboard → Authentication → Users → delete), then create it again here.",
+    };
+  }
+  // "Confirm email" ON also breaks sign-in: the account exists but can't log
+  // in until the email is confirmed — surface that instead of a fake success.
+  if (data.user && !data.session) {
+    return {
+      error:
+        'Account created BUT "Confirm email" is ON in Supabase (Authentication → Sign In / Up) — the person cannot sign in until you turn it OFF.',
+    };
+  }
   return { id: data.user?.id ?? null };
 }
