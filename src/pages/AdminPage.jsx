@@ -304,6 +304,11 @@ function Workspace({ project, shared, projects, people, docs, isAdmin, onBack, r
             Progress & certificates
           </TabBtn>
         )}
+        {!shared && (
+          <TabBtn active={tab === "activity"} icon="history" onClick={() => setTab("activity")}>
+            Activity
+          </TabBtn>
+        )}
         <TabBtn active={tab === "docs"} icon="folder_open" onClick={() => setTab("docs")}>
           Resources documents
         </TabBtn>
@@ -313,6 +318,8 @@ function Workspace({ project, shared, projects, people, docs, isAdmin, onBack, r
         <ProjectProgress project={project} people={people} />
       ) : tab === "users" && !shared ? (
         <ProjectUsers project={project} projects={projects} people={people} isAdmin={isAdmin} reload={reload} />
+      ) : tab === "activity" && !shared ? (
+        <ProjectActivity project={project} people={people} />
       ) : (
         <ProjectDocs pid={pid} shared={shared} docs={docs.filter((d) => (shared ? !d.project_id : d.project_id === pid))} reload={reload} />
       )}
@@ -677,6 +684,109 @@ function ProjectUsers({ project, people, isAdmin, reload }) {
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+/* -------------------------- PROJECT · ACTIVITY -------------------------- */
+// Sign-in history for this project's learners — who connected, and when.
+function ProjectActivity({ project, people }) {
+  const members = people.filter((u) => u.project_id === project.id && u.role !== "admin");
+  const [events, setEvents] = useState(null);
+
+  useEffect(() => {
+    const ids = members.map((m) => m.id);
+    if (ids.length === 0) {
+      setEvents([]);
+      return;
+    }
+    supabase
+      .from("login_events")
+      .select("*")
+      .in("user_id", ids)
+      .order("created_at", { ascending: false })
+      .limit(200)
+      .then(({ data, error }) => setEvents(error ? { error: error.message } : data ?? []));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [project.id, people.length]);
+
+  if (events?.error)
+    return (
+      <p className="rounded-lg bg-amber-50 p-stack-md text-caption text-amber-800">
+        Sign-in history is not set up yet in the database — run the “LOGIN HISTORY” block of
+        supabase/schema.sql in the Supabase SQL editor, then reload. ({events.error})
+      </p>
+    );
+
+  const nameOf = (id) => members.find((m) => m.id === id)?.full_name || "—";
+  const fmt = (ts) => {
+    const d = new Date(ts);
+    return `${d.toLocaleDateString()} ${d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`;
+  };
+  const lastByUser = {};
+  (Array.isArray(events) ? events : []).forEach((e) => {
+    if (!lastByUser[e.user_id]) lastByUser[e.user_id] = e.created_at; // events are newest-first
+  });
+
+  return (
+    <div className="space-y-gutter">
+      {/* Per-learner summary */}
+      <div className="overflow-x-auto rounded-xl border border-outline-variant bg-surface-container-lowest">
+        <table className="w-full min-w-[480px] text-left">
+          <thead>
+            <tr className="border-b border-outline-variant text-caption uppercase tracking-wider text-on-surface-variant">
+              <th className="px-stack-md py-stack-sm font-semibold">Learner</th>
+              <th className="px-stack-md py-stack-sm font-semibold">Last sign-in</th>
+              <th className="px-stack-md py-stack-sm font-semibold">Total sign-ins</th>
+            </tr>
+          </thead>
+          <tbody>
+            {members.length === 0 ? (
+              <tr><td colSpan={3} className="px-stack-md py-stack-lg text-center text-on-surface-variant">No users in this project yet.</td></tr>
+            ) : (
+              members.map((m) => {
+                const count = (Array.isArray(events) ? events : []).filter((e) => e.user_id === m.id).length;
+                return (
+                  <tr key={m.id} className="border-b border-surface-container last:border-0">
+                    <td className="px-stack-md py-stack-md text-body-md text-primary">{m.full_name || "—"}</td>
+                    <td className="px-stack-md py-stack-md text-body-md text-on-surface-variant">
+                      {lastByUser[m.id] ? fmt(lastByUser[m.id]) : <span className="text-outline">Never signed in</span>}
+                    </td>
+                    <td className="px-stack-md py-stack-md text-body-md text-on-surface-variant">{count}</td>
+                  </tr>
+                );
+              })
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Full log */}
+      <div className="rounded-xl border border-outline-variant bg-surface-container-lowest p-stack-lg">
+        <h2 className="mb-stack-md flex items-center gap-2 text-headline-md text-primary">
+          <MaterialIcon name="history" className="text-secondary" /> Recent sign-ins
+        </h2>
+        {events === null ? (
+          <p className="text-body-md text-on-surface-variant">Loading…</p>
+        ) : events.length === 0 ? (
+          <p className="text-body-md text-on-surface-variant">
+            No sign-ins recorded yet — history starts from today.
+          </p>
+        ) : (
+          <ul className="space-y-1.5">
+            {events.map((e) => (
+              <li key={e.id} className="flex items-center gap-3 rounded-lg px-3 py-2 odd:bg-surface-container-low">
+                <MaterialIcon name="login" className="text-[18px] text-secondary" />
+                <span className="flex-1 text-body-md text-primary">{nameOf(e.user_id)}</span>
+                <span className="text-caption text-on-surface-variant">{fmt(e.created_at)}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+      <p className="text-caption text-on-surface-variant">
+        Recorded automatically at every sign-in, kept in the central database — part of the training-evidence trail.
+      </p>
     </div>
   );
 }

@@ -37,7 +37,11 @@ export function AuthProvider({ children }) {
   }, [session?.user?.id]);
 
   async function signIn(email, password) {
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    // Sign-in history: one row per successful login (admin console reads it).
+    if (!error && data?.user?.id) {
+      supabase.from("login_events").insert({ user_id: data.user.id }).then(() => {});
+    }
     return error?.message ?? null;
   }
   async function signUp(email, password, fullName) {

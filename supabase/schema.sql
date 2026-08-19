@@ -247,3 +247,24 @@ begin
   update public.profiles set role = new_role where id = target;
 end;
 $$;
+
+-- ========== LOGIN HISTORY (added 2026-08-19) ==========
+-- One row per successful sign-in. Learners write their own rows;
+-- only staff (admin) can read them.
+create table if not exists public.login_events (
+  id bigint generated always as identity primary key,
+  user_id uuid not null references auth.users(id) on delete cascade,
+  created_at timestamptz not null default now()
+);
+alter table public.login_events enable row level security;
+
+drop policy if exists "login_events_own_insert" on public.login_events;
+create policy "login_events_own_insert" on public.login_events
+  for insert with check (auth.uid() = user_id);
+
+drop policy if exists "login_events_staff_read" on public.login_events;
+create policy "login_events_staff_read" on public.login_events
+  for select using (public.is_staff());
+
+create index if not exists login_events_user_time
+  on public.login_events (user_id, created_at desc);
