@@ -1338,13 +1338,13 @@ export const libraryItems = [
 // (see `documents`); the rest are placeholders ("coming soon").
 export const libraryByModule = {
   m1: [
-    { title: "What is ESG? — start here", icon: "eco", doc: "what-is-esg" },
-    { title: "ESG impacts field guide", icon: "description", doc: "esg-impacts-guide" },
-    { title: "Mitigation hierarchy job-aid", icon: "sticky_note_2", doc: "mitigation-hierarchy" },
+    { title: "What is ESG? — and what it is not", icon: "eco", doc: "what-is-esg" },
+    { title: "E, S and G on site — the field guide", icon: "description", doc: "esg-impacts-guide" },
+    { title: "The mitigation hierarchy & the chain of obligation", icon: "sticky_note_2", doc: "mitigation-hierarchy" },
   ],
   m2: [
-    { title: "ESG Standards Foundation Reference (IFC PS & Equator Principles)", icon: "menu_book", doc: "ifc-equator-reference" },
-    { title: "Nigerian ESG legal register (EIA Act, NESREA, permits)", icon: "gavel", doc: "nigeria-legal" },
+    { title: "The four rulebooks & the more-stringent test", icon: "menu_book", doc: "ifc-equator-reference" },
+    { title: "Jurisdiction file: Nigeria — law vs lender standards", icon: "gavel", doc: "nigeria-legal" },
   ],
   m3: [
     { title: "Loan ESG conditions — summary", icon: "account_balance", doc: "loan-esg-conditions" },
@@ -1769,130 +1769,72 @@ export const documents = {
   },
 
   "what-is-esg": {
-    title: "What is ESG?",
-    org: "The complete primer — start here",
+    title: "What is ESG? — and what it is not",
+    org: "Module 1 · reading 1 of 3 — start here",
     accent: "#06b6d4",
     image: "/images/esg-environment.jpg",
     intro:
-      "ESG stands for Environmental, Social and Governance. It is the framework the world now uses to judge whether a business is run responsibly — not just whether it makes money, but how it makes it: what it does to the planet, how it treats people, and whether it is governed honestly. This primer explains each pillar in plain language, with real examples from PPP construction, so you can see exactly what ESG means on the ground.",
+      "ESG stands for Environmental, Social and Governance — the three non-financial dimensions along which a project is judged by banks, insurers, regulators, clients and communities. This reading explains what each pillar means on a construction site, the correction that matters most (E&S is NOT ESG minus the G), where the rules actually came from, and an honest answer to the question everyone asks but rarely out loud.",
     sections: [
       {
-        title: "So what actually is ESG?",
+        title: "Why this discipline exists — a story that happens more often than the industry admits",
         body: [
-          "For most of the last century a company was judged on one question: is it profitable? ESG adds a second, equally important question — is that profit made responsibly? It breaks that down into three measurable dimensions: Environmental, Social and Governance.",
-          "Think of ESG as a report card for how a company behaves. A firm can be highly profitable and still score badly on ESG — for example if it pollutes rivers, mistreats workers, or hides bribery. Increasingly, banks, investors, governments and communities refuse to work with companies that score badly, because poor ESG is a warning sign of future trouble.",
-          "In construction ESG is not abstract. It is dust over a village, a worker without a harness, a stream turned brown by run-off, a land-owner waiting for fair compensation, or a bribe offered to speed up a permit. ESG is simply the discipline of managing all of that well.",
+          "A contractor opens a borrow pit to win laterite for an embankment. The land is scrubby, apparently unused, and nobody complains at first. Six weeks later the pit is twelve metres deep and full of standing water. Two children drown in it. The community blocks the haul road. Work stops on a fourteen-kilometre section. The lender's monitoring consultant arrives and finds no borrow pit management plan, no closure design, no fencing, no record of any consultation — and no evidence that anyone ever asked who used that land.",
+          "The project's technical work was sound. The embankment was well built. But the project had failed anyway, and the failure was expensive: months of delay, a suspended disbursement, a compensation claim, and a story that will follow the contractor into its next tender.",
+          "Nothing in that sequence required specialist knowledge to prevent. It required someone to ask, before the first excavator arrived, three ordinary questions: Who uses this land? What happens to this hole when we finish? Who has agreed to this? ESG is the discipline of making sure somebody asks those questions — and that the answers are written down, acted on, and checked.",
         ],
       },
       {
-        title: "Where ESG came from",
+        title: "The three pillars, in site language",
+        body: "For most of the twentieth century a company was assessed on one question: does it make money? ESG adds a second, asked with equal seriousness: is that money made in a way that does not destroy things, harm people, or depend on dishonesty?",
+        points: [
+          "Environmental — our effect on the physical and living world. On a road project: dust over a settlement, silt in a stream, a wetland drained, a borrow pit left open, fuel in the soil, trees cleared without a count.",
+          "Social — how we treat the people we employ and the people who live with our impacts: a worker without a harness on a bridge deck, a camp with one latrine for eighty men, a farmer whose field is now a haul road, waiting for a payment.",
+          "Governance — whether our systems, records and decisions are honest and verifiable: a payment to accelerate a permit, a safety register filled in on Friday for the whole week, a grievance logged as closed that was never resolved.",
+        ],
+      },
+      {
+        title: "The correction that matters most: E&S is not 'ESG minus the G'",
         body: [
-          "The term “ESG” was popularised in a 2004 United Nations report, “Who Cares Wins”, which argued that environmental, social and governance factors are financially material — they affect a company's long-term value and risk. Investors realised a company ignoring these issues was a riskier bet.",
-          "For big infrastructure and PPP projects, the practical rulebook came from development finance. The IFC (part of the World Bank) published its Performance Standards, and the world's major banks adopted the Equator Principles — agreeing to fund large projects only if they manage their environmental and social risks properly.",
-        ],
-      },
-      {
-        title: "E — Environmental",
-        body: "The Environmental pillar is our impact on the natural world: air, water, soil, biodiversity, climate and waste. On a construction site these impacts are large and immediate — and mostly preventable with the right controls.",
-        image: "/images/esg-pollution.jpg",
-        points: [
-          "Air — dust from earthworks and haulage; exhaust and carbon emissions from plant and generators.",
-          "Water — effluent, concrete washout and sediment run-off that can pollute streams communities depend on.",
-          "Land & biodiversity — erosion, fuel spills, and clearing vegetation and habitats.",
-          "Waste & climate — construction and hazardous waste, and the project's greenhouse-gas footprint.",
+          "You will very often hear that E&S is simply ESG without governance. That is wrong, and the mistake causes real confusion. E&S is not a smaller version of ESG — it is a different unit of analysis. ESG assesses an ORGANISATION. E&S assesses a PROJECT. Governance is fully present in both; at project level it appears under different names: management system, organisational capacity, competency, accountability, monitoring, reporting.",
+          "IFC Performance Standard 1 requires an Environmental and Social Management System whose elements are: policy; identification of risks and impacts; management programmes; organisational capacity and competency; emergency preparedness and response; stakeholder engagement; and monitoring and review. Read that list again — it is governance, described in project language.",
+          "So the honest formulation: E&S is the project-level, contractually binding scope that lenders assess and monitor. ESG is the broader corporate-level lens, much of which is voluntary. Governance runs through both.",
         ],
         example:
-          "On a road project, uncontrolled earthworks send dust over a nearby village and silt into a river used for drinking water. The fix is cheap — wetting haul roads, silt fences, settlement ponds — but only if someone plans and enforces it. That is the Environmental pillar in action.",
+          "A useful test: can a company score well on ESG and still fail an E&S audit? Yes — routinely. A contractor may have an excellent published sustainability report and an appalling worker camp. Ratings measure disclosure; audits measure reality.",
       },
       {
-        title: "S — Social",
-        body: "The Social pillar is about people — everyone affected by the project, both your own workforce and the communities and individuals around the site.",
-        image: "/images/esg-social.jpg",
+        title: "Two more terms you will hear",
         points: [
-          "Workers — health & safety, fair pay and hours, decent worker-camp conditions, and no forced or child labour.",
-          "Communities — managing noise, traffic and access; engaging honestly; running a real grievance mechanism.",
-          "Land & livelihoods — fair treatment when land is acquired and people are resettled or lose income.",
-          "Vulnerable groups — extra care for those least able to cope, and preventing gender-based violence and harassment.",
+          "Sustainability and CSR — looser umbrella terms for voluntary initiatives, donations and reporting. Do not confuse a school built as a goodwill gesture with a resettlement obligation owed under a financing agreement: one is a choice, the other is a debt.",
+          "HSE / EHS / SHEQ — the safety and environment function most sites already have. It overlaps with E&S but is narrower: it typically stops at the site gate, whereas E&S extends to everyone the project affects — including people who will never set foot on the site.",
         ],
-        example:
-          "A contractor hires 200 local workers but houses them in an overcrowded camp with poor sanitation, and a supervisor demands favours for shifts. Both are Social failures — they harm real people, breach the Code of Conduct, and can halt the project's financing.",
       },
       {
-        title: "G — Governance",
-        body: "The Governance pillar is how the organisation is run — the systems, ethics and accountability that keep the other two pillars honest. Without good governance, environmental and social promises are just words on paper.",
-        image: "/images/esg-governance.jpg",
-        points: [
-          "Ethics & anti-corruption — no bribery, kickbacks or facilitation payments; clear conflict-of-interest rules.",
-          "Transparency & reporting — honest data and records that others can verify.",
-          "Accountability — clear roles, oversight, and real consequences for breaches.",
-          "Whistleblowing — safe channels to report wrongdoing without retaliation.",
-        ],
-        example:
-          "A site manager pays a small bribe to speed up a permit. It seems harmless, but it is a Governance failure: it breaks the law and the Code of Conduct, and if a lender's auditor finds it, it can trigger a default across the whole loan. Good governance means escalating the delay through proper channels instead.",
-      },
-      {
-        title: "ESG vs “E&S” vs sustainability",
+        title: "Where the rules came from: two family trees",
         body: [
-          "You will hear several similar terms. “E&S” (Environmental & Social) is what lenders and the IFC call the risks of a specific project — the E and the S of ESG, without the G. This is what the IESC assesses on our sites.",
-          "“ESG” is the broader, company-level lens that adds Governance. “Sustainability” and “CSR” are looser umbrella terms for the same goal. This pathway uses ESG as the umbrella and goes deepest on the E&S topics, because that is what keeps our financing flowing.",
+          "People often tell the history of ESG as a single story beginning with a UN report in 2004. That is tidy, and misleading, because it merges two lineages that developed separately. The investor lineage: 'Who Cares Wins' (2004) coined the acronym and argued E&S+G factors are financially material; the Principles for Responsible Investment followed in 2006, then ratings and disclosure regimes. Powerful — but mostly not enforceable against a site foreman.",
+          "The project finance lineage is the one that reaches your site, and it is older. The World Bank's Operational Policies (1980s–90s) created impact assessment (OP 4.01) and resettlement practice (OP 4.12 — people displaced by a project must be compensated and their livelihoods restored, whether or not they hold legal title). Private banks adopted the Equator Principles in 2003 (EP4 since 2020). The IFC published its Performance Standards in 2006, revised 2012 — the reference benchmark everything else points to.",
+          "The Africa lens: the African Development Bank operates its own Integrated Safeguards System, updated in 2023 with ten Operational Safeguards. On co-financed projects you may be assessed against both frameworks — where they differ, the more stringent applies. And a precision worth having: the IFC is a member of the World Bank GROUP, not the World Bank itself. The World Bank lends to governments (its ESF has ten standards); the IFC finances private companies (eight Performance Standards). Knowing which institution finances your project tells you which rulebook you are audited against.",
         ],
       },
       {
-        title: "Who cares about ESG — and why",
-        body: "ESG is not a box-ticking exercise for regulators alone. A whole chain of people rely on it, and each one can stop the project if it fails.",
-        image: "/images/esg-reporting.jpg",
-        points: [
-          "Lenders & investors — they require it as a loan condition; poor ESG means withheld funds or default.",
-          "Regulators — Nigerian law (EIA Act, NESREA) and permits set the legal minimum.",
-          "Communities — the people who live with our impacts every day.",
-          "Clients & governments — a PPP client's reputation rides on the project.",
-          "Employees — people want to work safely and for an ethical employer.",
+        title: "An honest answer to an honest question: is ESG a foreign agenda?",
+        body: [
+          "This question is asked in every training room on the continent, usually not out loud, and it deserves a straight answer. What is fair in it: the industrial infrastructure of Europe and North America was built without impact assessment, without resettlement standards, and frequently with labour conditions that would today constitute serious violations. That asymmetry is real. So is the capacity cost: standards written in Washington carry assumptions about specialists and data that fall hardest on local contractors.",
+          "What is not accurate: the substance is not imported. African states legislated environmental protection on their own authority — Nigeria's EIA regime dates from 1992, Kenya's framework from 1999. The African Development Bank, headquartered in Abidjan, runs its own safeguards. The African Charter on Human and Peoples' Rights (Nairobi, 1981) recognised the right to a satisfactory environment before equivalent European instruments did. And most importantly: the costs of unmanaged impacts are borne locally. The communities of the Niger Delta did not need a Performance Standard to know what happens when extraction proceeds without control — they needed one to be ENFORCED.",
+          "The honest position: these standards are a body of accumulated learning about how large projects harm people — much of it paid for by African communities. The legitimate complaint is not that they are too demanding; it is that they arrived late, are applied unevenly, and the capacity to meet them has been under-invested in. The correct response is to build the capacity — which is what this pathway is for.",
         ],
       },
       {
-        title: "ESG on a PPP construction project",
-        body: "A PPP (Public-Private Partnership) project — a road, bridge, hospital or power plant built for public use with private financing — is exactly where ESG bites hardest, because lenders and the public are both watching.",
-        image: "/images/lm4.jpg",
+        title: "Six things people believe that are not true",
         points: [
-          "It is written into the loan: the ESAP lists the ESG actions the contractor must complete, on deadlines.",
-          "It is checked independently: an IESC monitors ESG performance for the lenders.",
-          "It is measured: KPIs track safety, environment, grievances and compliance.",
-          "It is everyone's job: from the operator wetting a road to the director signing the report.",
-        ],
-        example:
-          "On a PPP hospital build the loan releases money in stages. Before each release, the lender's consultant checks that ESG actions — dust control, worker safety, community grievances closed — are on track. Good ESG literally unlocks the next payment.",
-      },
-      {
-        title: "Why good ESG pays off (and poor ESG costs)",
-        points: [
-          "Protects people and the environment — fewer injuries, less pollution, healthier communities.",
-          "Keeps financing flowing — meeting ESG conditions unlocks loan disbursements.",
-          "Protects reputation — one viral incident can lose future contracts.",
-          "Saves money — preventing a spill or accident is far cheaper than cleaning up or compensating.",
-          "Poor ESG costs: covenant breaches, withheld funds, fines, work stoppages, lawsuits and lost bids.",
-        ],
-        example:
-          "A single fatal accident can stop a site for weeks, trigger an investigation, breach the loan, and cost far more than the safety measures that would have prevented it. ESG is risk management with a conscience.",
-      },
-      {
-        title: "Common myths about ESG",
-        points: [
-          "“ESG is just PR.” No — on financed projects it is a binding loan condition with real money attached.",
-          "“ESG slows us down.” Done early, it prevents the delays, stoppages and rework that poor ESG causes.",
-          "“ESG is the ESG team's job.” No — every role on site owns a piece of it.",
-          "“We follow local law, so we're fine.” Lenders require the stricter of local law or international standards.",
-        ],
-      },
-      {
-        title: "Key terms to remember",
-        points: [
-          "ESG — Environmental, Social, Governance.",
-          "E&S — the Environmental & Social risks lenders assess on a project.",
-          "IFC Performance Standards — the eight international benchmarks for managing E&S risk.",
-          "Equator Principles — how banks apply the IFC PS to project finance.",
-          "ESMS — the Environmental & Social Management System that runs it all day to day.",
-          "IESC — the Independent Environmental & Social Consultant who monitors for lenders.",
-          "ESAP — the Environmental & Social Action Plan: corrective actions with deadlines.",
+          "“ESG is just public relations.” On a financed project it is a binding contractual condition with money attached — conditions precedent, covenants and disbursement tests are legal instruments.",
+          "“ESG slows us down.” Done early it is close to cost-neutral. Done late it becomes rework, stoppage and retrofit — the delay people remember is E&S having been left too late.",
+          "“That is the ESG team's job.” The ESG team designs and verifies. It cannot wet a haul road, refuse an unsafe lift, log a grievance honestly or stop a grader at a burial site.",
+          "“We comply with national law, so we are fine.” On almost any financed African project: national law PLUS the IFC Performance Standards PLUS the EHS Guidelines, the more stringent prevailing.",
+          "“It is the subcontractor's problem.” The finding is recorded against the project. Naming the subcontractor is an explanation, not a defence.",
+          "“If we do not write it down, it did not happen.” The opposite is true — an unrecorded incident that surfaces later is treated as concealment, a governance finding of a higher order than the original issue.",
         ],
       },
     ],
@@ -1900,86 +1842,169 @@ export const documents = {
   },
 
   "esg-impacts-guide": {
-    title: "ESG impacts field guide",
-    org: "Module 1 · quick reference for the site",
+    title: "E, S and G on site — the field guide",
+    org: "Module 1 · reading 2 of 3",
     accent: "#06b6d4",
     image: "/images/lm3.jpg",
     intro:
-      "A quick field reference to the environmental and social impacts you meet on a PPP construction site, and the first control for each.",
+      "The three pillars in operational depth: the eight environmental areas you are accountable for, the social requirements that most often stop a project, the four components of governance with what a failure actually costs — and the six actors watching, each holding a different instrument of pressure.",
     sections: [
       {
-        title: "Air",
+        title: "E — the eight areas you are accountable for",
         points: [
-          "Impacts: dust from earthworks and haulage; exhaust from plant and generators.",
-          "First controls: wet-suppress haul roads, cover loads, maintain and switch off idle plant.",
+          "Air quality and dust — haul roads, crushing, earthworks settling on homes, crops and drying food; exhaust from plant (PS3; EHS Guidelines 1.1).",
+          "Water — sediment run-off turning a stream brown, concrete washout raising pH, fuel and oil from workshops, untreated camp sewage, over-abstraction from a source a village depends on (PS3; EHS 1.3–1.4).",
+          "Noise and vibration — night piling near homes, blasting cracking walls. Sleep disruption is a health impact, not an inconvenience (PS3, PS4; EHS 1.7 sets day AND night limits by receptor).",
+          "Land, soil and erosion — stripped slopes gullying in the first heavy rain, topsoil buried instead of stockpiled, contaminated ground at fuel points (PS3, PS1).",
+          "Borrow pits and quarries — the single most under-managed issue on African road projects: unlicensed extraction, no closure design, open water bodies, drowning risk, permanent land loss (PS1, PS3, PS4, PS5).",
+          "Biodiversity and habitat — clearance without survey, wetlands crossed without hydrological design, critical habitat encountered late, invasive species on plant and imported fill (PS6).",
+          "Waste and hazardous materials — used oil poured on roads for dust suppression, bitumen drums reused for drinking water, no segregation, no manifest, no licensed disposal route (PS3; EHS 1.6).",
+          "Climate and greenhouse gases — unquantified emissions from plant, haulage, cement and clearance; flood and heat exposure designed for yesterday's climate rather than the asset's design life (PS3; EP4 climate risk assessment).",
+        ],
+        example:
+          "On a coastal section, earthworks ran through the rainy season without silt fencing. Sediment reached a fishing creek; the community reported a collapse in catch and skin complaints among children. The fix — silt fences, check dams, a settlement pond — would have cost a fraction of one percent of the section value and taken four days. What it actually cost: a work stoppage, a corrective action plan, an imposed monitoring programme, and a community relationship that never fully recovered. That gap between prevention cost and failure cost is the entire economic argument for this pathway.",
+      },
+      {
+        title: "S — your workforce (PS2)",
+        points: [
+          "Written terms of employment, in a language the worker understands; wages in full, on time, without unlawful deduction; hours within limits.",
+          "Occupational health and safety through the hierarchy: eliminate, control at source, minimise, and only then PPE. A helmet is the last line of defence, not the strategy.",
+          "Freedom of association without interference or retaliation — even where national law restricts it, alternative means to organise must not be restricted.",
+          "Non-discrimination in recruitment, pay, training and promotion. Absolute prohibitions on child labour and forced labour (ILO 138/182 and 29/105) — withheld passports, debt bondage and recruitment fees are forced-labour indicators, whatever they are called locally.",
+          "Worker accommodation to the IFC/EBRD standard: floor area, sanitation ratios, ventilation, food safety — and accommodation management SEPARATED from employment, so losing a bed does not mean losing the job.",
+          "A worker grievance mechanism — separate from the community one, without retaliation, not impeding other remedies.",
+          "Contractors and supply chain: PS2 extends to workers engaged by third parties. Subcontracting does not transfer the obligation — it transfers only the work.",
         ],
       },
       {
-        title: "Water",
+        title: "S — the communities around you (PS4, PS8)",
         points: [
-          "Impacts: effluent, concrete washout, worker-camp wastewater, sediment run-off.",
-          "First controls: bund and contain, use settlement ponds, never discharge to a stream.",
+          "Community health and safety: on a road project the dominant risk is TRAFFIC — construction haulage on public roads kills more people on African road projects than any single on-site hazard. Traffic management, speed governors, banned overtaking zones, driver rotation and school-hours restrictions are not optional refinements.",
+          "Labour influx: several hundred workers beside a village of two thousand changes prices, water availability, disease transmission, sexual dynamics and local politics. Predictable and manageable — not an accident.",
+          "Sexual exploitation, abuse and harassment: a distinct risk category with its own architecture — a code of conduct signed by every worker, mandatory training, a survivor-centred confidential reporting channel, and a referral pathway that exists BEFORE an incident.",
+          "Security and human rights: assess risks, screen for past abuses, train in use of force, provide a grievance channel; where public security forces protect the project, the Voluntary Principles are the operative reference.",
+          "Cultural heritage (PS8): a chance find procedure — what happens when a grader exposes a burial, a shrine or an artefact — must exist, be known to the operator, and stop the work.",
         ],
       },
       {
-        title: "Land, soil & biodiversity",
+        title: "S — land and livelihoods (PS5): the highest-risk area on almost every road project",
         points: [
-          "Impacts: erosion, fuel/oil spills, spoil, vegetation clearing.",
-          "First controls: spill kits, bunded fuel stores, erosion control, limit clearing to the footprint.",
+          "Compensation at FULL REPLACEMENT COST: market value plus transaction costs, WITHOUT deduction for depreciation. A twenty-year-old house is compensated at the cost of an equivalent NEW house. The most frequently mishandled calculation on the continent.",
+          "Possession of land only AFTER compensation has been made available. Entering land before payment is one of the clearest and most serious findings a lender can make.",
+          "Eligibility is NOT restricted to title holders: PS5 extends to recognisable claims under national law AND to those with no legal right at all. A cut-off date is established and communicated to fix eligibility.",
+          "Livelihoods must be RESTORED, not merely compensated: a trader who loses a roadside stall needs a functioning place to trade, not only a cash sum.",
+          "Vulnerable groups (PS1): female-headed households, the elderly, people with disabilities, pastoralists, informal traders. A census at ten in the morning on a market day systematically misses several of these categories — a methodological failure with real consequences.",
+        ],
+        example:
+          "A resettlement census recorded 412 affected households. A verification eight months later found 63 more — almost all women running informal roadside trade and pastoralist families using seasonal grazing. The consequence was not only a compensation shortfall: once a community learns the count was wrong, every subsequent figure the project publishes is disbelieved, including the correct ones.",
+      },
+      {
+        title: "G — the four components, and what a failure actually costs",
+        body: "Governance is whether the environmental and social commitments are real or decorative. Four components: ethics and anti-corruption (a facilitation payment is unlawful under most financing agreements even where local practice tolerates it); record integrity (a falsified record is treated MORE seriously than the underlying failure, because it destroys the credibility of every other record); accountability (an E&S manager with no budget and no authority is a documented non-conformity); and speak-up channels (if the first person to use one is identified and punished, the channel is dead and everyone knows it). Forget the myth that one small bribe collapses the loan overnight — the actual mechanism is slower and more sobering:",
+        points: [
+          "1. Detection — internal audit, a complaint, the supervision engineer, or the lenders' IESC on a site visit.",
+          "2. Finding — recorded as a non-conformity with a severity rating; the report goes to the lenders.",
+          "3. Corrective action — into the ESAP with a named owner and a deadline. Most issues are resolved here.",
+          "4. Escalation — persistent or severe failure triggers formal notice, with a cure period under the financing agreement.",
+          "5. Financial consequence — suspended disbursement, additional conditions, and in the extreme an event of default.",
+          "The realistic risk is cumulative: a pattern of small failures builds a monitoring record that makes the next disbursement conditional and the next contract unwinnable.",
         ],
       },
       {
-        title: "Waste",
+        title: "Who cares about ESG — and what each of them can do to you",
         points: [
-          "Impacts: construction debris, hazardous waste (oils, chemicals), domestic camp waste.",
-          "First controls: segregate at source, store safely, use licensed disposal only.",
+          "Lenders and investors — withhold a disbursement, impose conditions, require corrective actions at your cost, and in extremis declare default.",
+          "Regulators — fines, stop-work notices, permit revocation, criminal prosecution of officers in some jurisdictions.",
+          "Communities — block access, escalate to media and civil society, file with a lender's accountability mechanism, litigate.",
+          "Client and host government — withhold certification and payment, apply penalties, exclude from future tenders.",
+          "Workers — leave, strike, report externally; on a tight labour market, attrition of skilled staff is a direct commercial cost.",
+          "Insurers and future clients — price up cover, decline cover, or disqualify at prequalification on past E&S performance.",
+          "Only ONE of those six is a regulator. The idea that E&S is a matter between a company and a government agency is thirty years out of date.",
         ],
       },
       {
-        title: "Social",
+        title: "What good performance buys",
         points: [
-          "Impacts: worker safety, community disturbance (noise, traffic), land, vulnerable groups.",
-          "First controls: PPE and safe systems of work, community engagement, the grievance mechanism.",
+          "Fewer people are harmed — the first reason, and it needs no financial justification.",
+          "The money keeps flowing — disbursement is conditional, and meeting E&S conditions is what converts a signed facility into cash.",
+          "The programme holds — blockades, stop-work notices and investigations are among the largest AND most preventable sources of delay.",
+          "The next contract becomes winnable — E&S performance is now a prequalification criterion on most donor-funded and PPP tenders.",
+          "It is cheaper — prevention costs are small, known and budgetable; remediation costs are large, unbudgeted, and arrive with legal and reputational consequences attached.",
         ],
+        example:
+          "A single construction fatality typically produces: an immediate stoppage, a regulatory investigation, a root-cause investigation, a lender notification, a special report, a corrective action plan, a settlement with the family — and a permanent entry in the incident record disclosed at every future prequalification. The measures that would have prevented it are almost always known, cheap, and already identified in a risk assessment somebody signed.",
       },
     ],
     relatedModules: ["m1"],
   },
 
   "mitigation-hierarchy": {
-    title: "Mitigation hierarchy job-aid",
-    org: "Module 1 · keep this at your post",
+    title: "The mitigation hierarchy & the chain of obligation",
+    org: "Module 1 · reading 3 of 3 — keep this at your post",
     accent: "#06b6d4",
     image: "/images/lm8.jpg",
     intro:
-      "Tackle any impact in this order — Avoid → Minimise → Restore → Offset. Always start at the top and only move down when you must.",
+      "If you remember one technical concept from the whole pathway, make it the mitigation hierarchy — the organising logic of the entire discipline, and the thing auditors most reliably find missing. This reading also traces how a rule travels from a loan agreement in a bank to a specific instruction on your site, who checks, and the five questions to ask before you break ground.",
     sections: [
       {
-        title: "1 · Avoid",
+        title: "The hierarchy: four steps, strictly in order",
+        body: "PS1 requires the mitigation hierarchy to be applied to every identified risk and impact — favouring avoidance over minimisation, with compensation or offset only for residual impacts. Worked example: a wetland on the alignment.",
         points: [
-          "Design or plan the impact out entirely — the best and cheapest option.",
-          "Examples: reroute a haul road away from a stream; reschedule noisy work away from prayer times.",
+          "1 · AVOID — can we design the impact out entirely? Realign the road around the wetland. Always the first question, and the one most often skipped because the alignment is treated as fixed before anyone has looked.",
+          "2 · MINIMISE — reduce the crossing width, build a viaduct rather than an embankment, restrict works to the dry season, prohibit night lighting near the water.",
+          "3 · RESTORE — reinstate hydrological connectivity, replant native species, regrade and revegetate temporary access.",
+          "4 · COMPENSATE / OFFSET — deliver an equivalent gain elsewhere, to a measurable no-net-loss objective. Cash alone is not an offset.",
         ],
       },
       {
-        title: "2 · Minimise",
+        title: "Three rules people get wrong",
         points: [
-          "Reduce what you can't avoid.",
-          "Examples: dust suppression, noise barriers, speed limits, PPE, containment.",
+          "The order is BINDING, not advisory. You may not jump to compensation because it is cheaper or faster — a reviewer will ask what avoidance options were considered and why they were rejected, and expects a documented answer.",
+          "It applies to PEOPLE as well as habitats: PS5 opens with a requirement to avoid displacement through alternative designs. Resettlement is step four, not step one — a thirty-metre alignment shift that avoids twelve houses is worth more than any compensation package.",
+          "It applies to SAFETY: eliminate the hazard, then engineer controls, then administrative controls, then PPE. If your strategy begins and ends with issuing helmets, you started at step four.",
+          "Why the hierarchy really fails: not ignorance, but timing — steps one and two require a decision earlier, by someone more senior. That is why the questions must be asked before the excavator arrives.",
         ],
       },
       {
-        title: "3 · Restore / Remediate",
+        title: "The chain of obligation: how a rule reaches your site",
         points: [
-          "Repair the damage that still occurs.",
-          "Examples: rehabilitate borrow pits, replant cleared areas, clean up a spill.",
+          "1 · Lenders — a financing agreement with conditions precedent, E&S covenants, an action plan and reporting obligations.",
+          "2 · Borrower / concessionaire — passes obligations into the construction contract, plus a duty to supervise and report.",
+          "3 · EPC contractor — turns them into management plans: ESMP, traffic, waste, borrow pits, camp, code of conduct.",
+          "4 · Subcontractors and suppliers — flow-down clauses, induction, right of audit.",
+          "5 · The individual on site — a specific instruction: wet this haul road, log this grievance, do not enter that land, stop if you uncover a burial.",
+          "The obligation flows down but the liability does NOT flow away: if a subcontractor employs a fifteen-year-old, the finding is against the project.",
+          "Everything above the last link is a plan. Only what the operator does on the ground is performance — 'ESG is everybody's job' is a structural fact about how the chain terminates, not a slogan.",
         ],
       },
       {
-        title: "4 · Offset",
+        title: "Who checks — and the rule that decides how you are judged",
         points: [
-          "Compensate for the residual impact that remains — the last resort.",
-          "Examples: biodiversity offset elsewhere, community compensation.",
+          "Internal: your own E&S/HSE team — inspections, monitoring, self-monitoring reports to the lenders on a defined cycle.",
+          "Client side: the employer's engineer, with authority to instruct and sometimes to suspend.",
+          "Lender side: the IESC — appointed by and reporting to the lenders. Not your adviser, not there to help you pass: their function is to give lenders an accurate picture.",
+          "Regulators: environmental agency, labour inspectorate, minerals authority, water regulator — independent powers of inspection and sanction.",
+          "Communities: the grievance mechanism — and when that fails, the road block, the press, and the DFIs' accountability mechanisms.",
+          "THE RULE: a problem you found, recorded and were correcting is evidence of a working system. The identical problem discovered by the IESC, absent from your records, is evidence the system does not work. Same facts — opposite conclusion about your organisation. Disclose.",
+        ],
+      },
+      {
+        title: "Case in point: the borrow pit at Km 214",
+        body: [
+          "You are eleven weeks behind on embankment. Your quarry manager finds a laterite source 800 m from the alignment: it cuts haulage by 19 km and recovers five weeks. A community leader says the land is unused, asks for two million naira to the community development committee, and offers to sign a consent letter. There is no management plan, the site is not in the approved ESIA, a seasonal stream runs 120 m east, and the minerals office takes eight weeks to issue a permit. The IESC visits in six weeks.",
+          "Run the framework: step one of the hierarchy is not 'how do we manage this pit' but 'do we NEED this pit' — an already-permitted source, a commercial quarry, reused cut material. 'Uncultivated' is a claim, not a finding: scrubland is grazed, gathered, crossed and held sacred — none of which appears in one visit with the person who wants the payment. The lump-sum payment is not compensation: PS5 entitlements are calculated per affected person and paid directly; a community benefit is a separate, transparent negotiation, never a substitute. The consent letter is worth less than nothing — in a dispute it proves the project knew consent was required and chose the cheapest route to it.",
+          "Nobody in this scenario is a bad actor. Almost every serious E&S failure looks exactly like this from the inside: individually reasonable decisions, under real pressure, by people who were not asked the question that mattered. That is why the framework exists as standing requirements rather than individual judgement.",
+        ],
+      },
+      {
+        title: "Job aid: five questions before you break ground",
+        points: [
+          "1 · Is this activity, at this location, inside the assessed and approved scope? New pits, camps, access tracks and spoil areas are usually the answer — and usually no. If unclear: stop, screen, notify.",
+          "2 · Who USES this land, and how do I know? Not who owns it. Ask women, pastoralists and youth separately, away from whoever benefits from the answer. An informal user is still an affected person under PS5.",
+          "3 · What is the impact, and have I applied the hierarchy IN ORDER — with what I rejected at each step written down?",
+          "4 · What happens to this when we finish? Design the closure NOW — a pit designed only for maximum yield cannot be safely closed at any price.",
+          "5 · If the IESC asked me today, could I show the record? The permit, the plan, the consultation record, the grievance log, the monitoring data.",
+          "And the rule that overrides all five: if you find a problem, DISCLOSE it.",
         ],
       },
     ],
@@ -1987,85 +2012,155 @@ export const documents = {
   },
 
   "ifc-equator-reference": {
-    title: "ESG Standards Foundation Reference",
-    org: "Module 2 · IFC Performance Standards & Equator Principles",
-    accent: "#f59e0b",
-    image: "/images/lm1.jpg",
-    intro:
-      "Every PPP construction project sits inside a regulatory framework with two layers: Nigerian law, and the international standards that lenders require on top. This reference explains that framework, walks through all eight IFC Performance Standards with a real example for each, shows how the Equator Principles categorise a project, and finishes with a short practice exercise.",
-    sections: [
-      {
-        title: "The framework at a glance",
-        body: [
-          "Two rulebooks apply to our projects at the same time. Nigerian law (the EIA Act, NESREA and the permit system) sets the legal minimum. On top of that, because our projects are financed by banks, the lenders require international standards — the IFC Performance Standards, applied through the Equator Principles.",
-          "The chart below shows how these two layers stack up, and the rule that decides which one wins when they differ.",
-        ],
-      },
-      { component: "reg-framework" },
-      {
-        title: "The IFC Performance Standards — with examples",
-        body: "The IFC Performance Standards are eight international benchmarks for managing E&S risk on a financed project. PS1 is the overarching system; PS2–PS8 each cover a specific area. Here is what each one means in plain terms, with a construction example.",
-      },
-      { component: "ps-cards" },
-      {
-        title: "The Equator Principles",
-        body: [
-          "The Equator Principles are the framework the world's major banks use to decide whether to finance a large project, and to monitor it afterwards. Their core requirement is simple: to get the loan, the borrower must meet the IFC Performance Standards.",
-          "The first thing a lender does is categorise the project by how much E&S risk it carries — which sets how much assessment and monitoring it will face.",
-        ],
-      },
-      { component: "equator-categories" },
-      {
-        title: "How it all connects on site",
-        points: [
-          "The lender categorises the project (A / B / C) and requires the relevant IFC Performance Standards.",
-          "An ESIA (Environmental & Social Impact Assessment) identifies the impacts; an ESMP sets the controls.",
-          "The IESC monitors performance, and self-monitoring reports prove the standards are being met.",
-          "Where Nigerian law and a standard differ, the stricter requirement always applies.",
-        ],
-      },
-      { component: "ps-match" },
-    ],
-    relatedModules: ["m2", "m3"],
-  },
-
-  "nigeria-legal": {
-    title: "Nigerian ESG legal register",
-    org: "Module 2 · EIA Act, NESREA, permits",
+    title: "The four rulebooks & the more-stringent test",
+    org: "Module 2 · reading 1 of 2",
     accent: "#f59e0b",
     image: "/images/lm5.jpg",
     intro:
-      "The Nigerian legal baseline for environmental and social performance — the floor every project must clear before international standards are added on top.",
+      "On a financed infrastructure project, four distinct bodies of requirement apply simultaneously — and satisfying one has no effect on the others. This reference explains the four tiers, the EP4 rule that decides which standards apply in Africa, how to run the more-stringent test properly, and the six areas where national frameworks characteristically fall short.",
     sections: [
       {
-        title: "EIA Act",
+        title: "Four rulebooks, not one",
         points: [
-          "Requires an approved Environmental Impact Assessment before major projects proceed.",
+          "Tier 1 · National law — statutes, regulations and permit conditions, enforced by regulators and courts with criminal and administrative sanction. Protects you from prosecution.",
+          "Tier 2 · Lender standards — the IFC Performance Standards, the WBG EHS Guidelines, and where applicable the AfDB Safeguards; incorporated by reference into the financing agreement and enforced through the IESC, the ESAP and covenants. Protects your disbursement.",
+          "Tier 3 · The project contract — the construction contract, the ESMP and the project's own plans, enforced by the employer's engineer with power to instruct and sometimes suspend. Protects your payment certificate.",
+          "Tier 4 · Good international industry practice — the skill and foresight expected of competent professionals, applied by the IESC and, if it comes to it, a court. Protects you when something happens that none of the first three anticipated.",
+          "Neither tier displaces another: the PS Overview requires compliance with national law IN ADDITION to the standards, and the EHS Guidelines expect whichever level is MORE STRINGENT to be achieved.",
         ],
       },
       {
-        title: "NESREA",
-        points: [
-          "The National Environmental Standards and Regulations Enforcement Agency — sets and enforces environmental standards.",
+        title: "EP4 Principle 3: the two categories of country",
+        body: [
+          "The Equator Principles are how the Performance Standards reach commercial bank financing, and Principle 3 is the single most consequential provision for anyone working in Africa. It divides the world into Designated Countries — essentially the high-income OECD, where national law is deemed to deliver equivalent protection — and Non-Designated Countries. Every country in Sub-Saharan Africa is Non-Designated.",
+          "The consequence is direct and non-negotiable: on an EP-financed project, the applicable standard is host country law TOGETHER WITH the IFC Performance Standards and the WBG EHS Guidelines. A team that has read the national statute and stopped there has read about one quarter of what applies to it.",
+          "A point of self-respect as well as compliance: the classification concerns the ENFORCEMENT environment, not the substance of national legislation — Nigeria's assessment statute is not weaker than a French one in what it requires; the gap is in resourcing and consistency of enforcement. And the practical effect of Non-Designated status is that communities receive MORE protection than national law alone would give them, particularly on land and labour.",
         ],
       },
       {
-        title: "Permits & approvals",
+        title: "The rest of EP4, briefly",
         points: [
-          "EIA approval, discharge/effluent permits, waste handling, water abstraction, borrow pits.",
-          "Operating outside a permit condition is a breach — and a finding for the IESC.",
+          "P1 Categorisation — A, B or C by magnitude of risk. Most major road and PPP work is Category A, with the fullest obligations.",
+          "P2 Assessment — proportionate to risk, to the applicable standards, including climate risk for defined categories.",
+          "P4 ESMS and Action Plan — the ESAP that governs your corrective actions exists because of this principle.",
+          "P5 Stakeholder engagement — effective and ONGOING; one consultation event at design stage does not satisfy it.",
+          "P6 Grievance mechanism — the community GRM is an EP4 obligation as well as a PS1 one.",
+          "P7 & P9 Independent review and monitoring — the IESC before financial close and throughout the loan.",
+          "P8 Covenants — the mechanism that converts a standard into money.",
+          "P10 Reporting — why documents you consider internal become publicly available.",
         ],
       },
       {
-        title: "Land & the stricter-standard rule",
+        title: "Running the more-stringent test — five steps",
         points: [
-          "The Land Use Act governs land acquisition and compensation.",
-          "Where Nigerian law and an international standard differ, apply the more protective one.",
+          "1 · Identify the SPECIFIC requirement. Not 'compensation' — 'how is the value of a demolished dwelling calculated'.",
+          "2 · State what national law requires, with the source: statute, section, regulation or permit condition.",
+          "3 · State what the Performance Standard or EHS Guideline requires, with the paragraph.",
+          "4 · Ask which outcome is better FOR THE AFFECTED PERSON or the receiving environment — that, not which is easier for the project, is what stringency means.",
+          "5 · Apply that one, document the comparison, and retain it. The written comparison turns a defensible position into a demonstrable one.",
+        ],
+      },
+      {
+        title: "Three traps",
+        points: [
+          "“The standards are silent, so national law governs.” Often false: PS5 specifies no valuation method but requires the OUTCOME to equal full replacement cost. Silence on method is not silence on requirement.",
+          "“National law is stricter here, so the standard falls away.” The stricter provision governs that requirement only — a stricter effluent limit does not disapply the rest of PS3.",
+          "“The regulator approved it.” A regulator approves against the only standard it administers. Its approval is conclusive of tier 1 and irrelevant to tier 2 — it has no power to waive standards that were never its to apply.",
+        ],
+        example:
+          "Night works on an urban section: the national regulation sets one noise limit with no day/night distinction; the EHS Guidelines set a substantially lower night-time limit by receptor type. The night limit governs. Get it wrong and the works proceed lawfully, generate a stream of grievances, and end in a finding requiring retrospective mitigation at far greater cost.",
+      },
+      {
+        title: "The six gaps where national frameworks fall short",
+        points: [
+          "1 · Scope of assessment — national regimes are ENVIRONMENTAL; lenders expect environmental AND SOCIAL, with displacement, labour, community safety, gender and engagement as full workstreams. A compliant national EIA can contain none of these.",
+          "2 · Land and resettlement — the widest gap: depreciation applied vs full replacement cost; title holders only vs occupants without title; no statutory resettlement plan vs RAP/LRP; no cut-off date; cash once vs livelihood restoration. And the irreversible one: possession only AFTER compensation.",
+          "3 · Labour — narrow 'worker' definitions vs PS2's third-party coverage; national age thresholds vs ILO 182 (hazardous work under eighteen); accommodation standards; worker grievance mechanism; verify REMITTANCE of contributions, not deduction.",
+          "4 · Engagement — national law requires a participation EVENT (display, hearing); PS1 requires a continuous PROCESS with a stakeholder plan, local-language disclosure and a grievance mechanism through construction, when grievances actually arise.",
+          "5 · Biodiversity, heritage, cumulative impacts — PS6 classifies ALL habitat with a no-net-loss objective; PS8 requires a chance find procedure; PS1 requires cumulative assessment — induced development along a corridor routinely outweighs the road itself.",
+          "6 · Numeric limits — compare parameter by parameter, never document by document; where a national limit is absent, the EHS Guideline fills the space; a less stringent level needs a full, health-based, documented justification.",
+        ],
+      },
+      {
+        title: "Closing the gap: supplementary assessment, or corrective framing",
+        body: [
+          "Before construction: the normal instrument is a SUPPLEMENTARY ASSESSMENT — it does not reopen the national approval; it addresses, to lender scope, what the national instrument did not cover: social impact, a resettlement instrument, an engagement plan and grievance mechanism, labour and community-safety assessments, biodiversity, heritage, cumulative impacts, and a consolidated ESMP. Holding a national EIA plus a supplementary ESIA is normal, expected practice — not a sign of failure.",
+          "After construction has started: the analysis cannot be presented as pre-construction due diligence, because it is not — any competent reviewer sees through that framing, and it converts technical findings into a credibility finding about the whole E&S function. The correct posture is CORRECTIVE: state what occurred, assess what can still be avoided on the remaining works, quantify what must be restored or compensated, and set a time-bound plan with named owners. Lenders penalise the disguise, not the fact.",
+          "On sequencing, the distinction reviewers examine on the dates: analytical work before approval (enumerating assets, verifying schedules) is generally defensible. Acts that create legal or physical facts (paying compensation, taking possession, clearing vegetation) are not. Counting is not taking.",
         ],
       },
     ],
-    relatedModules: ["m2", "m1"],
+    relatedModules: ["m2"],
   },
+
+  "nigeria-legal": {
+    title: "Jurisdiction file: Nigeria — and the applicable-requirements test",
+    org: "Module 2 · reading 2 of 2",
+    accent: "#f59e0b",
+    image: "/images/lm5.jpg",
+    intro:
+      "Nigeria in operational depth — the environmental, land and labour tiers, what Nigerian law requires and what it does not — plus the one-page test to run whenever someone tells you something is approved, permitted or agreed. The method matters more than the content: the same file should be built for every country you operate in.",
+    sections: [
+      {
+        title: "The environmental tier",
+        points: [
+          "EIA Act, Cap E12 (originally Decree 86 of 1992) — an environmental impact assessment before listed projects, administered by the Federal Ministry of Environment. Note the scope: it is an ENVIRONMENTAL statute — it requires no resettlement plan, no engagement plan, no labour assessment.",
+          "NESREA Act 2007 — the national enforcement agency and its sectoral regulations, including the Construction Sector Regulations 2011 (oil and gas sits outside NESREA's remit, under separate regulators).",
+          "State environmental agencies — independent powers in every state: a federal approval does NOT dispose of state requirements, and a corridor crossing several states must establish the position state by state.",
+          "Minerals and Mining Act 2007 — frequently missed and directly relevant: extracting laterite, sand, gravel or rock requires a mineral title from the Mining Cadastre Office. A borrow pit without one is unlawful extraction (tier 1) and an unassessed activity (tier 2) at the same time. A landowner's consent does not confer a mineral right.",
+          "Climate Change Act 2021 — national climate governance architecture, with obligations on larger entities.",
+        ],
+      },
+      {
+        title: "The land tier",
+        points: [
+          "Land Use Act 1978 — vests all land in each state's Governor, held in trust. Compensation on revocation of a right of occupancy is directed at UNEXHAUSTED IMPROVEMENTS — crops and structures — not the market value of bare land.",
+          "Against PS5 this produces every sub-gap in the book: depreciation applied to structures, and occupants without a certificate of occupancy — frequently the MAJORITY of those affected on a road corridor — outside the statutory scheme.",
+          "No Nigerian statute requires a Resettlement Action Plan. Where a RAP exists on a Nigerian project, it exists because a lender required it. Its absence is simultaneously NOT a breach of Nigerian law AND a red-flag non-conformity under PS5 — both statements are true at once.",
+        ],
+      },
+      {
+        title: "The labour and social tier",
+        points: [
+          "Labour Act, Cap L1 — core protections, with a 'worker' definition narrower than the PS2 concept and exemptions on young persons for family and agricultural undertakings.",
+          "Child Rights Act 2003 — defines a child as under eighteen, but it is federal legislation requiring STATE-level adoption, which has been uneven: verify per state. PS2 and ILO 182 apply uniformly regardless.",
+          "Employee's Compensation Act 2010 (NSITF), Pension Reform Act 2014, training levy, housing fund — verify REMITTANCE, not deduction: non-remittance is a tier 1 breach and PS2 evidence simultaneously.",
+          "Collective agreements through the joint industrial council — PS2 expressly requires terms consistent with applicable collective agreements.",
+          "Nigeria Data Protection Act 2023 — directly engaged by resettlement censuses, grievance registers, worker records and community photography: lawful basis, retention, security and data-subject rights apply to files projects historically treated as ordinary paperwork.",
+        ],
+      },
+      {
+        title: "The Nigeria position in one paragraph",
+        body: "Nigerian law requires: an EIA before listed projects, a mineral title for extraction, compensation on revocation of occupancy rights, core employment protections, statutory contributions, and lawful handling of personal data. It does NOT require: a resettlement action plan, full replacement cost without depreciation, eligibility for occupants without title, a communicated cut-off date, livelihood restoration, a stakeholder engagement plan, or a grievance mechanism. Every one of those seven requirements exists on a financed Nigerian project — and every one exists because the Performance Standards exist and the financing agreement makes them binding.",
+      },
+      {
+        title: "Around the region — same method, different statutes",
+        points: [
+          "Ghana — EPA assessment regime; Land Act 2020. Customary and stool land tenure sits alongside the statutory regime and must be mapped before any land access.",
+          "Kenya — EMCA 1999 (NEMA); Land Act 2012 with the National Land Commission. The 2010 Constitution's environmental right and participation obligations are actively litigated.",
+          "Senegal — Code de l'environnement; the national domain regime means much occupied land is untitled, sharply raising the PS5 eligibility gap.",
+          "Côte d'Ivoire — Code de l'environnement (Loi 96-766); the purge of customary rights operates on fixed values generally BELOW full replacement cost.",
+          "Tanzania — Environmental Management Act 2004; Land Act and Village Land Act 1999: the relevant land authority is often the village council.",
+          "Best practice: a one-page jurisdiction file per country, owned by a named person, dated, reviewed annually. It takes a day to build and removes an entire class of avoidable error.",
+        ],
+      },
+      {
+        title: "Job aid: the applicable-requirements test",
+        body: "Run these six questions whenever someone tells you something is approved, permitted or agreed:",
+        points: [
+          "1 · Which tier is this approval from? A permit is tier 1 — it says nothing about tiers 2, 3 or 4. Do not record the matter as closed.",
+          "2 · What exactly does each tier say? Statute section on one side, PS paragraph or EHS table on the other. You cannot run the test on a summary.",
+          "3 · Which outcome is better for the affected person or the environment? If the honest answer is the standard — apply it, and record the comparison.",
+          "4 · Is this activity inside the approved assessment scope? New pits, camps, tracks and spoil areas usually are not.",
+          "5 · Does it need a separate authorisation nobody mentioned? Mineral title, water abstraction, waste carrier licensing, state-level approval.",
+          "6 · Has anything been done before it was authorised? Establish the dates; separate analytical activity from acts that created facts.",
+          "The sentence to keep: a permit closes a legal question. It does not close a lender finding — and the regulator that issued it has no power to waive a standard it was never given to apply.",
+        ],
+      },
+    ],
+    relatedModules: ["m2"],
+  },
+
   "loan-esg-conditions": {
     title: "Loan ESG conditions — summary",
     org: "Module 3 · What the facility agreement asks of the project",
