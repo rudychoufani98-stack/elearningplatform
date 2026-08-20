@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { CourseProvider } from "./CourseContext.jsx";
 import { AuthProvider, useAuth } from "./AuthContext.jsx";
@@ -72,12 +72,58 @@ function Gate({ children }) {
   return children;
 }
 
+// Detects when a newer version of the platform has been deployed and offers a
+// one-click refresh — so nobody keeps working on stale code without knowing.
+function UpdateBanner() {
+  const [stale, setStale] = useState(false);
+  useEffect(() => {
+    const current = document
+      .querySelector('script[type="module"][src*="/assets/"]')
+      ?.getAttribute("src");
+    if (!current) return; // local dev — no hashed bundle
+    let stopped = false;
+    async function check() {
+      try {
+        const res = await fetch("/?v=" + Date.now(), { cache: "no-store" });
+        const html = await res.text();
+        const m = html.match(/assets\/index-[^"]+\.js/);
+        if (!stopped && m && !current.includes(m[0])) setStale(true);
+      } catch {
+        /* offline — try again later */
+      }
+    }
+    const t = setInterval(check, 120000);
+    const onVis = () => {
+      if (document.visibilityState === "visible") check();
+    };
+    document.addEventListener("visibilitychange", onVis);
+    return () => {
+      stopped = true;
+      clearInterval(t);
+      document.removeEventListener("visibilitychange", onVis);
+    };
+  }, []);
+  if (!stale) return null;
+  return (
+    <div className="fixed bottom-4 left-1/2 z-[100] flex -translate-x-1/2 items-center gap-3 rounded-full bg-[#0d1c32] py-2.5 pl-5 pr-2.5 text-white shadow-2xl">
+      <span className="text-label-md">A new version of the platform is available</span>
+      <button
+        onClick={() => window.location.reload()}
+        className="rounded-full bg-secondary-container px-4 py-1.5 text-label-md font-bold text-on-secondary-container transition-transform hover:opacity-90 active:scale-95"
+      >
+        Refresh
+      </button>
+    </div>
+  );
+}
+
 export default function App() {
   return (
     <ErrorBoundary>
       <AuthProvider>
       <CourseProvider>
         <Toast />
+        <UpdateBanner />
         <BrowserRouter
           future={{ v7_startTransition: true, v7_relativeSplatPath: true }}
         >
