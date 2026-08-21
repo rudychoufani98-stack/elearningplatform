@@ -42,7 +42,7 @@ export const modules = [
     type: "quiz",
     duration: "25–30 min",
     status: "not_started",
-    score: { earned: 0, total: 20 },
+    score: { earned: 0, total: 12 },
     icon: "foundation",
     summary: "What responsible infrastructure actually requires — and why the money depends on it.",
     video: { id: "AkbGz3CYvqE", title: "Environmental, Social and Governance (ESG) — framework & standards" },
@@ -2587,452 +2587,405 @@ export const quizzes = {
   "m1": {
     "passMark": 0.8,
     "questions": [
+      // ——— E.1 Multiple choice, single answer (14 in bank, 5 served) ———
       {
-        "tag": "Basics",
-        "prompt": "True or false: ESG stands for Environmental, Social and Governance.",
+        "fmt": "mcq", "difficulty": "easy", "tag": "Pillars",
+        "prompt": "Which of these is a GOVERNANCE failure, rather than Environmental or Social?",
         "options": [
-          "True",
-          "False"
+          "A safety register completed on Friday for the whole week",
+          "Sediment run-off reaching a stream",
+          "One latrine for eighty men in a worker camp",
+          "Night piling next to homes"
         ],
         "correct": 0,
-        "tip": "E = Environmental, S = Social, G = Governance."
+        "tip": "The failure is in the integrity of the record, not in what the record describes. The others are E or S impacts."
       },
       {
-        "tag": "Pillars",
-        "image": "/images/esg-governance.jpg",
-        "prompt": "Which ESG pillar covers ethics and anti-corruption?",
+        "fmt": "mcq", "difficulty": "easy", "tag": "E&S vs ESG",
+        "prompt": "E&S is best described as…",
         "options": [
-          "Governance",
-          "Environmental",
-          "Social",
-          "Financial"
+          "The project-level scope lenders assess and monitor contractually",
+          "ESG with the Governance pillar removed",
+          "A voluntary corporate reporting framework",
+          "The site HSE function under another name"
         ],
         "correct": 0,
-        "tip": "How the business is run — ethics, anti-corruption, oversight — is Governance."
+        "tip": "Governance is fully present at project level — as management system, capacity, monitoring and review. And E&S reaches beyond the site gate, unlike HSE."
       },
       {
-        "tag": "Social",
-        "prompt": "Which of these is a SOCIAL impact?",
+        "fmt": "mcq", "difficulty": "medium", "tag": "E&S vs ESG",
+        "prompt": "ESG assesses a ______ and E&S assesses a ______.",
         "options": [
-          "Worker-camp conditions",
-          "Dust emissions",
-          "Soil erosion",
-          "Concrete washout"
+          "Company; project",
+          "Project; company",
+          "Regulator; lender",
+          "Country; company"
         ],
         "correct": 0,
-        "tip": "Worker conditions affect people — a social impact."
+        "tip": "The unit of analysis is what separates the two terms — not the number of pillars."
       },
       {
-        "tag": "Environmental",
-        "prompt": "The environmental footprint includes all of these EXCEPT:",
+        "fmt": "mcq", "difficulty": "hard", "tag": "E&S vs ESG",
+        "prompt": "Can a company score well on ESG and still fail an E&S audit?",
         "options": [
-          "Bribery",
-          "Air",
-          "Water",
-          "Waste"
+          "Yes, routinely — ratings measure disclosure; audits measure site reality",
+          "No, since ESG includes E&S",
+          "Only if the rating agency made an error",
+          "Only on Category C projects"
         ],
         "correct": 0,
-        "tip": "Bribery is a governance issue, not an environmental footprint."
+        "tip": "A contractor may publish an excellent sustainability report and run an appalling worker camp."
       },
       {
-        "tag": "Subcontractors",
-        "prompt": "True or false: a subcontractor's conduct on site is the contractor’s responsibility.",
+        "fmt": "mcq", "difficulty": "easy", "tag": "The rules",
+        "prompt": "Under EP4, Nigeria, Ghana, Kenya and Senegal are…",
         "options": [
-          "True",
-          "False"
+          "Non-Designated Countries",
+          "Designated Countries",
+          "Exempt from the Equator Principles",
+          "Classified case by case per project"
         ],
         "correct": 0,
-        "tip": "Their conduct is flowed down to the contractor."
+        "tip": "Non-Designated status is what brings the Performance Standards into full application, on top of national law."
       },
       {
-        "tag": "Stakeholders",
-        "prompt": "A 'stakeholder' is…",
+        "fmt": "mcq", "difficulty": "medium", "tag": "The rules",
+        "prompt": "The IFC is…",
         "options": [
-          "Anyone affected by, or who can affect, the project",
-          "Only the shareholders",
-          "Only the government",
-          "Only the workers"
+          "The private sector arm of the World Bank Group",
+          "A department of the World Bank lending to governments",
+          "An agency of the United Nations",
+          "The body that licenses national regulators"
         ],
         "correct": 0,
-        "tip": "Stakeholders include workers, communities, lenders, regulators and more."
+        "tip": "The World Bank lends to governments under the ESF. The IFC finances companies under the Performance Standards."
       },
       {
-        "tag": "Mitigation",
-        "image": "/images/lm4.jpg",
-        "prompt": "What is the FIRST step of the mitigation hierarchy?",
+        "fmt": "mcq", "difficulty": "easy", "tag": "The rules",
+        "prompt": "The Equator Principles were first adopted in 2003. The IFC Performance Standards were first issued in…",
         "options": [
-          "Avoid",
-          "Offset",
-          "Restore",
-          "Minimise"
+          "2006, and revised in 2012",
+          "2004, following the Who Cares Wins report",
+          "1992, with the first EIA laws",
+          "2020, with EP4"
         ],
         "correct": 0,
-        "tip": "Always try to avoid the impact first."
+        "tip": "Who Cares Wins (2004) is an investor text — it coined 'ESG' but is not the source of project finance standards."
       },
       {
-        "tag": "Mitigation",
-        "difficulty": "medium",
-        "prompt": "'Offset' in the mitigation hierarchy is…",
+        "fmt": "mcq", "difficulty": "easy", "tag": "Hierarchy",
+        "prompt": "The mitigation hierarchy, in order, is…",
         "options": [
-          "The last resort for residual impacts",
-          "The first thing to try",
-          "A type of permit",
-          "A KPI"
+          "Avoid, minimise, restore, compensate",
+          "Assess, mitigate, monitor, report",
+          "Plan, do, check, act",
+          "Compensate, restore, minimise, avoid"
         ],
         "correct": 0,
-        "tip": "You only offset what you couldn't avoid, minimise or restore."
+        "tip": "'Assess–mitigate–monitor–report' describes a management cycle, not the hierarchy. And the order is binding, never reversed."
       },
       {
-        "tag": "Vulnerable",
-        "prompt": "Vulnerable groups need…",
+        "fmt": "mcq", "difficulty": "medium", "tag": "Hierarchy",
+        "prompt": "Applied to occupational safety, the mitigation hierarchy means…",
         "options": [
-          "Extra care, as they are least able to cope",
-          "No special attention",
-          "To be excluded",
-          "Higher wages than others"
+          "Eliminate the hazard first; personal protective equipment last",
+          "Issue correct PPE first; engineer controls if budget allows",
+          "Train workers first, then assess the hazard",
+          "Insure the risk, then reduce it"
         ],
         "correct": 0,
-        "tip": "Impacts hit vulnerable groups hardest."
+        "tip": "A safety strategy that begins with helmets has started at step four."
       },
       {
-        "tag": "Community",
-        "image": "/images/esg-social.jpg",
-        "prompt": "The people who live around a site and feel its impacts are the…",
+        "fmt": "mcq", "difficulty": "hard", "tag": "Hierarchy",
+        "prompt": "You may move to compensation before avoidance…",
         "options": [
-          "Host community",
-          "Lenders",
-          "Regulators",
-          "Shareholders"
+          "Never — unless avoidance has been considered and documented as not feasible",
+          "Whenever compensation costs less than redesign",
+          "When the client approves the payment",
+          "When construction has already started"
         ],
         "correct": 0,
-        "tip": "The host community lives with the project every day."
+        "tip": "Cost is a factor within feasibility. It is not a licence to skip a step — and the reviewer will ask for the documented comparison."
       },
       {
-        "tag": "Benefits",
-        "prompt": "True or false: good ESG can help the contractor win future work.",
+        "fmt": "mcq", "difficulty": "easy", "tag": "Chain of obligation",
+        "prompt": "In the chain of obligation, requirements originate with…",
         "options": [
-          "True",
-          "False"
+          "The lenders, through the financing agreement",
+          "The site HSE team",
+          "The national regulator",
+          "The subcontractors' method statements"
         ],
         "correct": 0,
-        "tip": "Reputation and a clean ESG record win bids."
+        "tip": "The HSE team implements requirements — it does not create them. They flow down from the financing agreement."
       },
       {
-        "tag": "On site",
-        "prompt": "Noise and traffic disturbing neighbours is mainly a…",
+        "fmt": "mcq", "difficulty": "medium", "tag": "Chain of obligation",
+        "prompt": "Why does the LAST link in the chain — the person on site — matter most?",
         "options": [
-          "Social / community impact",
-          "Governance issue",
-          "Financial risk",
-          "Cultural heritage issue"
+          "Only what happens on the ground is performance; everything above is a plan",
+          "Site staff carry personal legal liability for every breach",
+          "The last link writes the monitoring reports",
+          "Lenders only ever inspect the site level"
         ],
         "correct": 0,
-        "tip": "It affects the surrounding people — social."
+        "tip": "Personal liability exists in some jurisdictions, but that is not why the last link matters. Plans only become performance at the ground."
       },
       {
-        "tag": "Everyone",
-        "image": "/images/lm13.jpg",
-        "prompt": "Whose job is ESG on site?",
+        "fmt": "mcq", "difficulty": "medium", "tag": "Law vs standards",
+        "prompt": "A twenty-two year old house must be demolished for the road. It is compensated at…",
         "options": [
-          "Everyone's",
-          "Only the ESG team's",
-          "Only management's",
-          "Only the lender's"
+          "The cost of an equivalent new structure, no depreciation, plus transaction costs",
+          "Market value less depreciation for age and condition",
+          "The rateable value in the state valuation schedule",
+          "A goodwill amount agreed with the community leader"
         ],
         "correct": 0,
-        "tip": "Every role owns a piece of ESG."
+        "tip": "Depreciated valuation is standard national practice — and it is exactly the gap PS5's full replacement cost closes."
       },
       {
-        "tag": "Basics",
-        "prompt": "What does “ESG” stand for?",
+        "fmt": "mcq", "difficulty": "hard", "tag": "Governance",
+        "prompt": "Which statement about the consequences of a governance failure is most accurate?",
         "options": [
-          "Environmental, Social and Governance",
-          "Engineering, Safety and Growth",
-          "Energy, Sustainability and Green",
-          "Ethics, Standards and Guidance"
+          "It normally enters a defined process: finding, corrective action, escalation, financial consequence if uncured",
+          "Any bribe triggers immediate default across the loan",
+          "It is a matter for internal discipline and does not concern lenders",
+          "It only matters if a regulator becomes involved"
         ],
         "correct": 0,
-        "tip": "ESG = Environmental, Social and Governance. On site, the Environmental and Social pillars are the ones you meet most."
+        "tip": "Overstating the consequence is counterproductive. The realistic risk is cumulative, not catastrophic — a record that makes the next disbursement conditional."
       },
+      // ——— E.2 Multiple response (5 in bank, 2 served) ———
       {
-        "tag": "Environmental",
-        "image": "/images/esg-pollution.jpg",
-        "prompt": "Which of these is an ENVIRONMENTAL impact on a construction site?",
+        "fmt": "multi", "type": "multi", "difficulty": "medium", "tag": "ESMS",
+        "prompt": "Which of these are elements of the management system PS1 requires? Select all that apply.",
         "options": [
-          "Dust from earthworks and haulage",
-          "Unpaid overtime",
-          "A land-compensation dispute",
-          "Harassment at the worker camp"
+          "Policy",
+          "Organisational capacity and competency",
+          "Monitoring and review",
+          "A published sustainability report",
+          "An ESG rating from an external agency",
+          "Emergency preparedness and response"
         ],
-        "correct": 0,
-        "tip": "Dust affects air quality — an environmental impact. The others are social impacts."
+        "correct": [0, 1, 2, 5],
+        "tip": "An external rating measures disclosure at company level — no standard requires one. And emergency preparedness IS one of the seven elements; on a construction project it is among the most consequential."
       },
       {
-        "type": "order",
-        "tag": "Puzzle",
-        "prompt": "Put the mitigation hierarchy in the correct order — most preferred first.",
+        "fmt": "multi", "type": "multi", "difficulty": "medium", "tag": "Hierarchy",
+        "prompt": "A settlement lies 40 m from a proposed crusher. Which of these are STEP ONE — avoidance — rather than later steps? Select all that apply.",
+        "options": [
+          "Relocate the crusher to a site 2 km away",
+          "Source aggregate from an existing commercial quarry",
+          "Install acoustic screening around the crusher",
+          "Restrict crushing to daytime hours",
+          "Redesign the pavement to reduce aggregate demand",
+          "Compensate affected households for noise disturbance"
+        ],
+        "correct": [0, 1, 4],
+        "tip": "Screening and daytime hours are legitimate — and they are step two, minimisation: they reduce the impact rather than removing it. Compensation is step four."
+      },
+      {
+        "fmt": "multi", "type": "multi", "difficulty": "medium", "tag": "Chain of obligation",
+        "prompt": "Which of these can result in a finding recorded against YOUR project? Select all that apply.",
+        "options": [
+          "A labour supplier withholding passports from its workers",
+          "A quarry operator supplying you without an extraction licence",
+          "A subcontractor's uninsured vehicle injuring a pedestrian on your haul route",
+          "A neighbouring farmer burning crop residue",
+          "A community member's unrelated land dispute with the state",
+          "Your catering contractor's kitchen failing a hygiene inspection"
+        ],
+        "correct": [0, 1, 2, 5],
+        "tip": "The farmer and the land dispute arise neither from the project nor from a party engaged by it. Over-inclusion is a real error too: treat every local issue as your finding and you lose the ability to prioritise the ones that are."
+      },
+      {
+        "fmt": "multi", "type": "multi", "difficulty": "hard", "tag": "Law vs standards",
+        "prompt": "Your project holds a valid national environmental permit. Which of these questions does that permit leave OPEN? Select all that apply.",
+        "options": [
+          "Whether compensation was calculated at full replacement cost",
+          "Whether occupants without title were included in the register",
+          "Whether the project complies with the national EIA statute",
+          "Whether a worker grievance mechanism exists",
+          "Whether habitat classification was screened under PS6",
+          "Whether the environmental fee was paid to the regulator"
+        ],
+        "correct": [0, 1, 3, 4],
+        "tip": "The EIA statute and the fee are the only questions the permit actually answers. Every other option sits in a tier the regulator does not administer."
+      },
+      {
+        "fmt": "multi", "type": "multi", "difficulty": "hard", "tag": "Disclosure",
+        "prompt": "Which of these make a DISCLOSED finding better received than a discovered one? Select all that apply.",
+        "options": [
+          "It shows the detection mechanism works",
+          "It shows escalation happened",
+          "It shows corrective action was already under way",
+          "It reduces the technical severity of the underlying issue",
+          "It means the finding will not appear in the report",
+          "It preserves confidence in the project's other records"
+        ],
+        "correct": [0, 1, 2, 5],
+        "tip": "Disclosure does not reduce severity and does not remove the finding from the report — believing it does is why teams conceal. What it changes is the conclusion drawn about the organisation."
+      },
+      // ——— E.3 Sequencing (3 in bank, 1 served) ———
+      {
+        "fmt": "order", "type": "order", "difficulty": "medium", "tag": "Hierarchy",
+        "prompt": "A borrow pit will remove seasonal grazing land. Put these in the required order.",
         "items": [
-          "Avoid",
-          "Minimise",
-          "Restore",
-          "Offset"
+          "Use an existing licensed quarry instead",
+          "Reduce the pit footprint and avoid the main grazing corridor",
+          "Reinstate and revegetate the pit on completion",
+          "Compensate the herders for the loss of grazing"
         ],
-        "hint": "Think: don't cause it → shrink what's left → repair the damage → compensate only as a last resort.",
-        "tip": "Always try to avoid the impact first; offsetting is the last resort."
+        "tip": "Avoid, minimise, restore, compensate — and this is a SOCIAL impact: the hierarchy applies identically. PS5 requires displacement to be avoided through alternative designs before compensation is considered."
       },
       {
-        "tag": "Water",
-        "difficulty": "medium",
-        "prompt": "Concrete washout, camp wastewater and sediment run-off mainly threaten…",
-        "options": [
-          "Water",
-          "Air",
-          "Biodiversity only",
-          "Cultural heritage"
-        ],
-        "correct": 0,
-        "tip": "These are effluents that pollute water if they are not controlled."
-      },
-      {
-        "tag": "Mitigation hierarchy",
-        "difficulty": "hard",
-        "prompt": "What is the correct order of the mitigation hierarchy?",
-        "options": [
-          "Avoid → Minimise → Restore → Offset",
-          "Offset → Restore → Minimise → Avoid",
-          "Minimise → Avoid → Offset → Restore",
-          "Restore → Avoid → Offset → Minimise"
-        ],
-        "correct": 0,
-        "tip": "Always try to avoid first; offsetting is the last resort."
-      },
-      {
-        "tag": "Stakeholders",
-        "prompt": "“Vulnerable groups” are best described as…",
-        "options": [
-          "People least able to cope with impacts, who need special attention",
-          "The project's senior managers",
-          "The lenders financing the project",
-          "The largest subcontractors"
-        ],
-        "correct": 0,
-        "tip": "Vulnerable groups need particular care because impacts hit them hardest."
-      },
-      {
-        "tag": "Footprint",
-        "type": "multi",
-        "prompt": "Which of these are ENVIRONMENTAL impacts?",
-        "options": [
-          "Dust from haulage",
-          "Concrete washout into a stream",
-          "Unfair dismissal of a worker",
-          "Clearing vegetation"
-        ],
-        "correct": [
-          0,
-          1,
-          3
-        ],
-        "tip": "Dust, effluent and vegetation clearing are environmental. Unfair dismissal is a social impact."
-      },
-      {
-        "type": "fillblank",
-        "tag": "Fill the blanks",
-        "prompt": "Complete the definition of ESG.",
-        "segments": [
-          "ESG stands for ",
-          {
-            "options": [
-              "Environmental",
-              "Engineering"
-            ],
-            "correct": 0
-          },
-          ", ",
-          {
-            "options": [
-              "Social",
-              "Safety"
-            ],
-            "correct": 0
-          },
-          " and ",
-          {
-            "options": [
-              "Governance",
-              "Growth"
-            ],
-            "correct": 0
-          },
-          "."
-        ],
-        "hint": "Think about the planet, people, and how the business is run.",
-        "tip": "ESG = Environmental, Social and Governance."
-      },
-      {
-        "type": "hotspot",
-        "tag": "Spot it",
-        "prompt": "Tap the spot showing an ENVIRONMENTAL (air) impact on this site.",
-        "image": "/images/lm4.jpg",
-        "zones": [
-          {
-            "x": 26,
-            "y": 34,
-            "label": "Dust from earthworks",
-            "correct": true
-          },
-          {
-            "x": 47,
-            "y": 68,
-            "label": "Workers near plant (social)"
-          },
-          {
-            "x": 82,
-            "y": 58,
-            "label": "Community edge (social)"
-          }
-        ],
-        "hint": "Air quality is an environmental impact — look for dust.",
-        "tip": "Dust from earthworks harms air quality — an environmental impact."
-      },
-      {
-        "tag": "Solve it",
-        "image": "/images/esg-pollution.jpg",
-        "difficulty": "medium",
-        "prompt": "SOLVE THE CASE: dust from your haul trucks is drifting over the homes along this road. Applying the mitigation hierarchy, what do you consider FIRST?",
-        "options": [
-          "Whether the haul route can avoid the homes entirely",
-          "Offering compensation to the residents",
-          "Planting trees somewhere else as an offset",
-          "Nothing — dust is normal on projects"
-        ],
-        "correct": 0,
-        "hint": "The hierarchy has a fixed order — which step comes before all others?",
-        "tip": "AVOID comes first: can the route bypass the homes? Only then minimise (wet the road, slow the trucks), restore, and offset last."
-      },
-      {
-        "tag": "Solve it",
-        "image": "/images/esg-social.jpg",
-        "difficulty": "medium",
-        "prompt": "SOLVE THE CASE: community members walk this route daily — the same road your trucks now use. What is the right response?",
-        "options": [
-          "Speed limits, flagmen and community engagement about safe timings",
-          "Keep normal truck speeds — schedule is priority",
-          "Ban residents from using the road",
-          "Wait until an accident happens, then react"
-        ],
-        "correct": 0,
-        "hint": "Minimise the risk AND talk to the people affected.",
-        "tip": "Community health & safety: control the hazard (speed, flagmen, timings) and engage the community — never shift the burden onto them."
-      },
-      {
-        "type": "order",
-        "tag": "Puzzle",
-        "prompt": "You notice a leaking fuel drum on site. Put your response in the right order.",
+        "fmt": "order", "type": "order", "difficulty": "easy", "tag": "Chain of obligation",
+        "prompt": "Put the chain of obligation in order — from where a requirement originates to where it is performed.",
         "items": [
-          "Spot — notice the leak",
-          "Report — raise it through site channels",
-          "Mitigate — contain it with the spill kit",
-          "Share — the lesson goes into the toolbox talk"
+          "The financing agreement between lenders and borrower",
+          "The construction contract between borrower and contractor",
+          "The EPC contractor's management plans",
+          "The subcontract with the earthworks company",
+          "The plant operator wetting the haul road"
         ],
-        "hint": "It's the 'everyone's job' routine from the lesson: see it, say it, sort it, spread it.",
-        "tip": "Spot → Report → Mitigate → Share: every worker's ESG routine."
+        "tip": "Obligations flow down this chain. Liability does not flow back up it."
       },
       {
-        "type": "fillblank",
-        "tag": "Fill the blanks",
-        "prompt": "Complete the stakeholder rule.",
-        "segments": [
-          "A ",
-          {
-            "options": [
-              "stakeholder",
-              "shareholder"
-            ],
-            "correct": 0
-          },
-          " is anyone affected by the project, and ",
-          {
-            "options": [
-              "vulnerable",
-              "wealthy"
-            ],
-            "correct": 0
-          },
-          " groups need special attention because impacts hit them hardest."
+        "fmt": "order", "type": "order", "difficulty": "hard", "tag": "Disclosure",
+        "prompt": "You discover an unrecorded diesel spill at a fuel point. Put these in a sensible order.",
+        "items": [
+          "Make the area safe and stop the source",
+          "Record it in the incident register",
+          "Notify the engineer and your E&S lead",
+          "Sample the soil and define the extent",
+          "Investigate the cause and define corrective action"
         ],
-        "hint": "Think about who feels the project — and who can cope least.",
-        "tip": "Stakeholders = anyone affected or able to affect the project; vulnerable groups are least able to cope."
+        "tip": "Making safe always comes first. Recording BEFORE notifying matters: a notification without a register entry reads as reconstruction after the fact."
       },
+      // ——— E.4 Categorisation (4 in bank, 2 served) ———
       {
-        "type": "categorize",
-        "tag": "Puzzle",
-        "prompt": "Sort each impact: Environmental or Social?",
+        "fmt": "cat", "type": "categorize", "difficulty": "medium", "tag": "Pillars",
+        "prompt": "Sort each situation into Environmental, Social or Governance.",
         "categories": [
-          {
-            "id": "env",
-            "label": "Environmental"
-          },
-          {
-            "id": "soc",
-            "label": "Social"
-          }
+          { "id": "e", "label": "Environmental" },
+          { "id": "s", "label": "Social" },
+          { "id": "g", "label": "Governance" }
         ],
         "items": [
-          {
-            "text": "Fuel spill into the soil",
-            "cat": "env"
-          },
-          {
-            "text": "A land-compensation dispute",
-            "cat": "soc"
-          },
-          {
-            "text": "Generator exhaust fumes",
-            "cat": "env"
-          },
-          {
-            "text": "In-migration pressure on the village",
-            "cat": "soc"
-          }
+          { "id": "piling", "text": "Night piling near homes", "cat": "e" },
+          { "id": "grievance", "text": "A grievance logged as closed that was never resolved", "cat": "g" },
+          { "id": "favours", "text": "A supervisor demanding favours for shifts", "cat": "s" },
+          { "id": "drums", "text": "Bitumen drums reused for drinking water", "cat": "e" },
+          { "id": "gift", "text": "A gift accepted from a supplier during tender", "cat": "g" },
+          { "id": "school", "text": "A haul route past a school at closing time", "cat": "s" },
+          { "id": "seeds", "text": "Invasive seeds carried in on imported fill", "cat": "e" }
         ],
-        "hint": "Nature = environmental; people = social.",
-        "tip": "Spills and fumes hit the environment; land disputes and in-migration hit people."
+        "tip": "The drums are Environmental as a contamination pathway — and they also raise community health under PS4. Real issues rarely sit in one pillar."
       },
       {
-        "type": "diagramtap",
-        "tag": "Tap the diagram",
-        "prompt": "The mitigation hierarchy. Tap the step where you COMPENSATE for what could not be prevented or repaired.",
+        "fmt": "cat", "type": "categorize", "difficulty": "medium", "tag": "Hierarchy",
+        "prompt": "Avoidance — or something later in the hierarchy?",
+        "categories": [
+          { "id": "avoid", "label": "Avoidance (step 1)" },
+          { "id": "later", "label": "Later step" }
+        ],
+        "items": [
+          { "id": "shift", "text": "Shift the alignment 30 m to miss twelve houses", "cat": "avoid" },
+          { "id": "pay", "text": "Pay full replacement cost for the twelve houses", "cat": "later" },
+          { "id": "bridge", "text": "Choose a bridge over an embankment across the wetland", "cat": "later" },
+          { "id": "spur", "text": "Delete a spur road that serves no traffic demand", "cat": "avoid" },
+          { "id": "water", "text": "Water the haul road to suppress dust", "cat": "later" },
+          { "id": "fund", "text": "Fund restoration of an equivalent wetland", "cat": "later" }
+        ],
+        "tip": "The bridge is frequently miscategorised: it reduces the footprint and the hydrological interruption, but it does not remove the crossing — minimisation, not avoidance."
+      },
+      {
+        "fmt": "cat", "type": "categorize", "difficulty": "hard", "tag": "Law vs standards",
+        "prompt": "Does national compliance SETTLE this — or is the lender standard still open?",
+        "categories": [
+          { "id": "settled", "label": "Settled" },
+          { "id": "open", "label": "Standard still open" }
+        ],
+        "items": [
+          { "id": "permit", "text": "Environmental permit obtained for the alignment", "cat": "open" },
+          { "id": "depr", "text": "Compensation paid per the state schedule, with depreciation", "cat": "open" },
+          { "id": "fees", "text": "Environmental fees paid to the regulator", "cat": "settled" },
+          { "id": "register", "text": "Register limited to certificate-of-occupancy holders", "cat": "open" },
+          { "id": "licence", "text": "Extraction licence obtained for a borrow pit — is its SCOPE assessed?", "cat": "open" },
+          { "id": "hearing", "text": "Public hearing held at design stage", "cat": "open" }
+        ],
+        "tip": "The extraction licence settles the LEGAL question and says nothing about whether the pit sits inside the assessed scope — the standard stays open. The fee is the one card the regulator fully answers."
+      },
+      {
+        "fmt": "cat", "type": "categorize", "difficulty": "medium", "tag": "Chain of obligation",
+        "prompt": "Who enforces this — the regulator, or the lenders?",
+        "categories": [
+          { "id": "lenders", "label": "The lenders" },
+          { "id": "regulator", "label": "The regulator" }
+        ],
+        "items": [
+          { "id": "cp", "text": "Conditions precedent to first disbursement", "cat": "lenders" },
+          { "id": "stopwork", "text": "A stop-work notice for unlicensed extraction", "cat": "regulator" },
+          { "id": "esap", "text": "The Environmental and Social Action Plan", "cat": "lenders" },
+          { "id": "fine", "text": "A fine for exceeding a permitted effluent limit", "cat": "regulator" },
+          { "id": "iesc", "text": "A finding raised by the independent consultant", "cat": "lenders" },
+          { "id": "prosecution", "text": "Prosecution of an officer for falsified monitoring returns", "cat": "regulator" }
+        ],
+        "tip": "Both routes can be triggered by one event: an unlicensed pit produces a regulator's notice AND a lender's finding from a single omission."
+      },
+      // ——— E.5 Visual / tap (2 in bank, 1 served) ———
+      {
+        "fmt": "tap", "type": "diagramtap", "difficulty": "medium", "tag": "Spot the site",
+        "prompt": "Five things seen on one site. Four are findings — tap the ONE that is NOT a finding.",
         "boxes": [
-          "Avoid",
-          "Minimise",
-          "Restore",
-          "Offset"
+          "An unfenced flooded excavation beside a footpath",
+          "A fuel drum on bare ground, no bund",
+          "A worker at height without fall protection",
+          "A water bowser suppressing dust beside housing",
+          "A skip of mixed, unsegregated waste"
         ],
         "correct": 3,
-        "hint": "It's the last resort.",
-        "tip": "Offset = compensating for residual impacts — always the final step, never the first."
+        "hint": "Not everything on a site is a finding.",
+        "tip": "Dust suppression beside housing is exactly what is expected — a compliant control. The other four are findings under PS4, PS3, PS2 and PS3 respectively."
       },
       {
-        "type": "connect",
-        "tag": "Link them",
-        "prompt": "Link each ESG pillar to its example.",
-        "pairs": [
-          {
-            "l": "Environmental",
-            "r": "Concrete washout reaching a stream"
-          },
-          {
-            "l": "Social",
-            "r": "Worker-camp living conditions"
-          },
-          {
-            "l": "Governance",
-            "r": "Refusing a facilitation payment"
-          }
+        "fmt": "tap", "type": "diagramtap", "difficulty": "hard", "tag": "The borrow pit file",
+        "prompt": "A proposed borrow pit's file contains: the national environmental approval, a landowner's consent letter, and the construction contract with ESMP. All four documents below are missing — tap the one whose absence breaks the LAW and the STANDARDS at the same time.",
+        "boxes": [
+          "Extraction / mineral title from the minerals authority",
+          "Pit management and closure plan",
+          "Screening confirming the pit is inside the assessed scope",
+          "Independent record of who uses the land"
         ],
-        "hint": "Nature, people, honest business — in that order.",
-        "tip": "E = the stream, S = the workers, G = the ethics."
+        "correct": 0,
+        "hint": "One of these is a criminal matter as well as a lender finding.",
+        "tip": "Without a mineral title, extraction is unlawful under national law AND the pit is an unassessed activity under PS1 — two findings from one omission. The other three are serious lender findings. And note: the consent letter in the file is worth less than it looks — one signature from one interested party is not a consultation record."
+      },
+      // ——— E.6 Scenario, best first action (2 in bank, 1 served) ———
+      {
+        "fmt": "scenario", "difficulty": "hard", "tag": "Scenario — Km 214",
+        "prompt": "You are eleven weeks behind on embankment. Your quarry manager finds a laterite source 800 m off the alignment that would recover five weeks. A community leader says the land is unused, offers a letter of consent, and asks for a payment to the community development committee. The site is not in the approved assessment. The IESC visits in six weeks. What do you do FIRST?",
+        "options": [
+          "Establish who actually uses the land, independently of the leader, before anything else",
+          "Take the letter, make the payment, start, and add the pit to the next assessment revision",
+          "Start extraction and apply for the permit in parallel, since permitting takes ten weeks",
+          "Decline the site entirely and absorb the eleven-week delay"
+        ],
+        "correct": 0,
+        "tip": "Option b fails on three counts at once: a lump payment to a committee is not compensation, one interested signature is not consultation, and a later revision does not make the activity assessed. Option c creates two findings from one decision. Option d is not wrong — just premature: you cannot know if the site is usable until someone establishes who uses it."
+      },
+      {
+        "fmt": "scenario", "difficulty": "hard", "tag": "Scenario — the labour supplier",
+        "prompt": "Your earthworks subcontractor brought in twenty workers through a labour supplier. Your foreman reports two of them look young, and the supplier holds their identity documents. The subcontractor says this is the supplier's arrangement and none of your business. What do you do FIRST?",
+        "options": [
+          "Suspend the affected workers' deployment, verify ages directly, require the documents returned — then address the supplier contractually",
+          "Accept it: the employment relationship is between the workers and the supplier",
+          "Report it to the labour inspectorate and let them handle it",
+          "Raise it at the next monthly subcontractor meeting"
+        ],
+        "correct": 0,
+        "tip": "PS2 extends to workers engaged by third parties — the finding lands on the project regardless of who signed the contract. Withheld identity documents are a forced-labour indicator: a monthly meeting is the wrong instrument for something that requires action this afternoon. Notifying the inspectorate is a legitimate LATER step."
       }
     ]
   },

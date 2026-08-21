@@ -104,6 +104,21 @@ function buildDeck(questions) {
   return deck.sort((a, b) => (DIFF_RANK[a._diff] ?? 0) - (DIFF_RANK[b._diff] ?? 0));
 }
 
+// Stratified draw from a question BANK (blueprint from the assessment pack):
+// when every question carries a `fmt` tag, serve a fixed mix instead of the
+// whole bank — 5 MCQ, 2 multiple response, 1 sequencing, 2 categorisation,
+// 1 visual tap, 1 scenario = 12 items. Each retake draws afresh.
+const SERVE_MIX = { mcq: 5, multi: 2, order: 1, cat: 2, tap: 1, scenario: 1 };
+function drawFromBank(questions) {
+  if (!questions.length || !questions.every((q) => q.fmt)) return questions;
+  const served = [];
+  for (const [fmt, n] of Object.entries(SERVE_MIX)) {
+    const pool = shuffle(questions.filter((q) => q.fmt === fmt));
+    served.push(...pool.slice(0, n));
+  }
+  return served.length ? served : questions;
+}
+
 // Indices of the "blank" segments in a fill-in-the-blank question.
 function blankSegs(q) {
   return q.segments
@@ -216,7 +231,7 @@ export default function QuizPage() {
   const questions = activeQuiz?.questions ?? [];
 
   const [index, setIndex] = useState(0);
-  const [deck, setDeck] = useState(() => buildDeck(questions));
+  const [deck, setDeck] = useState(() => buildDeck(drawFromBank(questions)));
   const [answers, setAnswers] = useState(() => deck.map(blankAnswer));
   const [selChip, setSelChip] = useState(null); // categorize: selected item index
   const [selLeft, setSelLeft] = useState(null); // connect: selected left item
@@ -405,7 +420,7 @@ export default function QuizPage() {
   }
 
   function retake() {
-    const fresh = buildDeck(questions);
+    const fresh = buildDeck(drawFromBank(questions));
     setDeck(fresh);
     setAnswers(fresh.map(blankAnswer));
     setSelChip(null);
